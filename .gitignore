@@ -1,3 +1,10 @@
+# Emacs stuff
+*~
+
+# Vim stuff
+*.swp
+*.swo
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
