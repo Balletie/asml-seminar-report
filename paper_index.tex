@@ -1,0 +1,35 @@
+\documentclass[11pt]{article}
+\usepackage{hyperref}
+\usepackage{sectsty}
+%\usepackage{cite}
+
+\sectionfont{\large}
+
+\title{\textbf{Short summary \& index of papers}}
+\author{}
+
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{\cite{Angluin87} Learning regular sets from queries and counterexamples}
+Original paper by Dana Angluin.
+Describes the $L^*$ algorithm for learning DFA's from regular sets.
+Drawbacks:
+\begin{itemize}
+  \item applicable only to regular languages
+  \item not very efficient, various improvements have been developed
+  \item not very readable
+  \item clearer and more modern summary
+        \href{https://www.cs.bgu.ac.il/~beimel/Courses/Learning/}{here} and
+        \href{https://www.cs.bgu.ac.il/~beimel/Courses/Learning/lect3.ps}{here}.
+\end{itemize}
+
+\section{\cite{deRuiter15} }
+
+
+
+\bibliography{references}{}
+\bibliographystyle{plain}
+\end{document}
