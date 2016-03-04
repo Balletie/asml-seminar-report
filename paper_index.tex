@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage{hyperref}
 \usepackage{sectsty}
-%\usepackage{cite}
+\usepackage{todonotes}
 
 \sectionfont{\large}
 
@@ -13,7 +13,7 @@
 
 \maketitle
 
-\section{\cite{Angluin87} Learning regular sets from queries and counterexamples}
+\section{\cite{Angluin87} Learning Regular Sets from Queries and Counterexamples}
 Original paper by Dana Angluin.
 Describes the $L^*$ algorithm for learning DFA's from regular sets.
 Drawbacks:
@@ -26,9 +26,29 @@ Drawbacks:
         \href{https://www.cs.bgu.ac.il/~beimel/Courses/Learning/lect3.ps}{here}.
 \end{itemize}
 
-\section{\cite{deRuiter15} }
+\section{\cite{Howar14} Tutorial: Automata Learning in Practice}
+Lists and summarizes improvements that can be made to the $L^*$ learning algorithm.
+Primarily focuses on removing sources of redundancy in membership queries.
+\begin{itemize}
+  \item TTT (\& based on discrimination trees, \cite{} \todo{cite Kearns / vazirani}
+  \item Observation pack algorithm \todo{}
+  \todo{Isberner, M., Howar, F., Steffen, B.: The TTT algorithm: A redundancy-free approach to active automata learning.}
+\end{itemize}
 
+\section{\cite{deRuiter15} Protocol State Fuzzing of TLS Implementations}
+Details learning a \textit{state machine model} for a given TLS implementation.
+Knowledge gap between \cite{Angluin87} and this paper is quite large.
+Required knowledge:
+\begin{itemize}
+  \item \cite{Angluin87} Basics of $L^*$ automata learning.
+  \item \cite{Steffen12} Mapping input / output to DFAs.
+\end{itemize}
 
+\section{\cite{Aarts13} Improving active Mealy machine learning for protocol conformance testing}
+\section{\cite{Cho10} Inference and Analysis of Formal Models of Botnet Command and Control Protocols}
+\section{\cite{Bauer14} Analyzing Program Behavior Through Active Automata Learning}
+\section{\cite{Rivest93} Inference of Finite Automata Using Homing Sequences}
+\section{\cite{Steffen12} Active Automata Learning: From DFAs to Interface Programs and Beyond}
 
 \bibliography{references}{}
 \bibliographystyle{plain}
