@@ -171,3 +171,6 @@ TSWLatexianTemp*
 # Ignore AUCTeX stuff
 auto/
 _region_.*
+
+# Standalone package files
+*.sta
