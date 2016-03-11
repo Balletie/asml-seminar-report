@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{a4wide}
+
+%% Comment out to show headerinfo.
+%\pagestyle{headings}
+\pagestyle{empty}
+
+\begin{document}
+
+%\frontmatter
+\input{title}
+
+\input{abstract}
+
+%\tableofcontents{}
+
+%\mainmatter
+
+\input{introduction}
+
+\input{fund-theory}
+
+\input{variants}
+
+\input{improvements}
+
+\input{mapping}
+
+\input{applications}
+
+\input{conclusion}
+
+%\appendix
+
+\bibliographystyle{plain}
+\bibliography{references}{}
+
+%% Comment out for glossaries
+%\glossarystyle{altlistgroup}
+%\printglossaries{}
+
+%\backmatter
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
