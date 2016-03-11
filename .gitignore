@@ -164,3 +164,10 @@ pythontex-files-*/
 
 # Latexian
 TSWLatexianTemp*
+
+# Ignore PDF outputs
+*.pdf
+
+# Ignore AUCTeX stuff
+auto/
+_region_.*
