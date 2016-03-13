@@ -1,9 +1,40 @@
 \documentclass[multi,crop=false,class=article]{standalone}
+\onlyifstandalone{\input{common}}
 
 \begin{document}
 \section{Improvements}
 \label{sec:improvements}
+There are several improvements to be made with respect to the algorithms
+described in \cref{sec:variants,sec:fundamental-theory}, using different data
+structures which decrease the space complexity.
 
+\subsection{Classification Trees}
+\label{sec:classification-trees}
+Introduced by Kearns and Vazirani\cite{Kearns94}, classification trees (or
+\textit{discrimination trees}) were meant as a replacement for the observation
+table\todo{reference subsection chpt 2}. In other words, it is a different data
+structure for storing the sets $S$ and $D$ of access strings and distinguishing
+extensions. The main characteristic of a classification tree is that
+\textit{redundancy-free}, which will be explained in this section.
+
+Say that we have a classification tree for some target automaton $M$. The labels
+of the internal nodes of the tree are distinguishing extensions from the set
+$D$, and the labels of leaf nodes are access strings from $S$. The tree's
+structure is such that for any internal node $d \in D$, its left subtree
+contains all $s \in S$ such that $sd$ is rejected by $M$, and its right subtree
+contains those $s$ such that $sd$ is accepted by $M$.
+
+From the way the tree is constructed, any pair of access strings $v,w \in S$ are
+distinguished by their \textit{lowest common ancestor} in the tree. Thus, $v$
+and $w$ are distinguished by exactly \textit{one} distinguishing
+extension. Furthermore, it follows from the Myhill-Nerode
+Theorem~\todo{reference subsection chpt 2} that the strings $v$ and $w$ are
+Nirode-inequivalent, and thus each string represents a distinct equivalence
+class\todo{``candidate-state''?}. Howar~et~al. note that from this it follows
+that a discrimination tree is \textit{redundancy-free}, as opposed to
+observation tables where states can be distinguished by multiple distinguishing
+extensions\todo{Verify this. What do Howar et al mean with ``fixed number of
+  discriminators''?}\cite{Howar14}.
 \end{document}
 
 %%% Local Variables:
