@@ -1,8 +1,80 @@
 \documentclass[multi,crop=false,class=article]{standalone}
 
+\newcommand{\concat}{\cdot} 
+
 \begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
+
+Angluin defines the $L^*$ algorithm for learning regular sets. The goal of the
+algorithm is to discover a deterministic finite automaton (DFA) that corresponds
+to the regular set.
+
+The regular set is assumed to contain only \textit{words}, where each word
+consists of the concatenation of zero or more items from a certain set of of
+symbols called the input alphabet $A$.
+
+The algorithm requires a so called \textit{minimally adequate teacher} or
+\textit{oracle} which can answer two types of questions about the regular set.
+The first is a membership query; it answers whether a given word is in the
+regular set. The second is an equivalence query: given a DFA model, it answers
+`yes' if the model exactly matches the regular set, or provides counterexample
+(i.e. a word that is in the regular set but not in the DFA or vice versa) if it
+does not. With these two questions, any regular set can be learned.
+
+\subsection {Data structure} The algorithm keeps track of a set of \textit{state
+candidates} $S$ and a set of distinguishing experiments  $E$. The answer to the
+queries are stored in a two dimensional table called an observation table. The
+columns of this table are headered by the items of $E$. The rows are split into
+two parts. The rows of the upper and lower parts are headers by items from $S$
+and $S \concat A$ respectively, where `$\concat$' is the concatenation operator.
+Consider a cell at row $s$ and column $e$. The row represents the resulting
+state when input $s$ is applied to the initial DFA state. The value at column
+$e$ represents whether inputing $e$ from that state results in an accepting
+state. Equivalently, this can be interpreted to mean whether inputing $s \concat
+e$ from the initial state of the DFA results in an accepting state. Two rows in
+the observation table are considered to represent the same state if they react
+identically under the same input (i.e. if they have the same values under all
+columns).
+
+\subsection {The algorithm} The algorithm consists of two phases. The first
+phase is repeated until a closed and consistent model is found.
+
+A model is called inconsistent if and only if the observation table contains
+distinct rows with identical values under $E$ (i.e. the rows appear to represent
+the same state), but inputing some $a \in A$ results in rows with different
+values in some $e \in E$. Thus if a model is found to be inconsistent, feeding
+the input $a \concat e$ results in different states, and so $a \concat e$ is
+discovered to be a distinguishing experiment. Therefore, $a \concat e$ is added
+$E$, making the two rows in $S$ become distinct under the columns of $E$, thus
+removing the inconsistency. New membership queries are performed in order to
+fill in the blank cells in the table.
+
+% dit moet nog even wat beter.. 
+A model is considered to be closed if $S \concat A$ doesn't contain any states
+that are not in $S$. If there are, the row is moved to $S$. The reason for this
+is that if there is a row $x$ in $S \concat A$ that is not in $S$, then it is
+unknown how $x$ reacts to $A$, so the current hypothesis of the state machine
+does not describe what happens in state $x \concat A$. After moving $x$ to $S$,
+the rows $x \concat A$ are added to the lower part of the observation table, and
+membership queries are performed the fill in the cells. 
+\\\\
+In the second phase of the algorithm, the equivalence check is
+performed. If the reply is `yes', then the algorithm stops. If instead a counter
+example is replied, the counterexample and all of its prefixes are added to $S$,
+after which $S \concat A$ is updated and the algorithm moves back to phase 1.
+
+\subsection {Equivalence queries} In practice, no oracle is available to
+precisely answer equivalence queries, because if the oracle knew the exact DFA,
+the whole algorithm wouldn't be required. Instead, the answers to equivalence
+queries are approximated by repeatedly running random membership queries. For
+each of these membership queries, a random sequence of symbols from in input
+alphabet is generated, and is then checked against both the proposed DFA and the
+unknown regular set. If they do not match, the counterexample is found. This
+process is repeated until the desired confidence that the statemachine is
+correct is reached.
+
+\subsection {Example run}
 
 \end{document}
 
