@@ -57,18 +57,18 @@ removing the inconsistency. New membership queries are performed in order to
 fill in the blank cells in the table.
 
 % dit moet nog even wat beter.. 
-A model is considered to be closed if $S \concat A$ doesn't contain any states
+A model is considered to be closed if $S \concat A$ does not contain any states
 that are not in $S$. If there are, the row is moved to $S$. The reason for this
 is that if there is a row $x$ in $S \concat A$ that is not in $S$, then it is
 unknown how $x$ reacts to $A$, so the current hypothesis of the state machine
 does not describe what happens in state $x \concat A$. After moving $x$ to $S$,
 the rows $x \concat A$ are added to the lower part of the observation table, and
 membership queries are performed the fill in the cells. 
-\\\\
-In the second phase of the algorithm, the equivalence check is
-performed. If the reply is `yes', then the algorithm stops. If instead a counter
-example is replied, the counterexample and all of its prefixes are added to $S$,
-after which $S \concat A$ is updated and the algorithm moves back to phase 1.
+
+In the second phase of the algorithm, the equivalence check is performed. If the
+reply is `yes', then the algorithm stops. If instead a counter example is
+replied, the counterexample and all of its prefixes are added to $S$, after
+which $S \concat A$ is updated and the algorithm moves back to phase 1.
 
 \subsection {Equivalence queries}
 
