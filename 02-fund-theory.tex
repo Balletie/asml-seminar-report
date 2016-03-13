@@ -70,17 +70,6 @@ reply is `yes', then the algorithm stops. If instead a counter example is
 replied, the counterexample and all of its prefixes are added to $S$, after
 which $S \concat A$ is updated and the algorithm moves back to phase 1.
 
-\subsection {Equivalence queries}
-
-In practice, no oracle is available to precisely answer equivalence queries,
-because if the oracle knew the exact DFA, the whole algorithm wouldn't be
-required. Instead, the answers to equivalence queries are approximated by
-repeatedly running random membership queries. For each of these membership
-queries, a random sequence of symbols from in input alphabet is generated, and
-is then checked against both the proposed DFA and the unknown regular set. If
-they do not match, the counterexample is found. This process is repeated until
-the desired confidence that the statemachine is correct is reached.
-
 \subsection {Example run}
 
 \end{document}
