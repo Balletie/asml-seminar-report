@@ -24,19 +24,22 @@ two questions, any regular set can be learned.
 
 \subsection {Data structure}
 
-The algorithm keeps track of a set of \textit{state candidates} $S$ and a set of
-distinguishing experiments  $E$. The answer to the queries are stored in a two
-dimensional table called an observation table. The columns of this table are
-headered by the items of $E$. The rows are split into two parts. The rows of the
-upper and lower parts are headers by items from $S$ and $S \concat A$
-respectively, where `$\concat$' is the concatenation operator. Consider a cell
-at row $s$ and column $e$. The row represents the resulting state when input $s$
-is applied to the initial DFA state. The value at column $e$ represents whether
-inputing $e$ from that state results in an accepting state. Equivalently, this
-can be interpreted to mean whether inputing $s \concat e$ from the initial state
-of the DFA results in an accepting state. Two rows in the observation table are
-considered to represent the same state if they react identically under the same
-input (i.e. if they have the same values under all columns).
+The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
+\textit{distinguishing extensions} $E$. The answer to the queries are stored in
+a two dimensional table called an observation table. The columns of this table
+are headered by the items of $E$. The rows are split into two parts. The rows of
+the upper and lower parts are headered by items from $S$ and $S \concat A$
+respectively, where `$\concat$' is the concatenation operator. 
+
+% not quite happy with this phrasing yet.. 
+Rows in the observation table correspond to state candidates for the hypothesis.
+Two state candidates are considered to represent the same state if they react
+identically under the same input (i.e. if the corresponding rows have the same
+values under all columns). Consider a cell at the row $x$ labelled by access
+string $s$ and column $e$. The value at column $e$ represents whether applying
+the string $e$ from the state corresponding to $x$ results in an accepting
+state. Equivalently, this can be interpreted to mean whether applying $s \concat
+e$ from the initial state results in an accepting state.
 
 \subsection {The algorithm}
 
