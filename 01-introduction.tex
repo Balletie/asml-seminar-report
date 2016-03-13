@@ -1,8 +1,46 @@
 \documentclass[multi,crop=false,class=article]{standalone}
+\onlyifstandalone{\input{common}}
 
 \begin{document}
 \section{Introduction}
 \label{sec:introduction}
+
+Active state machine learning is a framework in which a learning algorithm (the
+learner) is given access to a teacher to ask questions of different kind. The
+goal of active state machine learning is to identify an unknown state machine.
+It was first introduced by Dana Angluin in her paper \textit{Learning Regular
+Sets from Queries and Counterexamples} in 1987\cite{Angluin87}.
+
+Active state machine learning tools are becoming increasingly prevalent in
+today's world for many different applications. \todo{add references?} Examples
+of such applications are protocol implementation validation and detection of
+botnets. \todo{add references, more examples? (E.g. software testing)}
+
+There are a plethora of papers and articles written about active state machine
+learning. Many, however, use different terms, slight variations on algorithms
+or data structures or are otherwise difficult to read. This leads to the
+situation in which it is hard to get a proper overview of the subject.
+
+The goal of this article, therefore, is to give a global overview of where the
+technology of active state machine learning is currently at. While doing so, an
+attempt is made to bring together all different terms used and to explain the
+slight variations in algorithms. For this reason, this article should serve the
+purpose of giving the reader a quick, concise but complete overview of not only
+the current state of the art, but also the history of active state machine
+learning and important advances made within this field of study over time.
+
+To accomplish this, the first chapter explains the fundamental theory behind the
+$L^{*}$ algorithm for learning regular sets. Chapter two highlights some
+variants of active state machine learning and explains their reason for being.
+After this, improvements to the $L^{*}$ algorithm are discussed in chapter
+three.
+
+The remaining two chapters are concerned with applications of active state
+machine learning. Chapter four discusses the mapping that is required to be made
+between the concepts used in the $L^{*}$ algorithm and the real life problem
+domain(s). Chapter five is the bridge from theory to practice, as chapter six
+gives examples of several important practical applications of active state
+machine learning.
 
 \end{document}
 
