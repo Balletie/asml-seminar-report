@@ -7,20 +7,20 @@
 \label{sec:fundamental-theory}
 
 Angluin defines the $L^*$ algorithm for learning regular sets\cite{Angluin87}.
-The goal of the algorithm is to discover a deterministic finite automaton (DFA)
-that corresponds to the regular set.
+The goal of the algorithm is to discover a model that corresponds to the regular
+set (`the target').
 
-The regular set is assumed to contain only \textit{words}, where each word
-consists of the concatenation of zero or more items from a certain set of of
-symbols called the input alphabet $A$.
+The target is said to contain only \textit{words}, where each word consists
+of the concatenation of zero or more items from a certain set of of symbols
+called the input alphabet $A$.
 
-The algorithm requires a so called \textit{minimally adequate teacher} or
-\textit{oracle} which can answer two types of questions about the regular set.
-The first is a membership query; it answers whether a given word is in the
-regular set. The second is an equivalence query: given a DFA model, it answers
-`yes' if the model exactly matches the regular set, or provides counterexample
-(i.e. a word that is in the regular set but not in the DFA or vice versa) if it
-does not. With these two questions, any regular set can be learned.
+The algorithm requires a so called \textit{minimally adequate teacher} which can
+answer two types of questions about the target. The first is a membership query;
+it answers whether a given word is accepted by the target. The second is an
+equivalence query: given a hypothesis, it answers `yes' if the hypothesis
+exactly matches the target, or provides counterexample (i.e. a word that is in
+the hypothesis but not in the target or vice versa) if it does not. Using these
+two questions, any regular set can be learned.
 
 \subsection {Data structure}
 
