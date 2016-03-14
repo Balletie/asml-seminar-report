@@ -21,8 +21,8 @@ Say that we have a classification tree for some target automaton $M$. The labels
 of the internal nodes of the tree are distinguishing extensions from the set
 $E$, and the labels of leaf nodes are access strings from $S$. The tree's
 structure is such that for any internal node $e \in E$, its left subtree
-contains all $s \in S$ such that $se$ is rejected by $M$, and its right subtree
-contains those $s$ such that $se$ is accepted by $M$.
+contains all $s \in S$ such that $s \concat e$ is rejected by $M$, and its right subtree
+contains those $s$ such that $s \concat e$ is accepted by $M$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
 distinguished by their \textit{lowest common ancestor} in the tree. Thus, $v$
