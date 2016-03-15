@@ -26,14 +26,17 @@ contains those $s$ such that $s \concat e$ is accepted by $M$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
 distinguished by their \textit{lowest common ancestor} in the tree. Thus, $v$
-and $w$ are distinguished by exactly \textit{one} distinguishing
-extension. Furthermore, it follows from the Myhill-Nerode
-Theorem~\todo{reference subsection chpt 2} that the strings $v$ and $w$ are
-Nirode-inequivalent, and thus each string represents a distinct equivalence
-class\todo{``candidate-state''?}. Howar~et~al. note that from this it follows
-that a discrimination tree is \textit{redundancy-free}, as opposed to
-observation tables where states can be distinguished by multiple distinguishing
-extensions\todo{Verify this. What do Howar et al mean with ``fixed number of
+and $w$ are distinguished by exactly \textit{one} distinguishing extension. In
+other words, any pair of access strings are Nirode-inequivalent~\todo{reference
+  subsection chpt 2}, and thus each access string uniquely identifies a distinct
+equivalence class of the target automaton $M$. When we construct a hypothesis,
+each equivalence class (and thus each access string), corresponds to a state in
+our hypothesis automaton $\hat M$.
+
+Howar~et~al. note that this means that a discrimination tree is
+\textit{redundancy-free}, as opposed to observation tables where states are
+distinguished by a fixed amount of distinguishing extensions\todo{Verify
+  this. What do Howar et al mean with ``fixed number of
   discriminators''?}\cite{Howar14}.
 \end{document}
 
