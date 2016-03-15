@@ -82,6 +82,19 @@ Part of the active state machine learning is the equivalence check.
 Since the actual state machine is not known we need to approximate it by utilizing model-based testing.
 This can be done by using Chow's W method \cite{deRuiter15, Chow78}.
 
+In order to use the W method there are four requirements.
+The machine must be minimal, completely specified, completely reachable, and have a fixed initial state.
+With some additional manipulation these four assumptions may be violated.
+The method consists of three steps.
+\begin{enumerate}
+\item estimation of the maximum number of states.
+\item generate test sequences.
+\item verify the responses.
+\end{enumerate}
+
+According to \cite{vasilevskii73}, the maximal number of test sequences is $n^{2} \times k^{m-n+1}$ and the maximal length is $n^{2} \times m \times k^{m-n+1}$.
+In which n is the number of states in the provided automaton, m is the number of states in the correct automaton, and k is the size of the input alphabet.
+
 \end{document}
 
 %%% Local Variables:
