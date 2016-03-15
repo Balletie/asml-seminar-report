@@ -1,7 +1,7 @@
 \documentclass[multi,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
-
 \usepackage{amsmath}
+\usepackage{varwidth}
 \DeclareMathOperator{\row}{row}
 
 \usetikzlibrary{automata,arrows}
@@ -105,31 +105,13 @@ to phase 1.
 Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
 The input alphabet for this DFA is $A = \{a, b\}. $ $L^*$ initializes $S$ and
 $E$ to $\{\epsilon\}$, and performs three membership queries to build the
-initial observation table of table x.
+initial observation table of table \ref{tbl:observation_1}.
 
-Since the table is both closed and consistent, the algorithm moves on to phase 2
-and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
-equivalence query with the hypothesis as parameter. Since it does not match $U$,
-the oracle will provide a counter example. Assume the counter example provided
-is $bbb$ (it could also have provided other counter examples such as $bbbbbbb$).
-Now, the counter example and all prefixes are added to $S$. After performing the
-new membership queries, the table x is built and the algorithm returns to phase
-1.
-
-The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
-$\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
-Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table x.
-This table is still inconsistent, since row($\epsilon$) = row($b$), but
-row($\epsilon \concat b$) differs from row($b \concat b$) under the column $b$.
-Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new membership
-queries now results in table x. The table is now is both consistent and closed,
-so $L^*$ moves on to phase 2 and constructs the hypothesis of figure
-\ref{fig:target}. Since this is equal to the target, the equivalence query
-returns `yes' and the algorithm terminates.
-
+\begin{table}
+\centering
+\begin{minipage}{.4\textwidth}
 \begin{figure}
 \centering
-
 \begin{tikzpicture}
   [bend angle=40,every node/.style={draw,circle}]
 
@@ -150,9 +132,12 @@ returns `yes' and the algorithm terminates.
         (4) edge [loop above] node[auto,draw=none] {a} (4)
         (4) edge [bend left]  node[auto,draw=none] {b} (1);
 \end{tikzpicture}
-\caption{The target automaton} \label{fig:target}
+\caption{The target} \label{fig:target}
 \end{figure}
-
+\end{minipage}
+%
+%
+\begin{minipage}{.4\textwidth}
 \begin{figure}
 \centering
 \begin{tikzpicture}
@@ -168,8 +153,13 @@ returns `yes' and the algorithm terminates.
 \end{tikzpicture}
 \caption{First hypothesis} \label{fig:hypoth_1}
 \end{figure}
+\end{minipage}
+\end{table}
 
+\begin{table}
+\centering
 
+\begin{varwidth}{.25\textwidth}
 \begin{tabular}{ | l || c | }
 \hline
       & $\epsilon$ \\ \hline \hline
@@ -178,7 +168,11 @@ $a$     & $0$ \\
 $b$     & $0$ \\
 \hline
 \end{tabular}
-\quad
+\caption{} \label{tbl:observation_1}
+\end{varwidth}
+%
+%
+\begin{varwidth}{.25\textwidth}
 \begin{tabular}{ | l || c | }
 \hline
       & $\epsilon$ \\ \hline \hline
@@ -193,7 +187,11 @@ $bbba$    & $1$ \\
 $bbbb$    & $0$ \\
 \hline
 \end{tabular}
-\quad
+\caption{} \label{tbl:observation_2}
+\end{varwidth}
+%
+%
+\begin{varwidth}{.25\textwidth}
 \begin{tabular}{ | l || c | c | }
 \hline
       & $\epsilon$   & $b$ \\ \hline \hline
@@ -208,7 +206,11 @@ $bbba$    & $1$       & $1$ \\
 $bbbb$    & $0$       & $0$ \\
 \hline
 \end{tabular}
-\quad
+\caption{} \label{tbl:observation_3}
+\end{varwidth}
+%
+%
+\begin{varwidth}{.25\textwidth}
 \begin{tabular}{ | l || c | c | c | }
 \hline
       & $\epsilon$   & $b$   & $bb$ \\ \hline \hline
@@ -223,6 +225,34 @@ $bbba$    & $1$       & $1$   & $0$ \\
 $bbbb$    & $0$       & $0$   & $0$ \\
 \hline
 \end{tabular}
+\caption{} \label{tbl:observation_4}
+\end{varwidth}
+
+\end{table}
+
+Since the table is both closed and consistent, the algorithm moves on to phase 2
+and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
+equivalence query with the hypothesis as parameter. Since it does not match $U$,
+the oracle will provide a counter example. Assume the counter example provided
+is $bbb$ (it could also have provided other counter examples such as $bbbbbbb$).
+Now, the counter example and all prefixes are added to $S$. After performing the
+new membership queries, the table \ref{tbl:observation_2} is built and the
+algorithm returns to phase 1.
+
+The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
+$\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
+Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table
+\ref{tbl:observation_3}. This table is still inconsistent, since row($\epsilon$)
+= row($b$), but row($\epsilon \concat b$) differs from row($b \concat b$) under
+the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new
+membership queries now results in table \ref{tbl:observation_4}. The table is
+now is both consistent and closed, so $L^*$ moves on to phase 2 and constructs
+the hypothesis of figure \ref{fig:target}. Since this is equal to the target,
+the equivalence query returns `yes' and the algorithm terminates.
+
+
+
+
 
 \todo{use better layout the figures and tables}
 
