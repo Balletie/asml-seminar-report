@@ -99,11 +99,30 @@ phase 1.
 
 \todo{give tables captions and use references to them}
 
-Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}. The input alphabet for this DFA is $A = \{a, b\}. $ $L^*$ initializes $S$ and $E$ to $\{\lambda\}$, and performs three membership queries to build the initial observation table of table x.
+Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
+The input alphabet for this DFA is $A = \{a, b\}. $ $L^*$ initializes $S$ and
+$E$ to $\{\lambda\}$, and performs three membership queries to build the initial
+observation table of table x.
 
-Since the table is both closed and consistent, the algorithm moves on to phase 2 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an equivalence query with the hypothesis as parameter. Since it does not match $U$, the oracle will provide a counter example. Assume the counter example provided is $bbb$ (it could also have provided other counter examples such as $1111111$). Now, the counter example and all prefixes are added to $S$. After performing the new membership queries, the table x is built and the algorithm returns to phase 1.
+Since the table is both closed and consistent, the algorithm moves on to phase 2
+and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
+equivalence query with the hypothesis as parameter. Since it does not match $U$,
+the oracle will provide a counter example. Assume the counter example provided
+is $bbb$ (it could also have provided other counter examples such as $1111111$).
+Now, the counter example and all prefixes are added to $S$. After performing the
+new membership queries, the table x is built and the algorithm returns to phase
+1.
 
-The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but $\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\lambda$. Therefore, $L^*$ adds $b \concat \lambda = b$ to $E$, resulting in table x. This table is still inconsistent, since row($\lambda$) = row($b$), but row($\lambda \concat b$) differs from row($b \concat b$) under the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new membership queries now results in table x. The table is now is both consistent and closed, so $L^*$ moves on to phase 2 and constructs the hypothesis of figure \ref{fig:target}. Since this is equal to the target, the equivalence query returns `yes' and the algorithm terminates.
+The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
+$\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\lambda$.
+Therefore, $L^*$ adds $b \concat \lambda = b$ to $E$, resulting in table x. This
+table is still inconsistent, since row($\lambda$) = row($b$), but row($\lambda
+\concat b$) differs from row($b \concat b$) under the column $b$. Therefore,
+$L^*$ adds $b \concat b$ to $E$. Performing the new membership queries now
+results in table x. The table is now is both consistent and closed, so $L^*$
+moves on to phase 2 and constructs the hypothesis of figure \ref{fig:target}.
+Since this is equal to the target, the equivalence query returns `yes' and the
+algorithm terminates.
 
 \begin{figure}
 \centering
