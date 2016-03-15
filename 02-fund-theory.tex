@@ -99,11 +99,11 @@ phase 1.
 
 \todo{give tables captions and use references to them}
 
-Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}. $L^*$ initializes $S$ and $E$ to $\{\lambda\}$, and performs three membership queries to build the initial observation table of table x.
+Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}. The input alphabet for this DFA is $A = \{a, b\}. $ $L^*$ initializes $S$ and $E$ to $\{\lambda\}$, and performs three membership queries to build the initial observation table of table x.
 
-Since the table is both closed and consistent, the algorithm moves on to phase 2 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an equivalence query with the hypothesis as parameter. Since it does not match $U$, the oracle will provide a counter example. Assume the counter example provided is $111$ (it could also have provided other counter examples such as $1111111$). Now, the counter example and all prefixes are added to $S$. After performing the new membership queries, the table x is built and the algorithm returns to phase 1.
+Since the table is both closed and consistent, the algorithm moves on to phase 2 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an equivalence query with the hypothesis as parameter. Since it does not match $U$, the oracle will provide a counter example. Assume the counter example provided is $bbb$ (it could also have provided other counter examples such as $1111111$). Now, the counter example and all prefixes are added to $S$. After performing the new membership queries, the table x is built and the algorithm returns to phase 1.
 
-The new table is closed, but not consistent, since $\row(1) = \row(11)$, but $\row(1 \concat 1)$ and $\row(11 \concat 1)$ differ under the column $\lambda$. Therefore, $L^*$ adds $1 \concat \lambda = 1$ to $E$, resulting in table x. This table is still inconsistent, since row($\lambda$) = row($1$), but row($\lambda \concat 1$) differs from row($1 \concat 1$) under the column $1$. Therefore, $L^*$ adds $1 \concat 1$ to $E$. Performing the new membership queries now results in table x. The table is now is both consistent and closed, so $L^*$ moves on to phase 2 and constructs the hypothesis of figure \ref{fig:target}. Since this is equal to the target, the equivalence query returns `yes' and the algorithm terminates.
+The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but $\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\lambda$. Therefore, $L^*$ adds $b \concat \lambda = b$ to $E$, resulting in table x. This table is still inconsistent, since row($\lambda$) = row($b$), but row($\lambda \concat b$) differs from row($b \concat b$) under the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new membership queries now results in table x. The table is now is both consistent and closed, so $L^*$ moves on to phase 2 and constructs the hypothesis of figure \ref{fig:target}. Since this is equal to the target, the equivalence query returns `yes' and the algorithm terminates.
 
 \begin{figure}
 \centering
@@ -116,20 +116,17 @@ The new table is closed, but not consistent, since $\row(1) = \row(11)$, but $\r
   \node[initial]   (1) at (1,0) {};
   \node            (2) at (2,0) {};
   \node            (3) at (3,0) {};
-  \node            (4) at (4,0) {};
-  \node[accepting] (5) at (5,0) {};
+  \node[accepting] (4) at (4,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge              node[auto,draw=none] {1} (2) 
-        (2) edge              node[auto,draw=none] {1} (3)
-        (3) edge              node[auto,draw=none] {1} (4)
-        (4) edge              node[auto,draw=none] {1} (5)
-        (1) edge [loop above] node[auto,draw=none] {0} (1)
-        (2) edge [loop above] node[auto,draw=none] {0} (2)
-        (3) edge [loop above] node[auto,draw=none] {0} (3)
-        (4) edge [loop above] node[auto,draw=none] {0} (4)
-        (5) edge [loop above] node[auto,draw=none] {0} (5)
-        (5) edge [bend left]  node[auto,draw=none] {1} (1);
+        (1) edge              node[auto,draw=none] {b} (2) 
+        (2) edge              node[auto,draw=none] {b} (3)
+        (3) edge              node[auto,draw=none] {b} (4)
+        (1) edge [loop above] node[auto,draw=none] {a} (1)
+        (2) edge [loop above] node[auto,draw=none] {a} (2)
+        (3) edge [loop above] node[auto,draw=none] {a} (3)
+        (4) edge [loop above] node[auto,draw=none] {a} (4)
+        (4) edge [bend left]  node[auto,draw=none] {b} (1);
 \end{tikzpicture}
 \caption{The target automaton} \label{fig:target}
 \end{figure}
@@ -144,8 +141,8 @@ The new table is closed, but not consistent, since $\row(1) = \row(11)$, but $\r
   \node[initial]   (1) at (1,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge [loop right] node[auto,draw=none] {0} (2) 
-        (1) edge [loop left]  node[auto,draw=none] {1} (2);
+        (1) edge [loop right] node[auto,draw=none] {a} (2) 
+        (1) edge [loop left]  node[auto,draw=none] {b} (2);
 \end{tikzpicture}
 \caption{First hypothesis} \label{fig:hypoth_1}
 \end{figure}
@@ -155,8 +152,8 @@ The new table is closed, but not consistent, since $\row(1) = \row(11)$, but $\r
 \hline
       & $\lambda$ \\ \hline \hline
 $\lambda$   & $0$ \\ \hline \hline
-$0$     & $0$ \\
-$1$     & $0$ \\
+$a$     & $0$ \\
+$b$     & $0$ \\
 \hline
 \end{tabular}
 \quad
@@ -164,44 +161,44 @@ $1$     & $0$ \\
 \hline
       & $\lambda$ \\ \hline \hline
 $\lambda$   & $0$ \\ 
-$1$     & $0$ \\ 
-$11$    & $0$ \\ 
-$111$   & $1$ \\ \hline \hline
-$0$     & $0$ \\
-$10$    & $0$ \\
-$110$     & $0$ \\
-$1110$    & $1$ \\
-$1111$    & $0$ \\
+$b$     & $0$ \\ 
+$bb$    & $0$ \\ 
+$bbb$   & $1$ \\ \hline \hline
+$a$     & $0$ \\
+$ba$    & $0$ \\
+$bba$     & $0$ \\
+$bbba$    & $1$ \\
+$bbbb$    & $0$ \\
 \hline
 \end{tabular}
 \quad
 \begin{tabular}{ | l || c | c | }
 \hline
-      & $\lambda$   & $1$ \\ \hline \hline
+      & $\lambda$   & $b$ \\ \hline \hline
 $\lambda$   & $0$       & $0$ \\ 
-$1$     & $0$       & $0$ \\ 
-$11$    & $0$       & $1$ \\ 
-$111$   & $1$       & $1$ \\ \hline \hline
-$0$     & $0$       & $0$ \\
-$10$    & $0$       & $0$ \\
-$110$     & $0$       & $0$ \\
-$1110$    & $1$       & $1$ \\
-$1111$    & $0$       & $0$ \\
+$b$     & $0$       & $0$ \\ 
+$bb$    & $0$       & $1$ \\ 
+$bbb$   & $1$       & $1$ \\ \hline \hline
+$a$     & $0$       & $0$ \\
+$ba$    & $0$       & $0$ \\
+$bba$     & $0$       & $0$ \\
+$bbba$    & $1$       & $1$ \\
+$bbbb$    & $0$       & $0$ \\
 \hline
 \end{tabular}
 \quad
 \begin{tabular}{ | l || c | c | c | }
 \hline
-      & $\lambda$   & $1$   & $11$ \\ \hline \hline
+      & $\lambda$   & $b$   & $bb$ \\ \hline \hline
 $\lambda$   & $0$       & $0$   & $0$ \\ 
-$1$     & $0$       & $0$   & $1$ \\ 
-$11$    & $0$       & $1$   & $0$ \\ 
-$111$   & $1$       & $1$   & $0$ \\ \hline \hline
-$0$     & $0$       & $0$   & $0$ \\
-$10$    & $0$       & $0$   & $1$ \\
-$110$     & $0$       & $0$   & $0$ \\
-$1110$    & $1$       & $1$   & $0$ \\
-$1111$    & $0$       & $0$   & $0$ \\
+$b$     & $0$       & $0$   & $1$ \\ 
+$bb$    & $0$       & $1$   & $0$ \\ 
+$bbb$   & $1$       & $1$   & $0$ \\ \hline \hline
+$a$     & $0$       & $0$   & $0$ \\
+$ba$    & $0$       & $0$   & $1$ \\
+$bba$     & $0$       & $0$   & $0$ \\
+$bbba$    & $1$       & $1$   & $0$ \\
+$bbbb$    & $0$       & $0$   & $0$ \\
 \hline
 \end{tabular}
 
