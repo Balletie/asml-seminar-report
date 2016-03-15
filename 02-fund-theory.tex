@@ -82,8 +82,10 @@ Each row from the table represents a candidate state, but since the table can
 contain duplicate rows, multiple rows (and therefore, candidate states) can map
 to the same state. The hypothesis contains one state for each unique row in the
 table. Let $f(x)$ denote the state in the hypothesis corresponding to the access
-string $x$. For each unique row in the upper part of the table, let $s \in S$
-denote the label corresponding to the row. Then the hypothesis contains a
+string $x$. The initial state in the hypothesis is the state $f(\sigma)$. All
+states corresponding to rows that have a $1$ under the column $\epsilon$ are
+accepting states. For each unique row in the upper part of the table, let $s \in
+S$ denote the label corresponding to the row. Then the hypothesis contains a
 transition for each $\sigma \in \Sigma$ from $f(s)$ to $f(s \concat \sigma)$
 with the condition $\sigma$.\todo{rephrase `with the condition', but how?} Note
 that since the observation table is closed, the upper part of the table contains
