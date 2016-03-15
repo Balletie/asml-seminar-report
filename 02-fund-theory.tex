@@ -17,7 +17,7 @@ set (`the target').
 
 The target is said to contain only \textit{words}, where each word consists
 of the concatenation of zero or more items from a certain set of of symbols
-called the input alphabet $A$.
+called the input alphabet $\Sigma$.
 
 The algorithm requires a so called \textit{minimally adequate teacher} which can
 answer two types of questions about the target. The first is a membership query;
@@ -33,7 +33,7 @@ The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
 \textit{distinguishing extensions} $E$. The answer to the queries are stored in
 a two dimensional table called an observation table. The columns of this table
 are headered by the items of $E$. The rows are split into two parts. The rows of
-the upper and lower parts are headered by items from $S$ and $S \concat A$
+the upper and lower parts are headered by items from $S$ and $S \concat \Sigma$
 respectively, where `$\concat$' is the concatenation operator. 
 
 % not quite happy with this phrasing yet.. 
@@ -49,8 +49,8 @@ e$ from the initial state results in an accepting state.
 \subsection {The algorithm}
 \todo{Introduce equivalence classes}
 
-The algorithm begins by initializing $S$ and $E$ to $\{\lambda\}$ (where
-$\lambda$ is the empty access string) and performing membership queries to fill
+The algorithm begins by initializing $S$ and $E$ to $\{\epsilon\}$ (where
+$\epsilon$ is the empty access string) and performing membership queries to fill
 in the observation table. After the initialization is done, the main loop runs
 until a hypothesis matching the target is found. The main loop is split up into
 of two phases. The first phase is repeated until a closed and consistent model
@@ -58,22 +58,23 @@ is found.
 
 A model is called inconsistent if and only if the observation table contains
 distinct rows with identical values under $E$ (i.e. the rows appear to represent
-the same state), but inputing some $a \in A$ results in rows with different
-values in some $e \in E$. Thus if a model is found to be inconsistent, feeding
-the input $a \concat e$ results in different states, and so $a \concat e$ is
-discovered to be a distinguishing experiment. Therefore, $a \concat e$ is added
-$E$, making the two rows in $S$ become distinct under the columns of $E$, thus
-removing the inconsistency. New membership queries are performed in order to
-fill in the blank cells in the table.
+the same state), but inputing some $\sigma \in \Sigma$ results in rows with
+different values in some $e \in E$. Thus if a model is found to be inconsistent,
+feeding the input $\sigma \concat e$ results in different states, and so $\sigma
+\concat e$ is discovered to be a distinguishing experiment. Therefore, $\sigma
+\concat e$ is added $E$, making the two rows in $S$ become distinct under the
+columns of $E$, thus removing the inconsistency. New membership queries are
+performed in order to fill in the blank cells in the table.
 
 % dit moet nog even wat beter.. 
-A model is considered to be closed if $S \concat A$ does not contain any states
-that are not in $S$. If there are, the row is moved to $S$. The reason for this
-is that if there is a row $x$ in $S \concat A$ that is not in $S$, then it is
-unknown how $x$ reacts to $A$, so the current hypothesis of the state machine
-does not describe what happens in state $x \concat A$. After moving $x$ to $S$,
-the rows $x \concat A$ are added to the lower part of the observation table, and
-membership queries are performed the fill in the cells. 
+A model is considered to be closed if $S \concat \Sigma$ does not contain any
+states that are not in $S$. If there are, the row is moved to $S$. The reason
+for this is that if there is a row $x$ in $S \concat \Sigma$ that is not in $S$,
+then it is unknown how $x$ reacts to $\Sigma$, so the current hypothesis of the
+state machine does not describe what happens in state $x \concat \Sigma$. After
+moving $x$ to $S$, the rows $x \concat \Sigma$ are added to the lower part of
+the observation table, and membership queries are performed the fill in the
+cells.
 
 In the second phase of the algorithm, the observation table is both closed and
 consistent. The algorithm uses the observation table to construct a hypothesis.
@@ -83,17 +84,17 @@ to the same state. The hypothesis contains one state for each unique row in the
 table. Let $f(x)$ denote the state in the hypothesis corresponding to the access
 string $x$. For each unique row in the upper part of the table, let $s \in S$
 denote the label corresponding to the row. Then the hypothesis contains a
-transition for each $a \in A$ from $f(s)$ to $f(s \concat a)$ with the condition
-$a$.\todo{rephrase `with the condition', but how?} Note that since the
-observation table is closed, the upper part of the table contains all unique
-rows, so $\row(s \concat a)$ can always be looked up in the lower part of the
-table.
+transition for each $\sigma \in \Sigma$ from $f(s)$ to $f(s \concat \sigma)$
+with the condition $\sigma$.\todo{rephrase `with the condition', but how?} Note
+that since the observation table is closed, the upper part of the table contains
+all unique rows, so $\row(s \concat \sigma)$ can always be looked up in the
+lower part of the table.
 
 Once the hypothesis is constructed, the equivalence query is executed upon it.
 If the hypothesis matches the target then the algorithm stops. If instead a
 counter example is replied, the counterexample and all of its prefixes are added
-to $S$, after which $S \concat A$ is updated and the algorithm moves back to
-phase 1.
+to $S$, after which $S \concat \Sigma$ is updated and the algorithm moves back
+to phase 1.
 
 \subsection {Example run}
 
@@ -101,28 +102,28 @@ phase 1.
 
 Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
 The input alphabet for this DFA is $A = \{a, b\}. $ $L^*$ initializes $S$ and
-$E$ to $\{\lambda\}$, and performs three membership queries to build the initial
-observation table of table x.
+$E$ to $\{\epsilon\}$, and performs three membership queries to build the
+initial observation table of table x.
 
 Since the table is both closed and consistent, the algorithm moves on to phase 2
 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
 equivalence query with the hypothesis as parameter. Since it does not match $U$,
 the oracle will provide a counter example. Assume the counter example provided
-is $bbb$ (it could also have provided other counter examples such as $1111111$).
+is $bbb$ (it could also have provided other counter examples such as $bbbbbbb$).
 Now, the counter example and all prefixes are added to $S$. After performing the
 new membership queries, the table x is built and the algorithm returns to phase
 1.
 
 The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
-$\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\lambda$.
-Therefore, $L^*$ adds $b \concat \lambda = b$ to $E$, resulting in table x. This
-table is still inconsistent, since row($\lambda$) = row($b$), but row($\lambda
-\concat b$) differs from row($b \concat b$) under the column $b$. Therefore,
-$L^*$ adds $b \concat b$ to $E$. Performing the new membership queries now
-results in table x. The table is now is both consistent and closed, so $L^*$
-moves on to phase 2 and constructs the hypothesis of figure \ref{fig:target}.
-Since this is equal to the target, the equivalence query returns `yes' and the
-algorithm terminates.
+$\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
+Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table x.
+This table is still inconsistent, since row($\epsilon$) = row($b$), but
+row($\epsilon \concat b$) differs from row($b \concat b$) under the column $b$.
+Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new membership
+queries now results in table x. The table is now is both consistent and closed,
+so $L^*$ moves on to phase 2 and constructs the hypothesis of figure
+\ref{fig:target}. Since this is equal to the target, the equivalence query
+returns `yes' and the algorithm terminates.
 
 \begin{figure}
 \centering
@@ -169,8 +170,8 @@ algorithm terminates.
 
 \begin{tabular}{ | l || c | }
 \hline
-      & $\lambda$ \\ \hline \hline
-$\lambda$   & $0$ \\ \hline \hline
+      & $\epsilon$ \\ \hline \hline
+$\epsilon$   & $0$ \\ \hline \hline
 $a$     & $0$ \\
 $b$     & $0$ \\
 \hline
@@ -178,8 +179,8 @@ $b$     & $0$ \\
 \quad
 \begin{tabular}{ | l || c | }
 \hline
-      & $\lambda$ \\ \hline \hline
-$\lambda$   & $0$ \\ 
+      & $\epsilon$ \\ \hline \hline
+$\epsilon$   & $0$ \\ 
 $b$     & $0$ \\ 
 $bb$    & $0$ \\ 
 $bbb$   & $1$ \\ \hline \hline
@@ -193,8 +194,8 @@ $bbbb$    & $0$ \\
 \quad
 \begin{tabular}{ | l || c | c | }
 \hline
-      & $\lambda$   & $b$ \\ \hline \hline
-$\lambda$   & $0$       & $0$ \\ 
+      & $\epsilon$   & $b$ \\ \hline \hline
+$\epsilon$   & $0$       & $0$ \\ 
 $b$     & $0$       & $0$ \\ 
 $bb$    & $0$       & $1$ \\ 
 $bbb$   & $1$       & $1$ \\ \hline \hline
@@ -208,8 +209,8 @@ $bbbb$    & $0$       & $0$ \\
 \quad
 \begin{tabular}{ | l || c | c | c | }
 \hline
-      & $\lambda$   & $b$   & $bb$ \\ \hline \hline
-$\lambda$   & $0$       & $0$   & $0$ \\ 
+      & $\epsilon$   & $b$   & $bb$ \\ \hline \hline
+$\epsilon$   & $0$       & $0$   & $0$ \\ 
 $b$     & $0$       & $0$   & $1$ \\ 
 $bb$    & $0$       & $1$   & $0$ \\ 
 $bbb$   & $1$       & $1$   & $0$ \\ \hline \hline
@@ -222,9 +223,6 @@ $bbbb$    & $0$       & $0$   & $0$ \\
 \end{tabular}
 
 \todo{use better layout the figures and tables}
-
-
-
 
 \end{document}
 
