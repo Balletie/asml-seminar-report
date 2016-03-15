@@ -38,6 +38,30 @@ Howar~et~al. note that this means that a discrimination tree is
 distinguished by a fixed amount of distinguishing extensions\todo{Verify
   this. What do Howar et al mean with ``fixed number of
   discriminators''?}\cite{Howar14}.
+
+\subsubsection{Constructing a Hypothesis}
+\label{sec:constr-hypoth}
+To construct the hypothesis automaton $\hat M$ from the classification tree $T$,
+the algorithm creates a state for each leaf (access string) of $T$. Then, to
+create the transitions for each state identified by some access string $s$, the
+algorithm has to find the access string uniquely identifying the state which is
+reached by executing $\hat M$ with input $s \concat b$, where $b \in
+\Sigma$. This is done by traversing the tree using membership queries: starting
+at the root node, for each internal node labeled with $e$, perform a membership
+query $s \concat b \concat e$. If the result is \textit{yes}, do the same for
+the node at the right tree; if it is \textit{no}, go to the left tree. When a
+leaf has been reached, the algorithm has found the access string which uniquely
+identifies a state in $\hat M$. Kearns and Vazirani call this operation
+\textit{sifting}, and is denoted as $\textbf{Sift}(s, T)$\cite{Kearns94}.
+
+So the state identified by $t$ reached by a $b$-transition from another state
+identified by $s$, is found by executing the operation
+$\textbf{Sift}(s \concat b,T)$. The algorithm then creates a $b$-transition from
+the state identified by $s$ to the state identified by $t$. It does this for
+each $s \in S$, for each $b \in \Sigma$, after which the construction of
+$\hat M$ is finished. The hypothesis can then be used to perform an equivalence
+query, resulting in a counterexample or the answer \textit{yes}, in which case
+the algorithm is done learning.
 \end{document}
 
 %%% Local Variables:
