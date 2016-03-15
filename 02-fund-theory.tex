@@ -48,9 +48,13 @@ e$ from the initial state results in an accepting state.
 
 \subsection {The algorithm}
 \todo{Introduce equivalence classes}
-\todo{intializing the algorithm}
-The algorithm consists of two phases. The first phase is repeated until a closed
-and consistent model is found.
+
+The algorithm begins by initializing $S$ and $E$ to $\{\lambda\}$ (where
+$\lambda$ is the empty access string) and performing membership queries to fill
+in the observation table. After the initialization is done, the main loop runs
+until a hypothesis matching the target is found. The main loop is split up into
+of two phases. The first phase is repeated until a closed and consistent model
+is found.
 
 A model is called inconsistent if and only if the observation table contains
 distinct rows with identical values under $E$ (i.e. the rows appear to represent
