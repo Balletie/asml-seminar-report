@@ -50,6 +50,27 @@ distinguished by a fixed amount of distinguishing extensions\todo{Verify
   this. What do Howar et al mean with ``fixed number of
   discriminators''?}\cite{Howar14}.
 
+\subsubsection{Complexity analysis}
+\label{sec:complexity-analysis}
+With their introduction of the \textit{classification tree}, Kearns and Vazirani
+also adapted the original $L^*$ learning algorithm to use the tree
+structure. The precise working of the adapted algorithm will not be given, but
+we do give an overview of the impact on the query complexity and the space
+complexity.
+
+\begin{description}
+\item[Query Complexity] The amount of \textit{membership queries} for hypothesis
+  construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
+  worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b}, where
+  $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
+  counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
+  where $m$ is the size of the longest counterexample\cite{Kearns94}.
+
+  Thus in total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
+  improvement over that of $L^*$.
+\item[Space Complexity] According to Isberner~et~al., the space needed by the
+  algorithm is $\Theta(kn + mn)$\cite{Isberner14b}.\todo{Compare with L-star}
+\end{description}
 
 \end{document}
 
