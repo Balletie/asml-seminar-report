@@ -118,14 +118,14 @@ initial observation table of table \ref{tbl:observation_1}.
   \node[accepting] (4) at (4,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge              node[auto,draw=none] {b} (2) 
-        (2) edge              node[auto,draw=none] {b} (3)
-        (3) edge              node[auto,draw=none] {b} (4)
-        (1) edge [loop above] node[auto,draw=none] {a} (1)
-        (2) edge [loop above] node[auto,draw=none] {a} (2)
-        (3) edge [loop above] node[auto,draw=none] {a} (3)
-        (4) edge [loop above] node[auto,draw=none] {a} (4)
-        (4) edge [bend left]  node[auto,draw=none] {b} (1);
+        (1) edge              node[auto,draw=none] {$b$} (2) 
+        (2) edge              node[auto,draw=none] {$b$} (3)
+        (3) edge              node[auto,draw=none] {$b$} (4)
+        (1) edge [loop above] node[auto,draw=none] {$a$} (1)
+        (2) edge [loop above] node[auto,draw=none] {$a$} (2)
+        (3) edge [loop above] node[auto,draw=none] {$a$} (3)
+        (4) edge [loop above] node[auto,draw=none] {$a$} (4)
+        (4) edge [bend left]  node[auto,draw=none] {$b$} (1);
 \end{tikzpicture}
 \caption{The target} \label{fig:target}
 \end{subfigure}
@@ -140,8 +140,8 @@ initial observation table of table \ref{tbl:observation_1}.
   \node[initial]   (1) at (1,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge [loop right] node[auto,draw=none] {a} (2) 
-        (1) edge [loop left]  node[auto,draw=none] {b} (2);
+        (1) edge [loop right] node[auto,draw=none] {$a$} (2) 
+        (1) edge [loop left]  node[auto,draw=none] {$b$} (2);
 \end{tikzpicture}
 \caption{First hypothesis} \label{fig:hypoth_1}
 \end{subfigure}
