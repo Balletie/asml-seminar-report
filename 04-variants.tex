@@ -4,10 +4,10 @@
 \section{Variants}
 \label{sec:variants}
 In the first few years following the introduction of the L* algorithm in
-\cite{Angluin87}, it was only a theoretical exploration of active learning.
+\cite{Angluin87}, L* learning was only a theoretical exploration.
 The various improvements described in the previous chapter,
 such as \todo{Cite some important improvements here},
-made practical applications suddenly more feasible.
+made practical applications already more feasible.
 
 In applying L* or improvements thereof to practical applications,
 there were still some practical limitations and restrictions that had to
@@ -17,10 +17,9 @@ Some of these issues can be summarized as follows:
   \item Equivalence queries are generally undecidable
   \item L* can only interact with regular languages, not with real systems
   \item The amount of required membership queries can grow very fast
-  \item L* has no way of dealing with parameter and value domains
-  \item Membership queries might not be independent in practice.
-        This might sometimes be solved by \textit{reset}ing the system.
-        However, not all systems might support a \textit{reset}.
+  \item Membership queries might not be independent in practice,
+        which imposes the requirement for a \textit{reset} function
+  \item Not all systems might support a \textit{reset} function.
 \end{itemize}
 
 In order to address these limitations and restrictions,
@@ -29,7 +28,7 @@ each with the goal to solve such an issue.
 In this chapter we will further elaborate on some of these issues
 and the variants proposed to solve them.
 
-\subsection{Equivalence queries are generally undecidable}
+\subsection{Approximating \textit{EQUIV(M)} queries with \textit{MEMBER(w)} queries}
 The target machine on which the learning algorithm is applied is generally
 a black box, since we want to infer knowledge about some unknown system.
 Therefore equivalence queries can only be answered by exhaustively testing
@@ -47,10 +46,9 @@ on the number of \textit{MEMBER(w)} queries and disallowing \textit{EQUIV(M)}
 queries completely.
 \todo{Possibly summarize some interesting result, like the winner.}
 
-\subsection{L* can only interact with regular languages, not with real systems}
-% @sander: take it away? :)
+\subsection{Learning Mealy machines}
 
-\subsection{The amount of required membership queries can grow very fast}
+\subsection{Limiting the amount of membership queries}
 In a theoretical framework the learning algorithm doesn't have to account
 for execution times of individual \textit{MEMBER(w)} queries.
 In practice, such queries might take time or be expensive to execute.
@@ -63,7 +61,10 @@ queries, the amount of membership queries needed grows exponentially
 in the number of states \todo{Cite source for exponential complexity of Chow's}.
 (...)
 
-\subsection{Systems without a reset}
+\subsection{Learning algorithms for systems with a \textit{reset} function}
+\todo{Talk about RESET}
+
+\subsection{Homing Sequences}
 
 \end{document}
 
