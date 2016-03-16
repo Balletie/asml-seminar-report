@@ -44,11 +44,10 @@ string uniquely identifies a distinct equivalence class of the target automaton
 $M$. When we construct a hypothesis, each equivalence class (and thus each
 access string), corresponds to a state in our hypothesis automaton $\hat M$.
 
-Howar~et~al. note that this means that a discrimination tree is
-\textit{redundancy-free}, as opposed to observation tables where states are
-distinguished by a fixed amount of distinguishing extensions\todo{Verify
-  this. What do Howar et al mean with ``fixed number of
-  discriminators''?}\cite{Howar14}.
+Howar~et~al. say that a discrimination tree is \textit{redundancy-free} because
+each state in $\hat M$ is distinguished by one distinguishing extension, as
+opposed to observation tables where states are distinguished by a fixed amount
+of distinguishing extensions\cite{Howar14}.
 
 \subsubsection{Complexity analysis}
 \label{sec:complexity-analysis}
