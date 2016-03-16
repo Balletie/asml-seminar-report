@@ -1,7 +1,6 @@
-\documentclass[multi,crop=false,class=article]{standalone}
+\documentclass[multi,tikz,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
 \usepackage{amsmath}
-\usepackage{varwidth}
 \DeclareMathOperator{\row}{row}
 
 \usetikzlibrary{automata,arrows}
@@ -106,10 +105,9 @@ The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
 and $E$ to $\{\epsilon\}$, and performs three membership queries to build the
 initial observation table of table \ref{tbl:observation_1}.
 
-\begin{table}
+\begin{figure}[t]
 \centering
-\begin{minipage}{.4\textwidth}
-\begin{figure}
+\begin{subfigure}[b]{.4\textwidth}
 \centering
 \begin{tikzpicture}
   [bend angle=40,every node/.style={draw,circle}]
@@ -132,12 +130,9 @@ initial observation table of table \ref{tbl:observation_1}.
         (4) edge [bend left]  node[auto,draw=none] {b} (1);
 \end{tikzpicture}
 \caption{The target} \label{fig:target}
-\end{figure}
-\end{minipage}
-%
-%
-\begin{minipage}{.4\textwidth}
-\begin{figure}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.4\textwidth}
 \centering
 \begin{tikzpicture}
   [bend angle=40,every node/.style={draw,circle}]
@@ -151,14 +146,14 @@ initial observation table of table \ref{tbl:observation_1}.
         (1) edge [loop left]  node[auto,draw=none] {b} (2);
 \end{tikzpicture}
 \caption{First hypothesis} \label{fig:hypoth_1}
+\end{subfigure}
 \end{figure}
-\end{minipage}
-\end{table}
 
 \begin{table}
 \centering
 
-\begin{varwidth}{.25\textwidth}
+\begin{subtable}[h]{.23\textwidth}
+\centering
 \begin{tabular}{ | l || c | }
 \hline
       & $\epsilon$ \\ \hline \hline
@@ -168,10 +163,10 @@ $b$     & $0$ \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_1}
-\end{varwidth}
-%
-%
-\begin{varwidth}{.25\textwidth}
+\end{subtable}
+\hfill
+\begin{subtable}[h]{.23\textwidth}
+\centering
 \begin{tabular}{ | l || c | }
 \hline
       & $\epsilon$ \\ \hline \hline
@@ -187,10 +182,10 @@ $bbbb$    & $0$ \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_2}
-\end{varwidth}
-%
-%
-\begin{varwidth}{.25\textwidth}
+\end{subtable}
+\hfill
+\begin{subtable}[h]{.23\textwidth}
+\centering
 \begin{tabular}{ | l || c | c | }
 \hline
       & $\epsilon$   & $b$ \\ \hline \hline
@@ -206,10 +201,10 @@ $bbbb$    & $0$       & $0$ \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_3}
-\end{varwidth}
-%
-%
-\begin{varwidth}{.25\textwidth}
+\end{subtable}
+\hfill
+\begin{subtable}[h]{.23\textwidth}
+\centering
 \begin{tabular}{ | l || c | c | c | }
 \hline
       & $\epsilon$   & $b$   & $bb$ \\ \hline \hline
@@ -225,7 +220,7 @@ $bbbb$    & $0$       & $0$   & $0$ \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_4}
-\end{varwidth}
+\end{subtable}
 
 \end{table}
 
