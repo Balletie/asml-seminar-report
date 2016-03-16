@@ -98,8 +98,6 @@ to phase 1.
 
 \subsection {Example run}
 
-\todo{give tables captions and use references to them}
-
 Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
 The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
 and $E$ to $\{\epsilon\}$, and performs three membership queries to build the
@@ -147,7 +145,9 @@ initial observation table of table \ref{tbl:observation_1}.
 \end{tikzpicture}
 \caption{First hypothesis} \label{fig:hypoth_1}
 \end{subfigure}
+\caption{Automata}
 \end{figure}
+
 
 \begin{table}
 \centering
@@ -156,72 +156,78 @@ initial observation table of table \ref{tbl:observation_1}.
 \centering
 \begin{tabular}{ | l || c | }
 \hline
-      & $\epsilon$ \\ \hline \hline
-$\epsilon$   & $0$ \\ \hline \hline
-$a$     & $0$ \\
-$b$     & $0$ \\
+           & $\epsilon$ \\ \hline \hline
+$\epsilon$ & $0$        \\ \hline \hline
+$a$        & $0$        \\
+$b$        & $0$        \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_1}
 \end{subtable}
+%
+%
 \hfill
 \begin{subtable}[h]{.23\textwidth}
 \centering
 \begin{tabular}{ | l || c | }
 \hline
-      & $\epsilon$ \\ \hline \hline
-$\epsilon$   & $0$ \\ 
-$b$     & $0$ \\ 
-$bb$    & $0$ \\ 
-$bbb$   & $1$ \\ \hline \hline
-$a$     & $0$ \\
-$ba$    & $0$ \\
-$bba$     & $0$ \\
-$bbba$    & $1$ \\
-$bbbb$    & $0$ \\
+           & $\epsilon$ \\ \hline \hline
+$\epsilon$ & $0$        \\ 
+$b$        & $0$        \\ 
+$bb$       & $0$        \\ 
+$bbb$      & $1$        \\ \hline \hline
+$a$        & $0$        \\
+$ba$       & $0$        \\
+$bba$      & $0$        \\
+$bbba$     & $1$        \\
+$bbbb$     & $0$        \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_2}
 \end{subtable}
+%
+%
 \hfill
 \begin{subtable}[h]{.23\textwidth}
 \centering
 \begin{tabular}{ | l || c | c | }
 \hline
-      & $\epsilon$   & $b$ \\ \hline \hline
-$\epsilon$   & $0$       & $0$ \\ 
-$b$     & $0$       & $0$ \\ 
-$bb$    & $0$       & $1$ \\ 
-$bbb$   & $1$       & $1$ \\ \hline \hline
-$a$     & $0$       & $0$ \\
-$ba$    & $0$       & $0$ \\
-$bba$     & $0$       & $0$ \\
-$bbba$    & $1$       & $1$ \\
-$bbbb$    & $0$       & $0$ \\
+           & $\epsilon$ & $b$ \\ \hline \hline
+$\epsilon$ & $0$        & $0$ \\ 
+$b$        & $0$        & $0$ \\ 
+$bb$       & $0$        & $1$ \\ 
+$bbb$      & $1$        & $1$ \\ \hline \hline
+$a$        & $0$        & $0$ \\
+$ba$       & $0$        & $0$ \\
+$bba$      & $0$        & $0$ \\
+$bbba$     & $1$        & $1$ \\
+$bbbb$     & $0$        & $0$ \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_3}
 \end{subtable}
+%
+%
 \hfill
 \begin{subtable}[h]{.23\textwidth}
 \centering
 \begin{tabular}{ | l || c | c | c | }
 \hline
-      & $\epsilon$   & $b$   & $bb$ \\ \hline \hline
-$\epsilon$   & $0$       & $0$   & $0$ \\ 
-$b$     & $0$       & $0$   & $1$ \\ 
-$bb$    & $0$       & $1$   & $0$ \\ 
-$bbb$   & $1$       & $1$   & $0$ \\ \hline \hline
-$a$     & $0$       & $0$   & $0$ \\
-$ba$    & $0$       & $0$   & $1$ \\
-$bba$     & $0$       & $0$   & $0$ \\
-$bbba$    & $1$       & $1$   & $0$ \\
-$bbbb$    & $0$       & $0$   & $0$ \\
+           & $\epsilon$ & $b$   & $bb$ \\ \hline \hline
+$\epsilon$ & $0$        & $0$   & $0$  \\ 
+$b$        & $0$        & $0$   & $1$  \\ 
+$bb$       & $0$        & $1$   & $0$  \\ 
+$bbb$      & $1$        & $1$   & $0$  \\ \hline \hline
+$a$        & $0$        & $0$   & $0$  \\
+$ba$       & $0$        & $0$   & $1$  \\
+$bba$      & $0$        & $0$   & $0$  \\
+$bbba$     & $1$        & $1$   & $0$  \\
+$bbbb$     & $0$        & $0$   & $0$  \\
 \hline
 \end{tabular}
 \caption{} \label{tbl:observation_4}
 \end{subtable}
-
+\caption{Observation tables}
 \end{table}
 
 Since the table is both closed and consistent, the algorithm moves on to phase 2
@@ -243,9 +249,6 @@ membership queries now results in table \ref{tbl:observation_4}. The table is
 now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns `yes' and the algorithm terminates.
-
-
-\todo{use better layout the figures and tables}
 
 \end{document}
 
