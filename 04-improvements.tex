@@ -68,8 +68,13 @@ complexity.
 
   Thus in total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
   improvement over that of $L^*$.
-\item[Space Complexity] According to Isberner~et~al., the space needed by the
-  algorithm is $\Theta(kn + mn)$\cite{Isberner14b}.\todo{Compare with L-star}
+\item[Space Complexity] The space complexity has been analyzed by
+  Isberner~et~al. as follows: a degenerated tree --- the worst case --- has
+  $\mathcal{O}(n)$ amount of nodes, of which each inner node is labeled by a
+  distinguishing extension of length $\mathcal{O}(m)$\cite{Isberner15}.  The
+  space required for the hypothesis automaton is
+  $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires space in
+  $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with L-star}.
 \end{description}
 
 \end{document}
