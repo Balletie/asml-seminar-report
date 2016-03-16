@@ -1,8 +1,81 @@
 \documentclass[multi,crop=false,class=article]{standalone}
+\onlyifstandalone{\input{common}}
 
 \begin{document}
 \section{Improvements}
 \label{sec:improvements}
+There are several improvements to be made with respect to the original $L^*$
+algorithm described in \cref{sec:fundamental-theory}, which will be discussed in
+this chapter. In discussing the improvements, we make two kinds of comparisons
+between the algorithms. The first comparison is in terms of the amount of
+\textit{queries} (the \textit{query complexity}), which gives an indication of
+the running time of the algorithm.
+
+In the second comparison, we show the improvements in terms of \textit{space
+  complexity} between algorithms. We discuss the TTT-algorithm, which according
+to Isberner~et~al. exhibits an optimal space complexity\cite{Isberner14b}.
+
+The first improvement which will be discussed is the \textit{classification
+  tree}, which forms the basis for multiple subsequent improvements (including
+the TTT-algorithm).
+
+\subsection{Classification Trees}
+\label{sec:classification-trees}
+Introduced by Kearns and Vazirani\cite{Kearns94}, classification trees (or
+\textit{discrimination trees}) are meant as a replacement for the observation
+table (see \cref{sec:data-structure}). In other words, it is a different data
+structure for storing the sets $S$ and $E$ of access strings and distinguishing
+extensions. The main characteristic of a classification tree is that it is
+\textit{redundancy-free}, which will be explained in this section.
+
+Say that we have a classification tree for some target automaton $M$. The labels
+of the internal nodes of the tree are distinguishing extensions from the set
+$E$, and the labels of leaf nodes are access strings from $S$. The tree's
+structure is such that for any internal node $e \in E$, its left subtree
+contains all $s \in S$ such that $s \concat e$ is rejected by $M$, and its right
+subtree contains those $s$ such that $s \concat e$ is accepted by $M$.
+
+From the way the tree is constructed, any pair of access strings $v,w \in S$ are
+distinguished by their \textit{lowest common ancestor} in the tree. Thus, $v$
+and $w$ are distinguished by exactly \textit{one} distinguishing extension. In
+other words, any pair of access strings in the classification tree are
+Nirode-inequivalent~\todo{reference subsection chpt 2}, and thus each access
+string uniquely identifies a distinct equivalence class of the target automaton
+$M$. When we construct a hypothesis, each equivalence class (and thus each
+access string), corresponds to a state in our hypothesis automaton $\hat M$.
+
+Howar~et~al. say that a discrimination tree is \textit{redundancy-free} because
+each state in $\hat M$ is distinguished by one distinguishing extension, as
+opposed to observation tables where states are distinguished by a fixed amount
+of distinguishing extensions\cite{Howar14}.
+
+\subsubsection{Complexity analysis}
+\label{sec:complexity-analysis}
+With their introduction of the \textit{classification tree}, Kearns and Vazirani
+also adapted the original $L^*$ learning algorithm to use the tree
+structure\cite{Kearns94}. The precise working of the adapted algorithm will not
+be given, but we do give an overview of the impact on the query complexity and
+the space complexity.
+
+\begin{description}
+\item[Query Complexity] The amount of \textit{membership queries} for hypothesis
+  construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
+  worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b}, where
+  $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
+  counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
+  where $m$ is the size of the longest counterexample\cite{Kearns94}.
+
+  Thus in total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
+  improvement over that of $L^*$.
+\item[Space Complexity] In chapter 4 of his dissertation, Isberner analyzed the
+  space complexity of discrimination-tree based learners as follows: a
+  degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner
+  node is labeled by a distinguishing extension of length
+  $\mathcal{O}(m)$\cite{Isberner15}.  The space required for the hypothesis
+  automaton is $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires
+  space in $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with
+    L-star}.
+\end{description}
 
 \end{document}
 
