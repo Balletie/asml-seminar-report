@@ -6,20 +6,64 @@
 In the first few years following the introduction of the L* algorithm in
 \cite{Angluin87}, it was only a theoretical exploration of active learning.
 The various improvements described in the previous chapter,
-such as \TODO{Cite some important improvements here},
+such as \todo{Cite some important improvements here},
 made practical applications suddenly more feasible.
 
 In applying L* or improvements thereof to practical applications,
 there were still some practical limitations and restrictions that had to
-be addressed.
-In order to do so several variants with restrictions have been proposed,
-such as: \TODO{Cite learnlib or upstream document, is bookmarked}
+be addressed (Steffen 2011, Ch. 6 \cite{Steffen11}).
+Some of these issues can be summarized as follows:
 \begin{itemize}
-  \item Interacting with real systems instead of regular languages.
-  \item Membership queries, order of magnitude.
-  \item Systems without a reset.
-  \item Learning without equivalence queries.
+  \item Equivalence queries are generally undecidable
+  \item L* can only interact with regular languages, not with real systems
+  \item The amount of required membership queries can grow very fast
+  \item L* has no way of dealing with parameter and value domains
+  \item Membership queries might not be independent in practice.
+        This might sometimes be solved by \textit{reset}ing the system.
+        However, not all systems might support a \textit{reset}.
 \end{itemize}
+
+In order to address these limitations and restrictions,
+several variants of the L* algorithm have been proposed,
+each with the goal to solve such an issue.
+In this chapter we will further elaborate on some of these issues
+and the variants proposed to solve them.
+
+\subsection{Equivalence queries are generally undecidable}
+The target machine on which the learning algorithm is applied is generally
+a black box, since we want to infer knowledge about some unknown system.
+Therefore equivalence queries can only be answered by exhaustively testing
+the inputs of the system. This problem has been shown to be undecidably hard.
+
+In order to solve this issue model-based testing techniques have been used,
+such as \textit{Chow's W-method} or the \textit{WP-method} \todo{Cite here}.
+These methods rely on approximating \textit{EQUIV(M)} queries by using
+\textit{MEMBER(w)} queries.
+
+To further research in this area, the \textit{ZULU} challenge was introduced.
+The \textit{ZULU} challenge asked participants to find a DFA corresponding
+to a certain system as accurately as possible, while imposing a restriction
+on the number of \textit{MEMBER(w)} queries and disallowing \textit{EQUIV(M)}
+queries completely.
+\todo{Possibly summarize some interesting result, like the winner.}
+
+\subsection{L* can only interact with regular languages, not with real systems}
+% @sander: take it away? :)
+
+\subsection{The amount of required membership queries can grow very fast}
+In a theoretical framework the learning algorithm doesn't have to account
+for execution times of individual \textit{MEMBER(w)} queries.
+In practice, such queries might take time or be expensive to execute.
+Therefore algorithms benefit from reducing the amount of queries needed.
+Some generic improvements in this regard have already been covered in
+\todo{Reference previous chapter}.
+
+However, when using for example \textit{Chow's method} for \textit{EQUIV(M)}
+queries, the amount of membership queries needed grows exponentially
+in the number of states \todo{Cite source for exponential complexity of Chow's}.
+(...)
+
+\subsection{Systems without a reset}
 
 \end{document}
 
