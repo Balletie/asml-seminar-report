@@ -1,5 +1,10 @@
-\documentclass[multi,crop=false,class=article]{standalone}
+\documentclass[multi,tikz,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
+\usepackage{amsmath}
+\DeclareMathOperator{\row}{row}
+
+\usetikzlibrary{automata,arrows}
+
 
 \begin{document}
 \section{Fundamental Theory}
@@ -11,9 +16,9 @@ set (`the target').
 
 The target is said to contain only \textit{words}, where each word consists
 of the concatenation of zero or more items from a certain set of of symbols
-called the input alphabet $A$.
+called the input alphabet $\Sigma$.
 
-The algorithm requires a so called \textit{minimally adequate teacher} which can
+The algorithm requires a so-called \textit{minimally adequate teacher} which can
 answer two types of questions about the target. The first is a membership query;
 it answers whether a given word is accepted by the target. The second is an
 equivalence query: given a hypothesis, it answers `yes' if the hypothesis
@@ -24,11 +29,11 @@ two questions, any regular set can be learned.
 \subsection {Data structure}
 
 The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
-\textit{distinguishing extensions} $E$. The answer to the queries are stored in
-a two dimensional table called an observation table. The columns of this table
+\textit{distinguishing extensions} $E$. The answers to the queries are stored in
+a two-dimensional table called an observation table. The columns of this table
 are headered by the items of $E$. The rows are split into two parts. The rows of
-the upper and lower parts are headered by items from $S$ and $S \concat A$
-respectively, where `$\concat$' is the concatenation operator. 
+the upper and lower parts are headered by items from $S$ and $S \concat \Sigma$
+respectively, where `$\concat$' is the concatenation operator.
 
 % not quite happy with this phrasing yet.. 
 Rows in the observation table correspond to state candidates for the hypothesis.
@@ -41,35 +46,209 @@ state. Equivalently, this can be interpreted to mean whether applying $s \concat
 e$ from the initial state results in an accepting state.
 
 \subsection {The algorithm}
+\todo{Introduce equivalence classes}
 
-The algorithm consists of two phases. The first phase is repeated until a closed
-and consistent model is found.
+The algorithm begins by initializing $S$ and $E$ to $\{\epsilon\}$ (where
+$\epsilon$ is the empty access string) and performing membership queries to fill
+in the observation table. After the initialization is done, the main loop runs
+until a hypothesis matching the target is found. The main loop is split up into
+two phases. The first phase is repeated until a closed and consistent model is
+found.
 
 A model is called inconsistent if and only if the observation table contains
 distinct rows with identical values under $E$ (i.e. the rows appear to represent
-the same state), but inputing some $a \in A$ results in rows with different
-values in some $e \in E$. Thus if a model is found to be inconsistent, feeding
-the input $a \concat e$ results in different states, and so $a \concat e$ is
-discovered to be a distinguishing experiment. Therefore, $a \concat e$ is added
-$E$, making the two rows in $S$ become distinct under the columns of $E$, thus
-removing the inconsistency. New membership queries are performed in order to
-fill in the blank cells in the table.
+the same state), but inputting some $\sigma \in \Sigma$ results in rows with
+different values for some $e \in E$. Thus if a model is found to be
+inconsistent, feeding the input $\sigma \concat e$ results in different states,
+and so $\sigma \concat e$ is discovered to be a distinguishing experiment.
+Therefore, $\sigma \concat e$ is added to $E$, making the two rows in $S$
+distinct under the columns of $E$, thus removing the inconsistency. New
+membership queries are performed in order to fill in the blank cells in the
+table.
 
-% dit moet nog even wat beter.. 
-A model is considered to be closed if $S \concat A$ does not contain any states
-that are not in $S$. If there are, the row is moved to $S$. The reason for this
-is that if there is a row $x$ in $S \concat A$ that is not in $S$, then it is
-unknown how $x$ reacts to $A$, so the current hypothesis of the state machine
-does not describe what happens in state $x \concat A$. After moving $x$ to $S$,
-the rows $x \concat A$ are added to the lower part of the observation table, and
-membership queries are performed the fill in the cells. 
+A model is considered to be closed if $S \concat \Sigma$ does not contain any
+states that are not in $S$. If there is a row $x$ in $S \concat \Sigma$ that is
+not in $S$, then it is unknown how $x$ reacts to $\Sigma$. This means that the
+current hypothesis of the state machine does not describe what happens in state
+$x \concat \Sigma$. To address this problem, $x$ is moved to $S$ and for each $y
+\in x \concat \Sigma$, a row labelled by $y$ is added to the lower part of the
+observation table. The values in the new rows in the lower part of the table are
+set by executing the required membership queries.
 
-In the second phase of the algorithm, the equivalence check is performed. If the
-reply is `yes', then the algorithm stops. If instead a counter example is
-replied, the counterexample and all of its prefixes are added to $S$, after
-which $S \concat A$ is updated and the algorithm moves back to phase 1.
+In the second phase of the algorithm, the observation table is both closed and
+consistent. The algorithm uses the observation table to construct a hypothesis.
+Each row from the table represents a candidate state, but since the table can
+contain duplicate rows, multiple rows (and therefore, candidate states) can map
+to the same state. The hypothesis contains one state for each unique row in the
+table. Let $f(x)$ denote the state in the hypothesis corresponding to the access
+string $x$. The initial state in the hypothesis is the state $f(\sigma)$. All
+states corresponding to rows that have a $1$ under the column $\epsilon$ are
+accepting states. For each unique row in the upper part of the table, let $s \in
+S$ denote the label corresponding to the row. Then the hypothesis contains a
+transition for each $\sigma \in \Sigma$ from $f(s)$ to $f(s \concat \sigma)$,
+constrained by $\sigma$. Note that since the observation table is closed, the
+upper part of the table contains all unique rows, so $\row(s \concat \sigma)$
+can always be looked up in the lower part of the table.
+
+Once the hypothesis is constructed, the equivalence query is executed upon it.
+If the hypothesis matches the target then the algorithm stops. If instead a
+counterexample is replied, the counterexample and all of its prefixes are added
+to $S$, after which $S \concat \Sigma$ is updated and the algorithm moves back
+to phase 1.
 
 \subsection {Example run}
+
+Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
+The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
+and $E$ to $\{\epsilon\}$, and performs three membership queries to build the
+initial observation table of table \ref{tbl:observation_1}.
+
+\begin{figure}[t]
+\centering
+\begin{subfigure}[b]{.4\textwidth}
+\centering
+\begin{tikzpicture}
+  [bend angle=40,every node/.style={draw,circle}]
+
+  \tikzstyle{initial} = [dashed]
+
+  \node[initial]   (1) at (1,0) {};
+  \node            (2) at (2,0) {};
+  \node            (3) at (3,0) {};
+  \node[accepting] (4) at (4,0) {};
+
+  \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
+        (1) edge              node[auto,draw=none] {$b$} (2) 
+        (2) edge              node[auto,draw=none] {$b$} (3)
+        (3) edge              node[auto,draw=none] {$b$} (4)
+        (1) edge [loop above] node[auto,draw=none] {$a$} (1)
+        (2) edge [loop above] node[auto,draw=none] {$a$} (2)
+        (3) edge [loop above] node[auto,draw=none] {$a$} (3)
+        (4) edge [loop above] node[auto,draw=none] {$a$} (4)
+        (4) edge [bend left]  node[auto,draw=none] {$b$} (1);
+\end{tikzpicture}
+\caption{The target} \label{fig:target}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.4\textwidth}
+\centering
+\begin{tikzpicture}
+  [bend angle=40,every node/.style={draw,circle}]
+
+  \tikzstyle{initial} = [dashed]
+
+  \node[initial]   (1) at (1,0) {};
+
+  \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
+        (1) edge [loop right] node[auto,draw=none] {$a$} (2) 
+        (1) edge [loop left]  node[auto,draw=none] {$b$} (2);
+\end{tikzpicture}
+\caption{First hypothesis} \label{fig:hypoth_1}
+\end{subfigure}
+\caption{Automata}
+\end{figure}
+
+
+\begin{table}
+\centering
+
+\begin{subtable}[h]{.23\textwidth}
+\centering
+\begin{tabular}{ | l || c | }
+\hline
+           & $\epsilon$ \\ \hline \hline
+$\epsilon$ & $0$        \\ \hline \hline
+$a$        & $0$        \\
+$b$        & $0$        \\
+\hline
+\end{tabular}
+\caption{} \label{tbl:observation_1}
+\end{subtable}
+%
+%
+\hfill
+\begin{subtable}[h]{.23\textwidth}
+\centering
+\begin{tabular}{ | l || c | }
+\hline
+           & $\epsilon$ \\ \hline \hline
+$\epsilon$ & $0$        \\ 
+$b$        & $0$        \\ 
+$bb$       & $0$        \\ 
+$bbb$      & $1$        \\ \hline \hline
+$a$        & $0$        \\
+$ba$       & $0$        \\
+$bba$      & $0$        \\
+$bbba$     & $1$        \\
+$bbbb$     & $0$        \\
+\hline
+\end{tabular}
+\caption{} \label{tbl:observation_2}
+\end{subtable}
+%
+%
+\hfill
+\begin{subtable}[h]{.23\textwidth}
+\centering
+\begin{tabular}{ | l || c | c | }
+\hline
+           & $\epsilon$ & $b$ \\ \hline \hline
+$\epsilon$ & $0$        & $0$ \\ 
+$b$        & $0$        & $0$ \\ 
+$bb$       & $0$        & $1$ \\ 
+$bbb$      & $1$        & $1$ \\ \hline \hline
+$a$        & $0$        & $0$ \\
+$ba$       & $0$        & $0$ \\
+$bba$      & $0$        & $0$ \\
+$bbba$     & $1$        & $1$ \\
+$bbbb$     & $0$        & $0$ \\
+\hline
+\end{tabular}
+\caption{} \label{tbl:observation_3}
+\end{subtable}
+%
+%
+\hfill
+\begin{subtable}[h]{.23\textwidth}
+\centering
+\begin{tabular}{ | l || c | c | c | }
+\hline
+           & $\epsilon$ & $b$   & $bb$ \\ \hline \hline
+$\epsilon$ & $0$        & $0$   & $0$  \\ 
+$b$        & $0$        & $0$   & $1$  \\ 
+$bb$       & $0$        & $1$   & $0$  \\ 
+$bbb$      & $1$        & $1$   & $0$  \\ \hline \hline
+$a$        & $0$        & $0$   & $0$  \\
+$ba$       & $0$        & $0$   & $1$  \\
+$bba$      & $0$        & $0$   & $0$  \\
+$bbba$     & $1$        & $1$   & $0$  \\
+$bbbb$     & $0$        & $0$   & $0$  \\
+\hline
+\end{tabular}
+\caption{} \label{tbl:observation_4}
+\end{subtable}
+\caption{Observation tables}
+\end{table}
+
+Since the table is both closed and consistent, the algorithm moves on to phase 2
+and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
+equivalence query with the hypothesis as parameter. Since it does not match $U$,
+the oracle will provide a counterexample. Assume the counterexample provided is
+$bbb$ (it could also have provided other counterexamples such as $bbbbbbb$).
+Now, the counterexample and all prefixes are added to $S$. After performing the
+new membership queries, the table \ref{tbl:observation_2} is built and the
+algorithm returns to phase 1.
+
+The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
+$\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
+Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table
+\ref{tbl:observation_3}. This table is still inconsistent, since row($\epsilon$)
+= row($b$), but row($\epsilon \concat b$) differs from row($b \concat b$) under
+the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new
+membership queries now results in table \ref{tbl:observation_4}. The table is
+now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
+hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
+equivalence query returns `yes' and the algorithm terminates.
 
 \end{document}
 
