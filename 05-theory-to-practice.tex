@@ -1,0 +1,103 @@
+\documentclass[multi,crop=false,class=article]{standalone}
+\onlyifstandalone{\input{common}}
+
+\begin{document}
+\section{From theory to practice}
+\label{sec:theory-to-practice}
+
+As the previous chapters have shown, active state machine learning is a well
+studied theoretical learning technology. Slowly but surely activate state
+machine learning is moving from a theoretical novelty to a real world applicable
+technology, due to hardware advancements as well as the optimizations discussed
+in chapter \cref{sec:improvements}.
+
+The learning algorithms discussed in the previous chapters all required an
+(abstract, formal) input alphabet, an (abstract, formal) output alphabet,
+membership queries and equivalence queries. In practice, it is in many cases
+quite difficult to realize these requirements for a specific system under
+learning\cite{Stefen11a}. This section discusses these challenges faced when
+applying active state machine learning to real world scenarios.
+
+\paragraph{Interaction with real world applications} Before active state machine
+learning can be used in practice, a mapping has to be made from an abstract,
+formal input alphabet to a concrete real world ``language'' understood by
+reactive systems (it is evident that reactive systems are a requirement for
+practical active state machine learning)\todo{begrippenlijst aanmaken met
+definities?}. This mapping needs to result in a deterministic language for it to
+work\cite{Steffen11a}. In the same way, the output of the system under learning
+needs to be mapped back to an abstract language understood by the tool (see
+section \cref{sec:tools} below).
+
+Whilst such a mapping has different peculiarities per application, there is an
+overlapping theme that applies to every mapping: it needs to be abstract enough
+in terms of communication (leading to a useful model structure, see below) while
+allowing for an automatic back and forth translation between the abstract and
+the concrete languages\cite{Steffen11a}. An interesting fact is that it turns
+out that the active state machine learning algorithm can be enhanced per
+application using application-specific optimizations\cite{Hungar03}. For more
+information on recent work focusing on these abstractions, see
+\cite{Aarts10,Howar11,Jonsson11}.
+
+Besides mapping input- and output alphabets, the gap between the abstract
+learned model and the concrete application also has to be bridged: when an
+abstract learned model is presented to the user, it has to be ``translated'' to
+a representation of the system under learning. This is rather intuitive for
+those applications that are designed explicitly for connectivity (such as web
+services or communication protocols), because these are made to be invoked from
+the outside. For other types of applications, this can be arbitrarily difficult.
+
+Another obstacle to overcome is that of parameters used in real world
+applications. Think, for example, about increasing sequence numbers in
+communication protocols. This is still a huge challenge to
+resolve\cite{Steffen11a}, and, for now, besides the creation of prototypical
+solutions\cite{Aarts10,Shahbaz07,Howar10}, application-specific solutions have
+to be applied.\cite{Steffen11a}.
+
+The final hurdle is that of a ``reset''. Membership queries have to be
+independent (see chapter \cref{sec:noreset}). In practice this often means that
+applications have to be reset in between successive membership queries. This can
+be achieved using homing sequences\cite{Rivest93} (discussed in chapter
+\cref{sec:variants} or by simply restarting the application for each membership
+query.
+
+\paragraph{Membership queries} Membership queries are the most straightforward
+to translate to real world applications: they can be realized via testing. An
+important thing to note, however, is the amount of membership queries required.
+Learning a real world application can easily require several thousand membership
+queries\todo{Add citation}. This means that the time required to learn a model
+can be greatly reduced either by speeding up membership queries (executing them
+in parallel), or simply by reducing the number of membership queries required.
+Chapter \cref{sec:improvements} has discussed several improvements to achieve
+exactly that. Additionally, application-specific optimizations can be used to
+further reduce the number of membership queries required.
+
+\paragraph{Equivalence queries} In theoretical simulations, equivalence testing
+is often easy because often the target system (in some cases even the model!) is
+known. In practice, however, the system under test is usually a black box
+system. This means that equivalence queries will have to be approximated,
+typically using membership queries. These approximated membership queries are in
+general not decidable without assuming any extra knowledge\cite{Steffen11a},
+such as the number of states of the system under learning: it is impossible to
+be certain that the system has been tested extensively enough.
+
+An alternative to using membership queries to simulate equivalence queries, is
+to use model-based testing methods\cite{Broy05, Tretmans11}. An example of
+model-based testing is Chow's W-method\cite{Chow78} (discussed in chapter
+\cref{sec:improvements}), which can be used if an upper bound on the number of
+states in the system is known.\todo{Mention Wp-method\cite{Fujiwara91} and more
+examples? Or refer to chapter \cref{sec:variants}}
+
+\todo{Discuss first paragraph of page 33 in \cite{Steffen11a}?}
+
+All the above problems might give the impression that active state machine
+learning is not yet applicable to real world applications. While it is true that
+practical application is not yet complete, great progress has been made and
+great things have already been achieved. The next few highlights of real world
+applications serve to illustrate these facts.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
