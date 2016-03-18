@@ -77,12 +77,12 @@ the space complexity.
     L-star}.
 \end{description}
 
-\subsection{Chow's W method}
+\subsection{Chow's W-method}
 Part of the active state machine learning is the equivalence check.
 Since the actual state machine is not known we need to approximate it by utilizing model-based testing.
-This can be done by using Chow's W method \cite{deRuiter15, Chow78}.
+This can be done by using Chow's W-method \cite{deRuiter15, Chow78}.
 
-In order to use the W method there are four requirements.
+In order to use the W-method there are four requirements.
 The machine must be minimal, completely specified, completely reachable, and have a fixed initial state.
 With some additional manipulation these four assumptions may be violated.
 The method consists of three steps.
@@ -94,6 +94,22 @@ The method consists of three steps.
 
 According to \cite{vasilevskii73}, the maximal number of test sequences is $n^{2} \times k^{m-n+1}$ and the maximal length is $n^{2} \times m \times k^{m-n+1}$.
 In which n is the number of states in the provided automaton, m is the number of states in the correct automaton, and k is the size of the input alphabet.
+
+By refining the test suites and the specification at the same time, and using a divide and conquer approach the size of the test is considerably reduced in comparison to defining the tests from the final specification\cite{Ipate07}.
+This is especially beneficial because complex systems are usually created in multiple iterations.
+Unlike some other test selection methods the W-method does not require that the number of states is exactly the same between the implementation and protocol.
+The W-method generates tests that guarantee the correct the correctness of the implementation with a number of states below a certain upper bound.
+
+The W-method generates input sequences that reach every state in the diagram, check all the transitions in the diagram and identify all the destination states and verify them against their counterparts in the implementation\cite{Ipate07}.
+The W-method constructs two sets of input sequences.
+A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the finale state machine.
+The empty sequence is also included to reach the initial state.
+And a characterization set $W \subseteq \Sigma^{*}$ that has different outputs for at least one sequence in $W$ for every pair of different states.
+The only information we need is an estimate of the maximum number of states of an unknown model for the machine.
+
+In some fields the W-method can be adapted to reduce the number of test cases even further such as for server testing.
+When a server closes the connection there usually are no further transitions possible.
+This can greatly reduce the number of tests necessary\cite{deRuiter15}.
 
 \end{document}
 
