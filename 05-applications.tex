@@ -1,0 +1,107 @@
+\documentclass[multi,crop=false,class=article]{standalone}
+\onlyifstandalone{\input{common}}
+
+\begin{document}
+\section{Applications}
+\label{sec:applications}
+
+As the previous chapters have shown, active state machine learning is a
+well studied theoretical learning technology. Since 19xx (TODO: find source)
+active state machine learning has been applicable in the real world due to
+advancements made in both the algorithms and computer hardware.\todo{find
+reference}
+
+This chapter serves to highlight some interesting and important practical
+applications of active state machine learning. The goal is not to discuss
+individual applications, rather several ``domains'' of application have been
+identified. Before doing so, however, the bridge between theory and application
+must be crossed.
+
+\subsection{From theory to practice}
+\label{sec:theory-to-practice}
+
+The learning algorithms discussed in the previous chapter all required an
+(abstract, formal) input alphabet, an (abstract, formal) output alphabet,
+membership queries and equivalence queries. In practice, it is in many cases
+quite difficult to realize these requirements for a specific system under
+learning. This section discusses these challenges faced when applying active
+state machine learning to real world scenarios.
+
+\paragraph{Interaction with real world applications} Before active state machine
+learning can be used in practice, a mapping has to be made from an abstract,
+formal input alphabet to a concrete real world ``language'' understood by
+reactive systems (it is evident that reactive systems are a requirement for
+practical active state machine learning)\todo{begrippenlijst aanmaken met
+definities?}. This mapping needs to result in a deterministic language for it to
+work\cite{Steffen11a}. In the same way, the output of the system under learning
+needs to be mapped back to an abstract language understood by the
+tool.\todo{refer to arjan's piece}
+
+Whilst such a mapping has different peculiarities per application, there is an
+overlapping theme that applies to every mapping: it needs to be abstract enough
+in terms of communication (leading to a useful model structure, see below) while
+allowing for an automatic back and forth translation between the abstract and
+the concrete languages. An interesting fact is that it turns out that the active
+state machine learning algorithm can be enhanced per specific application using
+application-specific optimizations. For more information on recent work focusing
+on these abstractions, see \cite{Aarts10,Howar11,Jonsson11}.
+
+Besides mapping input- and output alphabets, the gap between the abstract learned model
+and the concrete application also has to be bridged: when an abstract learned
+model is presented to the user, it has to be ``translated'' to a representation
+of the system under learning. This is rather simple for those applications that
+are designed explicitly for connectivity (such as web services or communication
+protocols), because these are made to be invoked from the outside. For other
+types of applications, this can be arbitrarily difficult.
+
+A second last obstacle to overcome is that of parameters used in real world
+applications. Think, for example, about increasing sequence numbers in
+communication protocols or authentication. This is still a huge challenge to
+resolve and for now, besides the creation of prototypical solutions,
+application-specific solutions have to be applied.\cite{Steffen11a}.
+
+The final hurdle is that of a ``reset''. Membership queries have to be
+independent. In practice this often means that applications have to be reset in
+between successive membership queries.
+
+\paragraph{Membership queries}
+Membership queries are the most straightforward to translate to real world
+applications: they can be realized via testing. %TODO: expand
+
+% TODO: discuss B: membership queries page 34 of STEFFEN-Handout-Learning2?
+
+\paragraph{Equivalence queries} In theoretical simulations, equivalence testing
+is often easy because often the target system is known. In practice, however,
+the system under test is usually a black box system. This means that equivalence
+queries will have to be approximated, typically using membership queries. These
+approximated membership queries are in general not decidable without assuming
+any extra knowledge, such as the number of states of the system under
+learning: it is impossible to be certain that the system has been tested
+extensively\cite{Steffen11a} enough.
+
+If more information about the system under learning is known, model-based
+testing methods can be used. If, for example, an upper bound on the number of
+states of the system under learning is known, the
+W-method\cite{Chow78}\todo{refer to previous chapters} or the
+Wp-method\cite{Fujiwara91}\todo{add more examples?} can be used.
+
+\todo{Discuss first paragraph of page 33 in \cite{Steffen11a}?}
+
+All the above problems might give the impression that active state machine
+learning is not yet applicable to real world applications. While it is true that
+practical application is not yet complete, great progress has been made and
+great things have already been achieved. The next few highlights of real world
+applications serve to illustrate this fact.
+
+%Possible references:
+% Hardi Hungar, Oliver Niese, and Bernhard Steffen. Domain-Specific Optimization
+%   in Automata Learning. In Warren A. Hunt Jr. and Fabio Somenzi, editors, Proc.
+%   15 th Int. Conf. on Computer Aided Verification, volume 2725 of Lecture Notes in
+%   Computer Science, pages 315–327. Springer Verlag, July 2003.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
