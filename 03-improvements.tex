@@ -1,6 +1,8 @@
 \documentclass[multi,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
 
+\usepackage{common}
+
 \begin{document}
 \section{Improvements}
 \label{sec:improvements}
@@ -134,17 +136,6 @@ Since the actual state machine is not known we need to approximate it by
 utilizing model-based testing.
 This can be done by using Chow's W-method \cite{deRuiter15, Chow78}.
 
-In order to use the W-method there are four requirements.
-The machine must be minimal, completely specified, completely reachable, 
-and have a fixed initial state.
-With some additional manipulation these four assumptions may be violated.
-The method consists of three steps.
-\begin{enumerate}
-\item estimation of the maximum number of states.
-\item generate test sequences.
-\item verify the responses.
-\end{enumerate}
-
 According to \cite{vasilevskii73}, the maximal number of test sequences is 
 $n^{2} \times k^{m-n+1}$ and the maximal length is 
 $n^{2} \times m \times k^{m-n+1}$.
@@ -174,8 +165,33 @@ finale state machine.
 The empty sequence is also included to reach the initial state.
 And a characterization set $W \subseteq \Sigma^{*}$ that has different
 outputs for at least one sequence in $W$ for every pair of different states.
+
+We have a specification P that can be modelled by an unknown finite
+state machine M.
 The only information we need is an estimate of the maximum number of
 states of an unknown model for the machine.
+Suppose $d = \text{estimated maximum number of states for P}
+- \text{number of states in M}$.
+Naturally, it follows that $d \geq 0$.
+We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
+making $\Sigma\left[ n \right]$ a random word with a maximal length of n.
+For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
+The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup S
+\concat \Sigma$, which is also called the transition cover of $M$, ensures that all the
+states and transition in $P$ are also present in $M$, while
+$\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
+performing all the transitions.
+
+In order to use the W-method there are four requirements.
+The machine must be minimal, completely specified, completely reachable, 
+and have a fixed initial state.
+With some additional manipulation these four assumptions may be violated.
+The method consists of three steps.
+\begin{enumerate}
+\item estimation of the maximum number of states.
+\item generate test sequences.
+\item verify the responses.
+\end{enumerate}
 
 In some fields the W-method can be adapted to reduce the number of test
 cases even further such as for server testing.
