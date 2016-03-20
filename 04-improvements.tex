@@ -87,6 +87,35 @@ Their paper, however, also included an improvement upon $L^*$, also in the case
 that a reset \textit{is} available. Specifically, they improved the
 \textit{counterexample analysis} stage, which is the part that handles
 counterexamples returned by an equivalence query.
+
+When a counterexample $\gamma$ is obtained, Rivest and Schapire's improved
+algorithm finds a single extension $e$ from $\gamma$ distinguishing two states
+in the new hypothesis, and adds it to the set $E$ of distinguishing
+extensions. The distinguishing extension $e$ can be found from $\gamma$ by means
+of a binary search.
+
+\paragraph{Query complexity} Rivest and Schapire's improvement results in
+$\mathcal{O}(\log(m))$ membership queries per counterexample of length $m$, as
+expected from a binary search. The amount of equivalence queries is
+$\mathcal{O}(n)$, and thus the amount of membership queries due to
+counterexample analysis is $\mathcal{O}(n\log(m))$, where $m$ is the size of the
+longest counterexample. The total amount of membership queries including
+hypothesis construction is thus $\mathcal{O}(kn^2 + n\log(m))$, an improvement
+over that of Kearns and Vazarani's (see \cref{sec:complexity-analysis}).
+
+It is worthwhile to note that Isberner~et~al. analyzed other search strategies
+(e.g. exponential search, among others) which yield the same query complexity as
+the original binary search strategy, but perform better in
+practice\cite{Isberner14a}.
+
+\paragraph{Space Complexity} The space complexity due to the new counterexample
+is better than that of $L^*$, however it is worse than that of Kearns and
+Vazirani's: $\mathcal{O}(kn^2 + nm)$\todo{Citation needed}.
+
+In the next section we will show another version of the algorithm due to
+Isberner~et~al., which combines Kearns and Vazirani's discrimination tree, and
+Rivest and Schapire-style counterexample analysis.
+
 \end{document}
 
 %%% Local Variables:
