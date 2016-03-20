@@ -1,7 +1,7 @@
 \documentclass[multi,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
 
-\usepackage{common}
+\onlyifstandalone{\input{common}}
 
 \begin{document}
 \section{Improvements}
@@ -132,7 +132,7 @@ Rivest and Schapire-style counterexample analysis.
 
 \subsection{Chow's W-method}
 Part of the active state machine learning is the equivalence check.
-Since the actual state machine is not known we need to approximate it by
+Since the actual state machine is not known it needs to approximated by
 utilizing model-based testing.
 This can be done by using Chow's W-method \cite{deRuiter15, Chow78}.
 
@@ -166,10 +166,10 @@ The empty sequence is also included to reach the initial state.
 And a characterization set $W \subseteq \Sigma^{*}$ that has different
 outputs for at least one sequence in $W$ for every pair of different states.
 
-We have a specification P that can be modelled by an unknown finite
+Given a specification P that can be modelled by an unknown finite
 state machine M.
 The only information we need is an estimate of the maximum number of
-states of an unknown model for the machine.
+states of an unknown model for the specification.
 Suppose $d = \text{estimated maximum number of states for P}
 - \text{number of states in M}$.
 Naturally, it follows that $d \geq 0$.
