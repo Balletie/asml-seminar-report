@@ -4,6 +4,192 @@
 \section{Applications}
 \label{sec:applications}
 
+\subsection{Tools}
+
+In order to encourage the use of active automata learning in a practical setting, tools have 
+to be created. Fortunately, work has been done on created such tools.
+This section will give a brief overview some of the different tools that are available. 
+
+Note: Not all tools that are usefull for automata learning are described here, since it would take up to much
+space, hence only the tools that directly uses some form of active automata learning are considered. RALT[3] and AIDE[7] 
+are is not considerd because of the same reason.
+
+
+\paragraph{Learnlib}
+
+Learnlib is a library that implements various active learning algorithms as well as different configurations for learning automata's.
+Learnlib was first published in 2009[4] as a closed source library that only could be used remotely [6]. In 2015 an article
+was published about the new version of Learnlib[1]. This is an open source library that is published on a public available repository
+on Github. Consequently, the older is renamed to JLearn and a performance comparison is given in %Verwijzing naar paragraaf
+
+The current version exists out of two parts: Automatalib and Learnlib.
+
+Automatalib is an independent library that is divided into three parts: abstract automata representations, automata data structures and algorithms. The abstract automata representations makes it possible to use third party implementations like the BRICS library[8]. 
+It also forms a basis for the automata data structures that are already build in like DFA's and Mealy machines.
+The algorithms that are included are: minimalization, equivalence testing(using ... for complete known automata or the W-Method and $W_p-Method$ for black box testing) and visualization. These algorithms uses the abstract automata representation layer so that the algorithms are not dependent on the implementations of the build in automata data structures.
+
+Learnlib is a library that provides learning algorithms and infrastructure for automata learning. 
+The learning algorithms consists of a 'base algorithm' whereby the counterexample analysis can be exchanged with
+other methods. All the different base algorithms with the examples of variants are listed below:
+
+\begin{itemize}
+	\item L* (base)
+	\begin{itemize}
+		\item Maler \& Pnueli's
+		\item Rivest \& Schapnire's
+		\item Shahbaz's
+		\item Suffix1by1
+	\end{itemize}
+	\item Obversation Pack (base)
+	\item Kearns \& Vazirani's (base)
+	\item DHC (base)
+	\item TTT (base)
+	\item NL*
+\end{itemize}
+
+All the algorithms come with both DFA and Mealy versions, expect for DHC and NL*.
+
+For finding the counterexamples, it offers oracles that implements equivalence testing from Automatalib as well as finding counterexamples with for instance a random walk on a Mealy machine.
+
+The infrastructure offers filters that helps to reduce the amount of queries such as elimination of duplicate queries %Verwijzing naar theorie ??
+or reusing systems states for reducing the amount of resets needed 
+
+It also contains a parallellization component that can speed up the process by using multiple teachers and parallel execution of membership queries[11][13]. 
+
+Learnlib is still in active development and can be downloaded from https://github.com/LearnLib
+Additionally, there are connectors for using Learnlib together with JLearn and Libalf. Those are also avaibable from https://github.com/LearnLib
+
+
+\paragraph{Libalf}
+
+Libalf[6] is a library for learning and manipulating formal languages. It has both active and passive learning algorithms.
+For this paper, only the active part is considerd %%Loopt dit?
+
+The library consists of a core library as well as two additional libraries:liblangen(random regular language generator) and AMoRE++(
+automata library that features DFA,NFA, Mealy and can be expanded for other automata representations).
+
+The core consists of the learning algorithms and the knowledgebase. The latter stores language information and collects the different
+queries that are used for that language. This storage makes it possible to switch between different learning algorithms during the 
+learning process as well as using multiple algorithms together in the learning process.
+The active learning algorithms that it offers are listed below.
+
+\begin{itemize}
+	\item L*
+	\item Rivest \& Schapnire's
+	\item NL*
+	\item Kearns \& Vazirani's
+\end{itemize}
+
+Besides the algorithms and the knowledgebase, it has filters for reducing the amount of queries asks to the teacher. These filters 
+uses domain specific knowledge %Verwijzing naar theorie ??
+that the user must specify itself. %Kromme zin?
+Also, it provides methods that uses domain specific relation for reducing the amount of storage needed.
+
+Libalf is not in active development anymore but can still be downloaded from here: http://libalf.informatik.rwth-aachen.de/
+
+
+
+\paragraph{Tomte}
+
+Tomte is a tool that automatically makes abstractions for automata learning. Essentially, it a connector between the system
+under learning(SUL) and the learner. This makes using Learnlib and Libalf easier, since the user doesn't have to make the mapping.
+
+%%TODO picture of Tomte architecture
+
+Tomte consists of several as seen in %plaatje
+. The Abstractor, Lookahead Oracle and the Determinizer together forms Tomte. The other two parts are not considered part
+of Tomte but it comes with a supplied library (Learnlib) for making the learner.
+ 
+Determinizer
+Tomte learns internally a deterministic register automata %Verwijzing naar theorie?
+which can exhibit nondeterministic behaviour because it can generate different output values. 
+However not all active learning methods offered by Learnlib and Libalf can handle this behaviour. 
+In order to still use those tools, the Determinizer can elimate most of the nondeterministic behaviour by using 
+symmetry. The explanation on how this part works, see [5] (page 172-175) 
+
+Lookahead Oracle
+This oracle is used to annotate each output action of the SUL with values that has an impact on the
+future behaviour of the SUL. It has an impact when either the value occurs in a future output or the future output
+depends on that particual value and a future input. This information is used by the abstractor. 
+The full explanation and implementation of this oracle is found in [9].
+
+Abstractor
+The Abstractor is the component that does the mapping between the SUL and the learning by using the information
+from the Lookahead Oracle which values needs to be stored. Then, a familiy of mappers are constructed that
+indicate if it is relevant that an input symbol is equal to the value of the Lookahead Oracle. These mappers
+leaves both the input and output symbols unchanged, but makes an abstraction of all of the values. Then, by using 
+counterexample-guided abstraction refinement[9] the mappers are extended.
+In order to make this process scalable, the Abstractor tries to reduce the length of the counterexample by removing 
+loops and single transistion. This is described in [11].
+It also processes the counterexample and determines if it must be send to the learner or if must be refined further. 
+The latter case means that there is a unknown transition and the input abstraction alphabet has to be updated. 
+For full details, see [9].
+
+Tomte is still in active development and can be downloaded from http://tomte.cs.ru.nl/Tomte-0-4.
+
+\paragraph{Performance comparisons}
+
+In order to see how each tool performs, a number of benchmarks are used from various sources.
+This paragraph summarizes this data to give an overview on how good each of those tools performs.
+
+The first comparison is between the old version of Learnlib (JLearn) and the new version.
+This comparison is found on the website of Learnlib (learnlib.de/features/jlearn-performance-comparison)
+In this comparison, various learning algorithms have been used to learn a randomly generated alphabet
+of a certain size and various amount of states. All algorithms are using the Mealy variant. The image below is a summary of the results of running
+all the different algorithms against a language of size ten and the automaton to be learned has 500 states.
+
+%TODO insert image with reference
+
+
+The image clearly shows that for this example, the new version of Learnlib is significant faster than JLearn.
+
+The second comparison is between the new version of Learnlib and Libalf.
+This comparison is found on the website of Learnlib (learnlib.de/features/libalf-performance-comparison) and [1].
+The same setup is used as the previous one, however the DFA versions of the algorithms are now used.
+
+%TODO insert image
+
+If both the above image and image X are being compared, Learnlib is clearly a lot faster than both JLearn and Libalf.
+
+The last comparison is between Tomte(with learnlib) and Learnlib alone. 
+These comparisons are described in [2] and [5].
+For this setup, a number of real world models which are already learned are used. These includes: the Biometric Passport[12], login prodecure and the session initiation protocol. 
+
+%TODO insert image
+
+According to this image, Tomte outperforms Learnlib and can learn more real life models than Learnlib. However, this testing 
+procedure uses random testing for approximating equivalence queries, since this is most of the time the fastest method[?].
+If there is a perfect equivalence oracle available, then Learnlib outperforms Tomte (v0.3) most of the time, see image X.
+
+%Insert image
+
+The reason behind this is that when using random testing, the counterexample are generally a lot longer. Since Tomte tries
+to reduce those counterexamples, it actually makes it faster. This is explained in [2].
+
+
+
+In conclusion, from the comparisons it is clear that there is a lot of improvement achieved in recent years by using 
+the new methods that are found for active automata learning.
+
+
+
+References:
+
+[1] Open Source Learnlib
+[2] Algorithms for Inferring Register Automata
+[3] Software Testing Verification and Reliability
+[4] Learnlib a framework for extrapolating behavioral models
+[5] Learning Register Automata with Fresh Value Generation
+[6] libalf: the Automata Learning Framework
+[7] Automata-Based Inference of Reactive Systems
+[8] Synthesis of interface specifications for java classes.
+[9] Tomte: Bridging the Gap between Active Learning and Real-World Systems
+[10] Model-based shrinking for state-based testing
+[11] Performance improvement in automata learning
+[12] Inference and Abstraction of the Biometric Passport
+[13] The Teacher's Crowd: The impact of distributed oracles on active automata learning
+
+
 \end{document}
 
 %%% Local Variables:
