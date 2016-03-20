@@ -69,16 +69,48 @@ in the number of states \todo{Cite source for exponential complexity of Chow's}.
       a maximum on \textit{MEMBER (w)} queries}
 
 \subsection{Learning Mealy machines}
-The $L^*$ algorithm of Angluin is able to learn DFA's, but it can not directly learn mealy machines. A mealy machine, as opposed to a DFA, has no accepting states. Instead, mealy machines additionally define an output symbol on each state transition. Reactive systems, or I/O programs, are easily modeled by a mealy machine, but not as easily by a DFA. Therefore, some adaptations are required. There are two main ways to do this. Either the mealy machine can be transformed into a DFA, or an adaptation of $L^*$ called $L^*_{M}$ can be used to learn the mealy machine directly.
+The $L^*$ algorithm of Angluin is able to learn DFA's, but it can not directly
+learn mealy machines. A mealy machine, as opposed to a DFA, has no accepting
+states. Instead, mealy machines additionally define an output symbol on each
+state transition. Reactive systems, or I/O programs, are easily modeled by a
+mealy machine, but not as easily by a DFA. Therefore, some adaptations are
+required. There are two main ways to do this. Either the mealy machine can be
+transformed into a DFA, or an adaptation of $L^*$ called $L^*_{M}$ can be used
+to learn the mealy machine directly.
 
 \subsubsection {Transforming a mealy machines into a DFA}
-Say we have a mealy automaton $M$ with input alphabet $\Sigma_M$ and output alphabet $O$ that we want to transform into a DFA $D$ with input alphabet $\Sigma_D$. There are two ways to do this.
 
-The first first way is define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar03}. This transformation defines that each state in $M$ is also a state in $D$. For each transition in $M$ from state $q_a$ to $q_b$ constrained by $i$ and output symbol $o$, a new intermediate state $q_t$ is introduced in $D$. Two transitions are added: one from $q_a$ to $q_t$ constrained by $i$, and one from $q_t$ to $q_b$ constrained by $o$. Furthermore, a single error state $k$ is added to $D$, which is the only non-accepting state. For each combination of a node $q$ and input symbol $\sigma \in \Sigma_D$, if $q$ does not yet contain a transition constrained by $\sigma$, a transition constrained by $\sigma$ is added from $q$ to $k$. An example of this transformation can be seen in figure \ref{fig:transformation_hungar}.
+Say we have a mealy automaton $M$ with input alphabet $\Sigma_M$ and output
+alphabet $O$ that we want to transform into a DFA $D$ with input alphabet
+$\Sigma_D$. There are two ways to do this.
 
-The second way to transform $M$ is to define $\Sigma_D = \Sigma_M \times O$ \cite{Makinen01}. In other words, $\Sigma_D$ contains all combinations of input and output symbols from $M$. This removes the need for intermediate states, but can have a significant impact on the size of the input alphabet. Similarly to the previous transformation, one error state is defined and all other states are accepting states. If from a certain state an input/output combination does not occur, then a transition to the error state is added with that combination. An example of this transformation can be seen in figure \ref{fig:transformation_makinen}.
+The first first way is define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar03}.
+This transformation defines that each state in $M$ is also a state in $D$. For
+each transition in $M$ from state $q_a$ to $q_b$ constrained by $i$ and output
+symbol $o$, a new intermediate state $q_t$ is introduced in $D$. Two
+transitions are added: one from $q_a$ to $q_t$ constrained by $i$, and one
+from $q_t$ to $q_b$ constrained by $o$. Furthermore, a single error state $k$
+is added to $D$, which is the only non-accepting state. For each combination
+of a node $q$ and input symbol $\sigma \in \Sigma_D$, if $q$ does not yet
+contain a transition constrained by $\sigma$, a transition constrained by
+$\sigma$ is added from $q$ to $k$. An example of this transformation can be
+seen in figure \ref{fig:transformation_hungar}.
 
-Either of these transformations can be used to learn a mealy machine with the standard $L^*$ algorithm. \todo {for both of these, explain how membership queries are defined} To learn a mealy machine $M$, simply define $\Sigma$ as $\Sigma_M \cup O$ or $\Sigma_M \times O$. By doing this, a model $D$ is learned which is the transformed version of $M$.
+The second way to transform $M$ is to define $\Sigma_D = \Sigma_M \times O$
+\cite{Makinen01}. In other words, $\Sigma_D$ contains all combinations of
+input and output symbols from $M$. This removes the need for intermediate
+states, but can have a significant impact on the size of the input alphabet.
+Similarly to the previous transformation, one error state is defined and all
+other states are accepting states. If from a certain state an input/output
+combination does not occur, then a transition to the error state is added with
+that combination. An example of this transformation can be seen in figure
+\ref{fig:transformation_makinen}.
+
+Either of these transformations can be used to learn a mealy machine with the
+standard $L^*$ algorithm. \todo {for both of these, explain how membership
+queries are defined} To learn a mealy machine $M$, simply define $\Sigma$ as
+$\Sigma_M \cup O$ or $\Sigma_M \times O$. By doing this, a model $D$ is
+learned which is the transformed version of $M$.
 
 \begin{figure}[t]
 \centering
@@ -149,11 +181,33 @@ Either of these transformations can be used to learn a mealy machine with the st
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
 
-Adapting Angluin's $L^*$ algorithm has been adjusted for use with mealy machines. The new procedure was first informally described in \cite{Margaria04}, and later more rigorously in \cite{Shahbaz09}. In $L^*$ the membership queries return a boolean value; either it's a member, or it's not. For $L^*_{M}$, the membership query is replaced by a output query, which returns an output string. The observation table is modified to store these output strings instead of boolean values. As in $L^*$, output queries are used in order to fill in the observation table. Suppose the algorithm performs an output query for $s \concat e$, where $s \in S \cup (S \concat \Sigma)$ and $e \in E$. The query will produce a string $r$ with $|r| = |s| + |e|$, where $|x|$ denotes the length of the string x. Instead of storing $r$ directly in the observation table, only the last $|e|$ symbols of $r$ are stored (since the observation is prefix closed, the output corresponding to $s$ is already stored in the table). The intuitive meaning of this value is that it corresponds to the sequence of output symbols that is produced when the when input $e$ is applied from the state corresponding to $s$. 
+Adapting Angluin's $L^*$ algorithm has been adjusted for use with mealy
+machines. The new procedure was first informally described in
+\cite{Margaria04}, and later more rigorously in \cite{Shahbaz09}. In $L^*$ the
+membership queries return a boolean value; either it's a member, or it's not.
+For $L^*_{M}$, the membership query is replaced by a output query, which
+returns an output string. The observation table is modified to store these
+output strings instead of boolean values. As in $L^*$, output queries are used
+in order to fill in the observation table. Suppose the algorithm performs an
+output query for $s \concat e$, where $s \in S \cup (S \concat \Sigma)$ and $e
+\in E$. The query will produce a string $r$ with $|r| = |s| + |e|$, where
+$|x|$ denotes the length of the string x. Instead of storing $r$ directly in
+the observation table, only the last $|e|$ symbols of $r$ are stored (since
+the observation is prefix closed, the output corresponding to $s$ is already
+stored in the table). The intuitive meaning of this value is that it
+corresponds to the sequence of output symbols that is produced when the when
+input $e$ is applied from the state corresponding to $s$.
 
-With the new meaning of the values in the table, a value of $\epsilon$ in $E$ becomes nonsensical. This is because $\epsilon$ would denote no change in state, so there would be no output symbol. Therefore, at the start of the algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$. 
+With the new meaning of the values in the table, a value of $\epsilon$ in $E$
+becomes nonsensical. This is because $\epsilon$ would denote no change in
+state, so there would be no output symbol. Therefore, at the start of the
+algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$.
 
-The concepts of closedness and consistency remain identical. The procedure to build the hypothesis remains largely the same, but now the generated hypothesis no longer defines accepting states, but instead defines output strings on the transitions.
+The concepts of closedness and consistency remain identical. The procedure to
+build the hypothesis remains largely the same, but now the generated
+hypothesis no longer defines accepting states, but instead defines output
+strings on the transitions.
+
 \todo {note that mealy ≃ dfa}
 
 \subsection{Systems without a \textit{reset} function}
