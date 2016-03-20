@@ -78,6 +78,8 @@ The first first way is define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar03}. This
 
 The second way to transform $M$ is to define $\Sigma_D = \Sigma_M \times O$ \cite{Makinen01}. In other words, $\Sigma_D$ contains all combinations of input and output symbols from $M$. This removes the need for intermediate states, but can have a significant impact on the size of the input alphabet. Similarly to the previous transformation, one error state is defined and all other states are accepting states. If from a certain state an input/output combination does not occur, then a transition to the error state is added with that combination. An example of this transformation can be seen in figure \ref{fig:transformation_makinen}.
 
+Either of these transformations can be used to learn a mealy machine with the standard $L^*$ algorithm. \todo {for both of these, explain how membership queries are defined} To learn a mealy machine $M$, simply define $\Sigma$ as $\Sigma_M \cup O$ or $\Sigma_M \times O$. By doing this, a model $D$ is learned which is the transformed version of $M$.
+
 \begin{figure}[t]
 \centering
 \begin{subfigure}[b]{.2\textwidth}
