@@ -9,7 +9,7 @@ As the previous chapters have shown, active state machine learning is a well
 studied theoretical learning technology. Slowly but surely activate state
 machine learning is moving from a theoretical novelty to a real world applicable
 technology, due to hardware advancements as well as the optimizations discussed
-in chapter~\ref{sec:improvements}.
+in chapter \cref{sec:improvements}.
 
 This chapter serves to highlight some interesting and important practical
 applications of active state machine learning. The goal is not to discuss
@@ -18,7 +18,7 @@ identified. Before doing so, however, the bridge between theory and application
 must be crossed.
 
 \subsection{From theory to practice}
-\label{sec:theory-to-practice}
+\label{ssec:theory-to-practice}
 
 The learning algorithms discussed in the previous chapters all required an
 (abstract, formal) input alphabet, an (abstract, formal) output alphabet,
@@ -34,8 +34,8 @@ reactive systems (it is evident that reactive systems are a requirement for
 practical active state machine learning)\todo{begrippenlijst aanmaken met
 definities?}. This mapping needs to result in a deterministic language for it to
 work\cite{Steffen11a}. In the same way, the output of the system under learning
-needs to be mapped back to an abstract language understood by the
-tool.\todo{refer to arjan's piece}
+needs to be mapped back to an abstract language understood by the tool (see
+section \cref{sec:tools} below).
 
 Whilst such a mapping has different peculiarities per application, there is an
 overlapping theme that applies to every mapping: it needs to be abstract enough
@@ -63,23 +63,22 @@ solutions\cite{Aarts10,Shahbaz07,Howar10}, application-specific solutions have
 to be applied.\cite{Steffen11a}.
 
 The final hurdle is that of a ``reset''. Membership queries have to be
-independent\todo{citation}. In practice this often means that applications have
-to be reset in between successive membership queries. This can be achieved using
-homing sequences\cite{Rivest93} (discussed in chapter~\ref{sec:variants} or by
-simply restarting the application for each membership query.
+independent (see chapter \cref{sec:noreset}). In practice this often means that
+applications have to be reset in between successive membership queries. This can
+be achieved using homing sequences\cite{Rivest93} (discussed in chapter
+\cref{sec:variants} or by simply restarting the application for each membership
+query.
 
 \paragraph{Membership queries} Membership queries are the most straightforward
 to translate to real world applications: they can be realized via testing. An
 important thing to note, however, is the amount of membership queries required.
 Learning a real world application can easily require several thousand membership
-queries\todo{maybe tens of thousand? millions? Give example of real world
-application that took hours, if not days? Add citation}. This means that the
-time required to learn a model can be greatly reduced either by speeding up
-membership queries (executing them in parallel), or simply by reducing the
-number of membership queries required.  Chapter~\ref{sec:improvements} has
-discussed several improvements to achieve exactly that. Additionally,
-application-specific optimizations can be used to further reduce the number of
-membership queries required.
+queries\todo{Add citation}. This means that the time required to learn a model
+can be greatly reduced either by speeding up membership queries (executing them
+in parallel), or simply by reducing the number of membership queries required.
+Chapter \cref{sec:improvements} has discussed several improvements to achieve
+exactly that. Additionally, application-specific optimizations can be used to
+further reduce the number of membership queries required.
 
 \paragraph{Equivalence queries} In theoretical simulations, equivalence testing
 is often easy because often the target system (in some cases even the model!) is
@@ -92,10 +91,10 @@ be certain that the system has been tested extensively enough.
 
 An alternative to using membership queries to simulate equivalence queries, is
 to use model-based testing methods\cite{Broy05, Tretmans11}. An example of
-model-based testing is Chow's W-method\cite{Chow78} (discussed in
-chapter~\ref{sec:improvements}), which can be used if an upper bound on the
-number of states in the system is known.\todo{Mention Wp-method\cite{Fujiwara91}
-and more examples?}
+model-based testing is Chow's W-method\cite{Chow78} (discussed in chapter
+\cref{sec:improvements}), which can be used if an upper bound on the number of
+states in the system is known.\todo{Mention Wp-method\cite{Fujiwara91} and more
+examples? Or refer to chapter \cref{sec:variants}}
 
 \todo{Discuss first paragraph of page 33 in \cite{Steffen11a}?}
 
