@@ -1,0 +1,95 @@
+\documentclass[multi,crop=false,class=article]{standalone}
+
+\begin{document}
+\section{Variants}
+\label{sec:variants}
+In the first few years following the introduction of the L* algorithm by
+D. Angluin~\cite{Angluin87}, L* learning was only a theoretical exploration.
+The various improvements described in the previous chapter,
+such as \textit{Classification Trees} \cref{sec:classification-trees} and
+the \textit{TTT} algorithm \cref{sec:ttt}
+made practical applications already more feasible.
+
+In applying L* or improvements thereof to practical applications,
+there were still some practical limitations and restrictions that had to
+be addressed (Steffen 2011, Ch. 6~\cite{Steffen11}).
+Some of these issues can be summarized as follows:
+\begin{itemize}
+  \item Equivalence queries are generally undecidable for black boxes
+  \item L* can only interact with regular languages, not with real systems
+  \item The amount of required membership queries can grow very fast
+  \item Membership queries might not be independent in practice,
+        which imposes the requirement for a \textit{reset} function
+  \item Not all systems might support a \textit{reset} function.
+\end{itemize}
+
+In order to address these limitations and restrictions,
+several variants of the L* algorithm have been proposed,
+each with the goal to solve such an issue.
+In this chapter we will further elaborate on some of these issues
+and the variants proposed to solve them.
+
+\subsection{Approximating \textit{EQUIV (M)} queries with \textit{MEMBER (w)} queries}
+The target machine on which the learning algorithm is applied is generally
+a black box, since the main motive for using a learning algorithm is to
+infer knowledge about some unknown system.
+Therefore equivalence queries can generally only be answered by exhaustively
+testing the inputs and outputs of a system.
+However, exhaustively testing a black box is undecidably hard.
+
+In order to solve this issue model-based testing techniques have been used,
+such as \textit{Chow's W-method} or the \textit{WP-method} \todo{Cite here}.
+These methods rely on approximating \textit{EQUIV (M)} queries by using
+\textit{MEMBER (w)} queries.
+
+To further research in this area,
+the \textit{ZULU} challenge~\cite{Combe10} was introduced.
+The \textit{ZULU} challenge asked participants to find a DFA corresponding
+to a certain system as accurately as possible, while imposing a restriction
+on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
+queries completely.
+\todo{Elaborate on ZULU some more}
+
+\subsection{Limiting the amount of membership queries}
+In a theoretical framework the learning algorithm doesn't have to account
+for execution times of individual \textit{MEMBER (w)} queries.
+In practice, such queries might take time or be expensive to execute.
+Therefore algorithms benefit from reducing the amount of queries needed.
+Some generic improvements in this regard have already been covered in
+\todo{Reference previous chapter}.
+
+However, when using for example \textit{Chow's method} for \textit{EQUIV (M)}
+queries, the amount of membership queries needed grows exponentially
+in the number of states \todo{Cite source for exponential complexity of Chow's}.
+
+\todo{Cite ZULU participant here, since the challenge also imposed
+      a maximum on \textit{MEMBER (w)} queries}
+
+\subsection{Learning Mealy machines}
+
+\subsection{Systems without a \textit{reset} function}
+\label{sec:noreset}
+In the L* learning algorithm, every \textit{MEMBER (w)} query is implicitly
+independent of other queries.
+However, when learning a system in practice, it might happen that
+\textit{MEMBER (w)} queries are not independent at all.
+Suppose for example that the system under learning requires authentication
+while also imposing a restriction on the maximum amount of failed requests.
+In such a system queries are no longer independent of each other,
+since after a certain amount of authentication requests
+the systems behaviour suddenly changes for the same membership queries.
+In order to solve this issue, the L* algorithm implicitly requires a means
+of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest93}.
+
+However, not all systems support a \textit{reset} function.
+As we'll see in \todo{reference applications}, the system under learning
+could also be a system that the learning algorithm has totally no control over.
+
+\subsection{}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
