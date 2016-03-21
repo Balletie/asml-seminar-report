@@ -57,25 +57,23 @@ structure\cite{Kearns94}. The precise working of the adapted algorithm will not
 be given, but we do give an overview of the impact on the query complexity and
 the space complexity.
 
-\begin{description}
-\item[Query Complexity] The amount of \textit{membership queries} for hypothesis
-  construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
-  worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b}, where
-  $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
-  counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
-  where $m$ is the size of the longest counterexample\cite{Kearns94}.
+\paragraph{Query Complexity} The amount of \textit{membership queries} for
+hypothesis construction is bounded by $\mathcal{O}(kn^2)$ membership queries in
+the worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b},
+where $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
+counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
+where $m$ is the size of the longest counterexample\cite{Kearns94}. Thus in
+total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
+improvement over that of $L^*$.
 
-  Thus in total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
-  improvement over that of $L^*$.
-\item[Space Complexity] In chapter 4 of his dissertation, Isberner analyzed the
-  space complexity of discrimination-tree based learners as follows: a
-  degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner
-  node is labeled by a distinguishing extension of length
-  $\mathcal{O}(m)$\cite{Isberner15}.  The space required for the hypothesis
-  automaton is $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires
-  space in $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with
-    L-star}.
-\end{description}
+\paragraph{Space Complexity} In chapter 4 of his dissertation, Isberner analyzed
+the space complexity of discrimination-tree based learners as follows: a
+degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner node
+is labeled by a distinguishing extension of length
+$\mathcal{O}(m)$\cite{Isberner15}.  The space required for the hypothesis
+automaton is $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires
+space in $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with
+  L-star}.
 
 \subsection{Rivest and Schapire's Counterexample Analysis}
 \label{sec:rivest-schap-count}
