@@ -298,25 +298,29 @@ One commonly used application of active state machine learning is
 boils down to checking the correctness of some implementation of a protocol, by
 using the protocol description to identify states and allowed transitions. The
 input alphabet is defined as a set of messages. Combinations of these messages
-are then constructed and passed as input. If the output matches the expected
-output, the logic of the implemtation is correct. However, if the expected
-output does not match the actual output, there is some logical error in the
-implementation of the protocol. The tests are performed as black box testing,
-resulting in the need for approximation as explained in
-\ref{para:equiv_queries}.
+are then constructed and passed as input. If the actual output matches the 
+expected output, the logic of the implemtation is correct. However, if the 
+expected output does not match the actual output, there is some logical error
+in the implementation of the protocol. The tests are performed as black box
+testing, resulting in the need for approximation as explained in
+\ref{sec:theory-to-practice}.
 
 To illustrate, consider an implementation of the TLS-protocol\cite{deRuiter15}.
 For this specific protocol fuzzing application, an improved version of the
 W-method\cite{Chow78} is used. The improvement comes forth from the fact that
 the TLS-protocol requires the output to be ``Connection closed'' at all times
-once a connection is closed. Especially since the W-method is a very costly
-one, interrupting the trace generation as soon as the connection has been
-closed reduces the number of equivalence queries significantly.
-To overcome the difficulty of resetting the state at each iteration, De Ruiter
-et al. came up with an abstraction of the input and output alphabet, in order
-to be able to define a ``reset''-state, as well as to generalize states between
-different TLS-implementations. The reset command triggered actions to not only
-reset the state, but also to undo any possible changes to variables.
+once a connection is closed. By making use of this and thus limiting the
+W-method to halt whenever the connection is closed, a great reduction in the
+time needed to perfom the implementation analysis is achieved. Furhtermore, 
+especially since the W-method is a very costly one, interrupting the trace 
+generation as soon as the connection has been closed reduces the number of 
+equivalence queries significantly.
+An aspect that has proven to be difficult in practice, namely that of resetting
+the state of the machine after each iteration, has been overcome by De Ruiter
+et al. They came up with an abstraction of the input and output alphabet, in
+order to be able to define a ``reset''-state, as well as to generalize states 
+between different TLS-implementations. The reset command trigges actions to
+not only reset the state, but also to undo any possible changes to variables.
 
 \end{document}
 
