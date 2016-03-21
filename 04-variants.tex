@@ -107,10 +107,19 @@ that combination. An example of this transformation can be seen in figure
 \ref{fig:transformation_makinen}.
 
 Either of these transformations can be used to learn a mealy machine with the
-standard $L^*$ algorithm. \todo {for both of these, explain how membership
-queries are defined} To learn a mealy machine $M$, simply define $\Sigma$ as
-$\Sigma_M \cup O$ or $\Sigma_M \times O$. By doing this, a model $D$ is
-learned which is the transformed version of $M$.
+standard $L^*$ algorithm. By redefining the input alphabet and the
+implementation of the membership query, a model $D$ can be learned which is
+the transformed version of $M$. 
+
+When $\Sigma$ is defined as $\Sigma_M \cup O$, then the membership query needs to be defined such that it returns $1$ iff:
+
+\begin{itemize}
+  \item the first symbol is an input symbol
+  \item input and output symbols are alternating
+  \item for every pair of input symbol $i$ and output symbol $o$, if $i$ is applied, $o$ is returned
+\end{itemize}
+
+If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership query must return 1 iff each successive combination of input symbol $i$ and output symbol $o$ yields $o$ when $i$ is applied.
 
 \begin{figure}[t]
 \centering
