@@ -31,9 +31,11 @@ and the variants proposed to solve them.
 
 \subsection{Approximating \textit{EQUIV (M)} queries with \textit{MEMBER (w)} queries}
 The target machine on which the learning algorithm is applied is generally
-a black box, since we want to infer knowledge about some unknown system.
-Therefore equivalence queries can only be answered by exhaustively testing
-the inputs of the system. This problem has been shown to be undecidably hard.
+a black box, since the main motive for using a learning algorithm is to
+infer knowledge about some unknown system.
+Therefore equivalence queries can generally only be answered by exhaustively
+testing the inputs and outputs of a system.
+However, exhaustively testing a black box is undecidably hard.
 
 In order to solve this issue model-based testing techniques have been used,
 such as \textit{Chow's W-method} or the \textit{WP-method} \todo{Cite here}.
@@ -65,9 +67,25 @@ in the number of states \todo{Cite source for exponential complexity of Chow's}.
 
 \subsection{Learning Mealy machines}
 
-\subsection{Learning algorithms for systems with a \textit{reset} function}
+\subsection{Systems without a \textit{reset} function}
+\label{sec:noreset}
+In the L* learning algorithm, every \textit{MEMBER (w)} query is implicitly
+independent of other queries.
+However, when learning a system in practice, it might happen that
+\textit{MEMBER (w)} queries are not independent at all.
+Suppose for example that the system under learning requires authentication
+while also imposing a restriction on the maximum amount of failed requests.
+In such a system queries are no longer independent of each other,
+since after a certain amount of authentication requests
+the systems behaviour suddenly changes for the same membership queries.
+In order to solve this issue, the L* algorithm implicitly requires a means
+of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest93}.
 
-\subsection{Homing Sequences}
+However, not all systems support a \textit{reset} function.
+As we'll see in \todo{reference applications}, the system under learning
+could also be a system that the learning algorithm has totally no control over.
+
+\subsection{}
 
 \end{document}
 
