@@ -106,21 +106,6 @@ combination does not occur, then a transition to the error state is added with
 that combination. An example of this transformation can be seen in figure
 \ref{fig:transformation_makinen}.
 
-Either of these transformations can be used to learn a mealy machine with the
-standard $L^*$ algorithm. By redefining the input alphabet and the
-implementation of the membership query, a model $D$ can be learned which is
-the transformed version of $M$. 
-
-When $\Sigma$ is defined as $\Sigma_M \cup O$, then the membership query needs to be defined such that it returns $1$ iff:
-
-\begin{itemize}
-  \item the first symbol is an input symbol
-  \item input and output symbols are alternating
-  \item for every pair of input symbol $i$ and output symbol $o$, if $i$ is applied, $o$ is returned
-\end{itemize}
-
-If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership query must return 1 iff each successive combination of input symbol $i$ and output symbol $o$ yields $o$ when $i$ is applied.
-
 \begin{figure}[t]
 \centering
 \begin{subfigure}[b]{.2\textwidth}
@@ -131,7 +116,7 @@ If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership query
   \tikzstyle{initial} = [dashed]
 
   \node[initial]   (1) at (1,0) {};
-  \node 		   (2) at (3,0) {};
+  \node        (2) at (3,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
         (1) edge [bend left] node[auto,draw=none] {$a/b$} (2) 
@@ -148,20 +133,20 @@ If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership query
   \tikzstyle{initial} = [dashed]
 
   \node[initial, accepting] (1) at (1,0)  {};
-  \node 					(2) at (3,0)  {};
-  \node [accepting] 		(3) at (5,0)  {};
-  \node [accepting] 		(4) at (3,-1) {};
-  \node [accepting] 		(5) at (3,1)  {};
+  \node           (2) at (3,0)  {};
+  \node [accepting]     (3) at (5,0)  {};
+  \node [accepting]     (4) at (3,-1) {};
+  \node [accepting]     (5) at (3,1)  {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
         (1) edge [bend left] node[auto,draw=none] {$a$} (5) 
         (4) edge [bend left] node[auto,draw=none] {$b$} (1)
         (5) edge [bend left] node[auto,draw=none] {$b$} (3)
         (3) edge [bend left] node[auto,draw=none] {$a$} (4)
-        (1) edge 			 node[auto,draw=none] {$b$} (2)
-        (3) edge 			 node[auto,draw=none] {$b$} (2)
-        (4) edge 			 node[auto,draw=none] {$a$} (2)
-        (5) edge 			 node[auto,draw=none] {$a$} (2);
+        (1) edge       node[auto,draw=none] {$b$} (2)
+        (3) edge       node[auto,draw=none] {$b$} (2)
+        (4) edge       node[auto,draw=none] {$a$} (2)
+        (5) edge       node[auto,draw=none] {$a$} (2);
 \end{tikzpicture}
 \caption{Hungar's transformation} \label{fig:transformation_hungar}
 \end{subfigure}
@@ -178,7 +163,7 @@ If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership query
   \node (3) at (2,1) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge 			  node[auto,draw=none] {$ab$} (2) 
+        (1) edge        node[auto,draw=none] {$ab$} (2) 
         (2) edge [bend left]  node[auto,draw=none] {$ab$} (1)
         (1) edge [bend left]  node[auto,draw=none] {$ba$} (3)
         (2) edge [bend right] node[auto,draw=none] {$ba$} (3);
@@ -187,6 +172,24 @@ If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership query
 \end{subfigure}
 \caption{Mealy to DFA transformation} \label{fig:transformation}
 \end{figure}
+
+Either of these transformations can be used to learn a mealy machine with the
+standard $L^*$ algorithm. By redefining the input alphabet and the
+implementation of the membership query, a model $D$ can be learned which is
+the transformed version of $M$. 
+
+When $\Sigma$ is defined as $\Sigma_M \cup O$, then the membership query needs
+to be defined such that it returns $1$ iff:
+
+\begin{itemize}
+  \item the first symbol is an input symbol
+  \item input and output symbols are alternating
+  \item for every pair of input symbol $i$ and output symbol $o$, if $i$ is applied, $o$ is returned
+\end{itemize}
+
+If instead $\Sigma$ is defined as $\Sigma_M \times O$, then the membership
+query must return 1 iff each successive combination of input symbol $i$ and
+output symbol $o$ yields $o$ when $i$ is applied.
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
 
