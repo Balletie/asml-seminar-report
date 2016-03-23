@@ -250,6 +250,30 @@ now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns `yes' and the algorithm terminates.
 
+\subsection {Complexity}
+
+% Note: Angluin considers k to be constant, and therefore drops the term in the
+% asymptotic upperbounds of both the query complexity and space complexity. She
+% also doesn't explicitly state the required number of membership queries, but
+% it is easy to see that this will be equal to the number of cells in the
+% observation table.
+
+Since the runtime complexity is dependent on the implementation of the queries
+(which are application specific), it is more useful to consider the number of
+queries made. Specifically, the number of membership queries, as these normally
+far outnumber the equivalence queries. The asymptotic number of membership
+queries is called the \textit{query complexity}.
+
+Angluin states that the number of items in the observation table is at most
+$(k+1)(n+m(n-1))n$, where $k = |\Sigma|$, $n$ is the number of states in the
+minimum acceptor of the target and $m$ is equal to length of the longest
+counterexample\cite{Angluin87}. Since for each item exactly one membership query
+needs to be performed, the number of required membership queries is equal to the
+number of items in the observation table. Therefore, the query complexity is
+$\mathcal{O}(kmn^2)$. Furthermore, since each item has a length of at most
+$\mathcal{O}(m+n)$\cite{Angluin87}, it can be concluded that the total space
+complexity is $\mathcal{O}(km^2n^2 + kmn^3)$.
+
 \end{document}
 
 %%% Local Variables:
