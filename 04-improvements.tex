@@ -57,25 +57,76 @@ structure\cite{Kearns94}. The precise working of the adapted algorithm will not
 be given, but we do give an overview of the impact on the query complexity and
 the space complexity.
 
-\begin{description}
-\item[Query Complexity] The amount of \textit{membership queries} for hypothesis
-  construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
-  worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b}, where
-  $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
-  counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
-  where $m$ is the size of the longest counterexample\cite{Kearns94}.
+\paragraph{Query Complexity} The amount of \textit{membership queries} for
+hypothesis construction is bounded by $\mathcal{O}(kn^2)$ membership queries in
+the worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b},
+where $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
+counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
+where $m$ is the size of the longest counterexample\cite{Kearns94}. Thus in
+total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
+improvement over that of $L^*$.
 
-  Thus in total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
-  improvement over that of $L^*$.
-\item[Space Complexity] In chapter 4 of his dissertation, Isberner analyzed the
-  space complexity of discrimination-tree based learners as follows: a
-  degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner
-  node is labeled by a distinguishing extension of length
-  $\mathcal{O}(m)$\cite{Isberner15}.  The space required for the hypothesis
-  automaton is $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires
-  space in $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with
-    L-star}.
-\end{description}
+\paragraph{Space Complexity} In chapter 4 of his dissertation, Isberner analyzed
+the space complexity of discrimination-tree based learners as follows: a
+degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner node
+is labeled by a distinguishing extension of length
+$\mathcal{O}(m)$\cite{Isberner15}.  The space required for the hypothesis
+automaton is $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires
+space in $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with
+  L-star}.
+
+\subsection{Rivest and Schapire's Counterexample Analysis}
+\label{sec:rivest-schap-count}
+In 1993, Rivest and Schapire published a paper on learning without a reset using
+homing sequences\cite{Rivest93}, which will be the scope of discussion of
+\cref{sec:variants}\todo{Change reference to the No-Reset variant specifically}.
+
+Their paper, however, also included an improvement upon $L^*$, also in the case
+that a reset \textit{is} available. Specifically, they improved the
+\textit{counterexample analysis} stage, which is the part that handles
+counterexamples returned by an equivalence query.
+
+When a counterexample $\gamma$ is obtained, Rivest and Schapire's improved
+algorithm finds a \textit{single} extension $e$ from $\gamma$ distinguishing two
+states in the new hypothesis, and adds it to the set $E$ of distinguishing
+extensions. This is in contrast with the original $L^*$ algorithm, which adds
+all prefixes of the counterexample to the set $S$ of access strings.
+
+According to Rivest and Schapire\cite{Rivest93}, and further clarified by
+Steffen\cite{Steffen11} and Isberner\cite{Isberner14a}, there must be a point
+where the hypothesis automaton $\hat M$ takes a wrong turn (i.e. there's an
+incorrect transition). Let $e$ be the suffix of the counterexample $\gamma$ from
+the point where the transition of $\hat M$ is inconsistent with the
+corresponding transition of the target $M$. Then $e$ can be found by means of a
+search strategy such as binary search and membership queries.
+
+As in the previous section, this section concludes with an analysis of the
+impact on the amount of membership queries needed and the space requirement.
+
+\paragraph{Query complexity} Rivest and Schapire's original improvement used a
+binary search strategy to find the single suffix $e$. As expected from a binary
+search, this results in $\mathcal{O}(\log(m))$ membership queries per
+counterexample of length $m$. The amount of equivalence queries is
+$\mathcal{O}(n)$, and thus the amount of membership queries due to
+counterexample analysis is $\mathcal{O}(n\log(m))$, where $m$ is the size of the
+longest counterexample. The total amount of membership queries including
+hypothesis construction is thus $\mathcal{O}(kn^2 + n\log(m))$, an improvement
+over that of Kearns and Vazarani's (see \cref{sec:complexity-analysis}).
+
+It is worthwhile to note that Isberner~et~al. analyzed and compared multiple
+search strategies by means of an abstract framework\cite{Isberner14a}. Their
+results show that the query complexities of the other search strategy remain the
+same as the original binary search strategy due to Rivest and Schapire, yet
+perform better when put into practice.
+
+\paragraph{Space Complexity} From Isberner's analysis\cite{Isberner14b}, the
+space complexity due to the new counterexample analysis is better than that of
+$L^*$, however it is worse than that of Kearns and Vazirani's:
+$\mathcal{O}(kn^2 + nm)$.
+
+In the next section we will show another version of the algorithm due to
+Isberner~et~al., which combines Kearns and Vazirani's discrimination tree, and
+Rivest and Schapire-style counterexample analysis.
 
 \end{document}
 

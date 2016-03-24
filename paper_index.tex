@@ -54,7 +54,18 @@ analysis\cite{Rivest93}.
 \section{\cite{Aarts13} Improving active Mealy machine learning for protocol conformance testing}
 \section{\cite{Cho10} Inference and Analysis of Formal Models of Botnet Command and Control Protocols}
 \section{\cite{Bauer14} Analyzing Program Behavior Through Active Automata Learning}
-\section{\cite{Rivest93} Inference of Finite Automata Using Homing Sequences}
+\section{Inference of Finite Automata Using Homing Sequences\cite{Rivest93}}
+This paper gave two contributions. The first contribution is a way to learn DFAs
+in an environment where a reset is not available when performing a membership
+query.
+
+The second one is a new method of counterexample analysis, also in case a reset
+is available. It improves the upper bound of Angluin's counterexample analysis
+from $\mathcal{O}(kn^2m)$ to
+$\mathcal{O}(kn^2 + n \log(m))$\cite{Angluin87,Rivest93}. This is also an
+improvement upon Kearn's and Vazirani's algorithm, where the counterexample
+analysis had an upper bound of
+$\mathcal{O}(kn^2 + nm)$\cite{Kearns94,Isberner15}.
 \section{\cite{Steffen12} Active Automata Learning: From DFAs to Interface Programs and Beyond}
 
 \bibliography{references}{}
