@@ -9,41 +9,90 @@
 
 In order to facilitate and promote active automata learning in a practical 
 setting, tools have been created. This section will give a brief overview of 
-some tools that uses active automata learning. The tools Learnlib (section 
-\ref{sssec:learnlib}) and Libalf (section \ref{sssec:libalf}) are tools that 
-provides various active automata learning algorithms and optimizations whilst 
-the tool Tomte(section \ref{sssec:tomte}) makes automatic abstractions for 
-active automata learning. This selection is based on availability and 
-researches that have used those tools \footnote{These include 
+some tools that use active automata learning. The tools  Libalf (section 
+\ref{sssec:libalf}) and are tools that Learnlib (section
+\ref{sssec:learnlib})provide various active automata learning algorithms and 
+optimizations whilst the tool Tomte(section \ref{sssec:tomte}) makes automatic 
+abstractions for active automata learning. This selection is based on 
+availability and researches that have used those tools \footnote{These include 
 RALT\cite{Shahbaz2014} and AIDE \cite{Cicala2016}}. Also, tools that are used 
-for automata moddeling and verification are also not included.
+for automata modeling and verification are not included.
+
+\subsubsection{Libalf}
+\label{sssec:libalf}
+Libalf\footnote{No support available,but can be downloaded from 
+	\url{http://libalf.informatik.rwth-aachen.de}} is a library for learning 
+and manipulating formal languages. It has both active and passive learning 
+algorithms. For this paper, only the active part is covered.
+
+The library consists of a core library as well as two additional libraries, 
+liblangen(random regular language generator) and AMoRE++(automata library).
+
+The core consists of the learning algorithms and the knowledgebase. The latter 
+stores language information and collects the different queries that are used 
+for that language. This storage makes it possible to switch learning algorithms 
+or to use multiple learning algorithms during the learning process. Therefore, 
+Libalf is suitable for experimenting with different kind of learning algorithms 
+and see how they would affect the learn process. Libalf also comes with a demo 
+application where the user is the Teacher. This means that user can go through 
+the learning algorithms step by step and see how it handles the membership 
+queries and the reaction on the counterexample. The active learning algorithms 
+that it offers are listed below.
+
+\begin{itemize}
+	\item L* (Explained in section \ref{sec:fundamental-theory})
+	\item Rivest \& Schapnire's (Summarized in 
+	%\ref{sec:rivest-schap-count))
+	\item NL* \cite{Bollig2010}
+	\item Kearns \& Vazirani's (Summarized in 
+	%\ref{sec:classification-trees)
+\end{itemize}
+
+Besides the algorithms and the knowledgebase, it has filters for reducing the 
+amount of queries asked to the teacher. These filters use domain specific 
+knowledge. %Is hier theorie over?
+Also, it provides methods that uses domain specific equivalence relations 
+supplied by the user to determine equivalence classes(data that is used by 
+equivalence queries). This does reduce the amount of memory needed.
+
+More information on Libalf is published in \cite{Bollig2010}.
 
 \subsubsection{Learnlib}
 \label{sssec:learnlib}
 
-Learnlib  \footnote{In active development and available from 
-\url{https://github.com/LearnLib/learnlib} } is a library that implements 
+Learnlib  \footnote{Supported through bug fixes and available from 
+\url{https://github.com/LearnLib/learnlib}} is a library that implements 
 various active 
 learning algorithms as well as different configurations for learning 
 automata. It has been in development since 2009 \cite{Raffelt2009} and as of 
 2015, there has been a total overhaul of the tool \cite{Isberner2015}. To avoid 
 confusion, the old version was renamed to JLearn. 
 
-\todo{Image of architecture of Learnlib }
-The current version consists out of two parts: Automatalib and Learnlib.
+The current version of this tool consists out of two parts: Automatalib and 
+Learnlib.
 
-\todo{Image of architecture of Automatalib }
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{Tool_images/automatalib_architecture.png}
+	\caption{Architecture of Automatalib, source is from \cite{Isberner2015}}
+	\label{fig:automatalib_arch}
+\end{figure}
 
 \paragraph{Automatalib} An independent library that contains abstract 
 automata representations, automata data structures and algorithms. The abstract 
 automata representations make the library flexible because all data structures
 and algorithms depend on those representations. This makes it easy to add 
 third party implementations of automata like the BRICS library 
-\cite{Alur2005}. Automatalib included minimalization 
+\cite{Alur2005}. Automatalib includes minimalization 
 algorithms and equivalence testing algorithms based on Hopcroft and Karp's 
 near-linear equivalence algorithm \cite{hopcroft1971} or the W-Method 
 (See section X) %Need a reference to the W-Method  
 for black-box testing. 
+
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{Tool_images/learnlib_architecture.png}
+	\caption{Architecture of Learnlib}
+	\label{fig:learnlib_arch}
+\end{figure}
 
 \paragraph{Learnlib} A library that provides learning algorithms and 
 infrastructure for automata learning. The learning algorithms consist of a 
@@ -54,7 +103,7 @@ that are officially supported are listed below:
 \todo{Should I give a really short explanation of methods that are not 
 described in the theory?}
 \begin{itemize}
-	\item L* (base) (Explained in section %\ref{sec:fundamental-theory})
+	\item L* (base) (Explained in section \ref{sec:fundamental-theory})
 	\begin{itemize}
 		\item Maler \& Pnueli's \cite{Maler1995}
 		\item Rivest \& Schapnire's (Summarized in 
@@ -81,44 +130,10 @@ It also contains a parallellization component that can speed up the process by
 using multiple teachers and parallel execution of membership 
 queries\cite{Henrix15}\cite{Howar2012}. 
 
-\subsubsection{Libalf}
-\label{sssec:libalf}
-Libalf\footnote{Not in active development since 2011 but still available 
-from \url{http://libalf.informatik.rwth-aachen.de}} is a library for learning 
-and manipulating formal languages. It has both active and passive learning 
-algorithms. For this paper, only the active part is covered.
-
-\todo{Image of architecture of libalf }
-The library consists of a core library as well as two additional libraries, 
-liblangen(random regular language generator) and AMoRE++(automata library).
-
-The core consists of the learning algorithms and the knowledgebase. The latter 
-stores language information and collects the different queries that are used 
-for that language. This storage makes it possible to switch learning algorithms 
-or to use multiple learning algorithms during the learning process. The active 
-learning algorithms that it offers are listed below.
-
-\begin{itemize}
-	\item L* (Explained in section %\ref{sec:fundamental-theory})
-	\item Rivest \& Schapnire's (Summarized in 
-	%\ref{sec:rivest-schap-count))
-	\item NL* \cite{Bollig2010}
-	\item Kearns \& Vazirani's (Summarized in 
-	%\ref{sec:classification-trees)
-\end{itemize}
-
-Besides the algorithms and the knowledgebase, it has filters for reducing the 
-amount of queries asked to the teacher. These filters use domain specific 
-knowledge. %Is hier theorie over?
-Also, it provides methods that uses domain specific equivalence relations 
-supplied by the user to determine equivalence classes(data that is used by 
-equivalence queries). This does reduce the amount of memory needed.
-
-One major difference between Learnlib and Libalf is that Libalf does not 
-include any methods that could be used for making a teacher. %Moet hier nog een 
-%conclusie aan gebonden worden?
-
-More information on Libalf is published in \cite{Bollig2010}.
+There is also a plugin \footnote{Available here: 
+\url{https://github.com/LearnLib/learnlib-libalf-native}} available for using 
+Learnlib together with Libalf as a 
+native client.
 
 \subsubsection{Tomte}
 \label{sssec:tomte}
@@ -128,7 +143,11 @@ abstractions for automata learning. Essentially, it a connector between the
 system under learning(SUL) and the learner. This makes using Learnlib and 
 Libalf easier, since the user doesn't have to make the mapping.
 
-\todo{Image of architecture of Tomte }
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{Tool_images/tomte_network.png}
+	\caption{Architecture of Tomte}
+	\label{fig:tomte_arch_interactoin}
+\end{figure}
 
 The Abstractor, Lookahead Oracle and the Determinizer together form Tomte. The 
 other two parts are not part of Tomte but it comes with a supplied library 
@@ -138,14 +157,14 @@ http://tomte.cs.ru.nl/Sut-0-4/Description} available for creating the SUL since
 they must be modeled after a register automata.
  
 \paragraph{Determinizer}
-This parts elimates the nondeterministic behaviour caused by the SUL. Since 
-tools like Learnlib can only analyse deterministic behaviour, it needs to 
+The Determinizer elimates the nondeterministic behaviour caused by the SUL. 
+Since tools like Learnlib can only analyse deterministic behaviour, it needs to 
 converted. The theory behind it, is explained in \cite{Aarts2015}.
 
 \paragraph{Lookahead Oracle}
-This oracle is used to annotate each output action of the SUL with values that 
-have an impact on the future behaviour of the SUL. This makes it is possible to 
-learn any deterministic register automaton. The theory and implementation of 
+This oracle is used to annotate events of the SUL with information about the 
+impact on the future behaviour of the SUL. This way, the Looahead Oracle act as 
+a cache for the Abstractor. The theory and implementation of 
 this oracle is found in \cite{Aarts2014} and \cite{tomte14}.
 
 \paragraph{Abstractor}
@@ -155,19 +174,39 @@ parameter values of the SUL but leaving the input/output symbols unchanged. It
 uses counterexample-guided abstraction refinement\cite{tomte14} for extension 
 of the mapping. In order to make it scalable, this component also tries to 
 reduce the length of the counterexample by removing loops and single 
-transition \cite{Koopman2014}. The complete theory is found in \cite{tomte14}.
+transitions \cite{Koopman2014}. The complete theory is found in \cite{tomte14}.
+
+\paragraph{Interaction between the modules} The exchange of messages between 
+all the modules is as follows(see numbering in figure 
+\ref{fig:tomte_arch_interactoin}.
+\begin{enumerate}
+	\item Learner sends an abstract output query to the Abstractor.
+	\item Abstracter receives an abstract query, selects a concrete input 
+	symbol $i$ and send it as an output query to the Lookahead Oracle. If no 
+	input symbol $i$ exists, return $\perp$ to the Learner.
+	\item  Lookahead Oracle checks if $i$ is cached. If not, then $s$ is send 
+	to the Determinizer. Otherwise, go to step 7.
+	\item Determinizer transforms the input back to the original behavior of 
+	the Teacher  
+	\item Determinizer receives input from the Teacher and transforms this 
+	nondeterministic behavior.
+	\item Determinizer sends concrete symbol $o$ to the Lookahead Oracle which 
+	caches input output pair $\{i,o\}$
+	\item Lookahead oracle sends $o$ together with the annotated information 
+	that came after the sequence of queries between the last reset query and 
+	$i$.
+	\item Abstractor receives a concrete answer $o$ and the annotated 
+	information. It uses the annotated information to determine updates to the 
+	state variables of the Learner. It sends those updates and other 
+	information to the Learner as an abstract answer. 
+\end{enumerate}
 
 
-\todo{Make section about different researches that used those tools??}
+\todo{Make section about different researches that used those tools, only when 
+there is still sufficient wordcount left}
 %\cite{Aarts2014}\cite{Aarts2015}
 %Biometric Passport \cite{Aarts2010}
 
-
-
-In conclusion, from the comparisons it is clear that there is a lot of 
-improvement in the creation of the tools in recent years by using the new 
-methods that are found by either testing the tools on practical applications or 
-new advances in active automata learning.
 
 
 \end{document}
