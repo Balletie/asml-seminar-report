@@ -10,6 +10,7 @@
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
 
+\subsection{An Algorithm for Learning DFAs}
 Angluin defines the $L^*$ algorithm for learning regular sets\cite{Angluin87}.
 The goal of the algorithm is to discover a model that corresponds to the regular
 set (`the target').
@@ -26,7 +27,7 @@ exactly matches the target, or provides counterexample (i.e. a word that is in
 the hypothesis but not in the target or vice versa) if it does not. Using these
 two questions, any regular set can be learned.
 
-\subsection{Data structure}
+\subsubsection{Data structure}
 \label{sec:data-structure}
 The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
 \textit{distinguishing extensions} $E$. The answers to the queries are stored in
@@ -45,7 +46,7 @@ the string $e$ from the state corresponding to $x$ results in an accepting
 state. Equivalently, this can be interpreted to mean whether applying $s \concat
 e$ from the initial state results in an accepting state.
 
-\subsection {The algorithm}
+\subsubsection {The algorithm}
 \todo{Introduce equivalence classes}
 
 The algorithm begins by initializing $S$ and $E$ to $\{\epsilon\}$ (where
@@ -96,7 +97,7 @@ counterexample is replied, the counterexample and all of its prefixes are added
 to $S$, after which $S \concat \Sigma$ is updated and the algorithm moves back
 to phase 1.
 
-\subsection {Example run}
+\subsubsection {Example run}
 
 Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
 The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
