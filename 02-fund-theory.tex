@@ -72,12 +72,31 @@ state would be represented by the equivalence class
 $\eqclass{\epsilon}{\lang_M}$. Lastly, a state $\eqclass{w}{\lang_M}$ is an
 accepting state if and only if $\eqclass{w}{\lang_M} \subseteq \lang_M$.
 
+\subsection{Key Principle of Active Learning}
+\label{sec:key-principle-active}
+In active state machine learning, the goal is to learn an unknown DFA $M$ (the
+\textit{target}), which is assumed to be minimal. The key principle of all
+active state machine learning algorithms is to progressively refine a hypothesis
+DFA $\hat M$ until it equals $M$.
+
+Put in terms of equivalence classes, a learning algorithm progressively refines
+a set of equivalence classes $\nero_{\hat M}$, until it eventually converges to
+the set of equivalence classes $\nero_M$ of the target.
+
+According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
+only if $\nero_\lang$ is finite. Thus, since this article is concerned with
+learning regular languages, the set of equivalence classes must be finite. And
+since the active learning algorithms that will be discussed guarantee progress,
+the process of learning is guaranteed to converge.
+
 % TODOs:
 % Done: Explain connection minimal DFA <-> equivalence classes
 % Explain principle of active state machine learning: refining a set of
 %   equivalence classes until it equals the set of equivalence classes of the
 %   target DFA.
 % Cite Myhill & Nerode and Hopcroft & Ullman
+% Explain membership and equivalence queries and relationship with key
+%   principles.
 
 \subsection{An Algorithm for Learning DFAs}
 Angluin defines the $L^*$ algorithm for learning regular sets\cite{Angluin1987}.
