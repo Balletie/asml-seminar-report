@@ -2,13 +2,75 @@
 \onlyifstandalone{\input{common}}
 \usepackage{amsmath}
 \DeclareMathOperator{\row}{row}
-
 \usetikzlibrary{automata,arrows}
-
 
 \begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
+This part introduces the theory fundamental to active state machine learning:
+the notion of Nerode-equivalence, and the original learning algorithm due to
+Angluin called $L^*$. Before this, an explanation of the notation used
+throughout the article is in order. First, the assumed definition of a DFA is
+introduced.
+
+\begin{definition}[Deterministic Finite Automaton]
+  A DFA $M$ is a 5-tuple $(Q, q_0, \Sigma, \delta, F)$ where $Q$ is the set of
+  states, $q_0$ the initial state, $\Sigma$ the input alphabet, $\delta$ the
+  transition function, and $F$ the set of accepting states.
+\end{definition}
+
+Define $\Sigma^*$ to be all of the words constructed from the input alphabet
+$\Sigma$. Furthermore, $\epsilon$ represents the empty word. Note that by
+definition it holds that $\epsilon \in \Sigma^*$.
+
+For some word $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
+executing $w$ from state $q$. Furthermore, denote $\exec{M}{w} = \dstar{q_0}{w}$
+to be the state reached by executing $w$ from the initial state $q_0$, as used
+by Kearns and Vazirani\cite{Kearns94}. Lastly, let $\lang_M$ denote the regular
+language accepted by $M$ such that $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
+
+Below two definitions are given which together provide the necessary background
+theory of the field of active state machine learning.
+
+\begin{definition}[Distinguishing Extension]
+  Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$
+  and $z$ be words in $\Sigma^*$. Then $z$ is a \textit{distinguishing
+    extension} for $v$ and $w$ if and only if \textit{exactly one} of $vz$ and
+  $wz$ is in $\lang$.
+\end{definition}
+\begin{definition}[Nerode-equivalence]
+  For some language $\lang$ over an alphabet $\Sigma$, define two words
+  $v,w \in \Sigma^*$ to be \textit{Nerode-equivalent} with respect to
+  $\lang$ if and only if there is no distinguishing extension $z$ for $v$
+  and $w$. We write $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
+
+  Let $\nero_\lang$ be the set of \textit{equivalence classes} such that each
+  equivalence class $C$ in $\nero_\lang$ is a set of words which are mutually
+  Nerode-equivalent.
+\end{definition}
+
+In addition, define $[w]_\lang$ to be the equivalence class of $w$, such that for
+any word $v$ in $[w]_\lang$ it holds that $v \nero_\lang w$.
+
+According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
+only if the set of equivalence classes $\nero_\lang$ is a finite set. Indeed,
+this is a stronger theorem than the pumping lemma for regular languages, which
+can only prove that a language is \textit{not} regular.
+
+Furthermore, equivalence class for some language $\lang_M$ represents a state in
+the minimal DFA $M$ accepting $\lang_M$. Thus, from a set of equivalence classes
+$\nero_{\lang_M}$, $M$ can be constructed, with as its states the equivalence
+classes. Then for each state $[w]$, an outgoing transition can be constructed
+for each letter $\sigma \in \Sigma$ to the state $[w\concat\sigma]$. The initial
+state would be represented by the equivalence class $[\epsilon]$. A state $[w]$
+is an accepting state if $[w] \subseteq \lang_M$
+
+% TODOs:
+% Done: Explain connection minimal DFA <-> equivalence classes
+% Explain principle of active state machine learning: refining a set of
+%   equivalence classes until it equals the set of equivalence classes of the
+%   target DFA.
+% Cite Myhill & Nerode and Hopcroft & Ullman
 
 \subsection{An Algorithm for Learning DFAs}
 Angluin defines the $L^*$ algorithm for learning regular sets\cite{Angluin87}.

@@ -4,9 +4,15 @@
 \presetkeys{todonotes}{inline, noline}{}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{theorem}
+\newtheorem{definition}{Definition}[section]
 
-\newcommand{\concat}{\cdot} 
-
+% Math macros
+\newcommand{\concat}{\cdot}
+\newcommand{\lang}{\ensuremath{\mathcal{L}}}
+\newcommand{\dstar}[2]{\ensuremath{\delta^*(#1,#2)}}
+\newcommand{\exec}[2]{\ensuremath{#1[#2]}}
+\newcommand{\nero}{\ensuremath{\equiv}}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
