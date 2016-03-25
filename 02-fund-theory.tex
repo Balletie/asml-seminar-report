@@ -13,7 +13,7 @@ Angluin called $L^*$. Before this, an explanation of the notation used
 throughout the article is in order. First, the assumed definition of a DFA is
 introduced.
 
-\begin{definition}[Deterministic Finite Automaton]
+\begin{definition}[Deterministic Finite Automaton]\label{def:dfa}
   A DFA $M$ is a 5-tuple $(Q, q_0, \Sigma, \delta, F)$ where $Q$ is the set of
   states, $q_0$ the initial state, $\Sigma$ the input alphabet, $\delta$ the
   transition function, and $F$ the set of accepting states.
@@ -32,13 +32,13 @@ language accepted by $M$ such that $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
 Below two definitions are given which together provide the necessary background
 theory of the field of active state machine learning.
 
-\begin{definition}[Distinguishing Extension]
+\begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$
   and $z$ be words in $\Sigma^*$. Then $z$ is a \textit{distinguishing
     extension} for $v$ and $w$ if and only if \textit{exactly one} of $vz$ and
   $wz$ is in $\lang$.
 \end{definition}
-\begin{definition}[Nerode-equivalence]
+\begin{definition}[Nerode-equivalence]\label{def:nerode-eq}
   For some language $\lang$ over an alphabet $\Sigma$, define two words
   $v,w \in \Sigma^*$ to be \textit{Nerode-equivalent} with respect to
   $\lang$ if and only if there is no distinguishing extension $z$ for $v$
