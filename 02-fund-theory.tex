@@ -47,7 +47,8 @@ theory of the field of active state machine learning.
   Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of $w$, such
   that for any word $v$ in $\eqclass{w}{\lang}$ it holds that $v \nero_\lang
   w$. Lastly, let $\nero_\lang$ be the set of all equivalence classes of
-  $\lang$.
+  $\lang$. For convenience, denote $\nero_M$ to be the same set for some DFA
+  $M$.
 \end{definition}
 
 According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
@@ -57,7 +58,7 @@ can only prove that a language is \textit{not} regular.
 
 Furthermore, an equivalence class of some language $\lang_M$ represents a state
 in the minimal DFA $M$ accepting $\lang_M$. Thus, from a set of equivalence
-classes $\nero_{\lang_M}$, $M$ can be constructed, with as its states the
+classes $\nero_M$, $M$ can be constructed, with as its states the
 equivalence classes. Then for each state $\eqclass{w}{\lang_M}$, an outgoing
 transition can be constructed for each letter $\sigma \in \Sigma$ to the state
 $\eqclass{w\concat\sigma}{\lang_M}$. The initial state would be represented by
