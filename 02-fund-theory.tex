@@ -51,20 +51,26 @@ theory of the field of active state machine learning.
   $M$.
 \end{definition}
 
-According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
-only if the set of equivalence classes $\nero_\lang$ is a finite set. Indeed,
-this is a stronger theorem than the pumping lemma for regular languages, which
-can only prove that a language is \textit{not} regular.
+%TODO: Cite Myhill and Nerode
+From the above \cref{def:nerode-eq}, the Myhill-Nerode theorem makes a strong
+statement: a language $\lang$ is regular if and only if the set of equivalence
+classes $\nero_\lang$ is a finite set. Indeed, this theorem is stronger than the
+pumping lemma for regular languages, which can only prove that a language is
+\textit{not} regular.
 
-Furthermore, an equivalence class of some language $\lang_M$ represents a state
-in the minimal DFA $M$ accepting $\lang_M$. Thus, from a set of equivalence
-classes $\nero_M$, $M$ can be constructed, with as its states the
-equivalence classes. Then for each state $\eqclass{w}{\lang_M}$, an outgoing
-transition can be constructed for each letter $\sigma \in \Sigma$ to the state
-$\eqclass{w\concat\sigma}{\lang_M}$. The initial state would be represented by
-the equivalence class $\eqclass{\epsilon}{\lang_M}$. A state
-$\eqclass{w}{\lang_M}$ is an accepting state if
-$\eqclass{w}{\lang_M} \subseteq \lang_M$
+%TODO: Cite Hopcroft and Ullman
+According to Hopcroft and Ullman, each regular language $\lang$ has a minimal
+DFA $M$ which accepts $\lang$. The amount of states of $M$ is precisely equal to
+the amount of equivalence classes $\nero_\lang$, thus there is a one-to-one
+correspondence between each equivalence class and each state of $M$.
+
+Thus, from a set of equivalence classes $\nero_M$, $M$ can be constructed as
+follows. Let $\nero_M$ represent the set of states of $M$. For each state
+$\eqclass{w}{\lang_M}$ and for each $\sigma \in \Sigma$, an outgoing transition
+can be constructed to the state $\eqclass{w\concat\sigma}{\lang_M}$. The initial
+state would be represented by the equivalence class
+$\eqclass{\epsilon}{\lang_M}$. Lastly, a state $\eqclass{w}{\lang_M}$ is an
+accepting state if and only if $\eqclass{w}{\lang_M} \subseteq \lang_M$.
 
 % TODOs:
 % Done: Explain connection minimal DFA <-> equivalence classes
