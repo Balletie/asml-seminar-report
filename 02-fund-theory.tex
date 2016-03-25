@@ -49,21 +49,24 @@ theory of the field of active state machine learning.
   Nerode-equivalent.
 \end{definition}
 
-In addition, define $[w]_\lang$ to be the equivalence class of $w$, such that for
-any word $v$ in $[w]_\lang$ it holds that $v \nero_\lang w$.
+In addition, define $\eqclass{w}{\lang}$ to be the equivalence class of $w$,
+such that for any word $v$ in $\eqclass{w}{\lang}$ it holds that
+$v \nero_\lang w$.
 
 According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
 only if the set of equivalence classes $\nero_\lang$ is a finite set. Indeed,
 this is a stronger theorem than the pumping lemma for regular languages, which
 can only prove that a language is \textit{not} regular.
 
-Furthermore, equivalence class for some language $\lang_M$ represents a state in
-the minimal DFA $M$ accepting $\lang_M$. Thus, from a set of equivalence classes
-$\nero_{\lang_M}$, $M$ can be constructed, with as its states the equivalence
-classes. Then for each state $[w]$, an outgoing transition can be constructed
-for each letter $\sigma \in \Sigma$ to the state $[w\concat\sigma]$. The initial
-state would be represented by the equivalence class $[\epsilon]$. A state $[w]$
-is an accepting state if $[w] \subseteq \lang_M$
+Furthermore, an equivalence class of some language $\lang_M$ represents a state
+in the minimal DFA $M$ accepting $\lang_M$. Thus, from a set of equivalence
+classes $\nero_{\lang_M}$, $M$ can be constructed, with as its states the
+equivalence classes. Then for each state $\eqclass{w}{\lang_M}$, an outgoing
+transition can be constructed for each letter $\sigma \in \Sigma$ to the state
+$\eqclass{w\concat\sigma}{\lang_M}$. The initial state would be represented by
+the equivalence class $\eqclass{\epsilon}{\lang_M}$. A state
+$\eqclass{w}{\lang_M}$ is an accepting state if
+$\eqclass{w}{\lang_M} \subseteq \lang_M$
 
 % TODOs:
 % Done: Explain connection minimal DFA <-> equivalence classes
