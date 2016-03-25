@@ -44,14 +44,11 @@ theory of the field of active state machine learning.
   $\lang$ if and only if there is no distinguishing extension $z$ for $v$
   and $w$. We write $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
 
-  Let $\nero_\lang$ be the set of \textit{equivalence classes} such that each
-  equivalence class $C$ in $\nero_\lang$ is a set of words which are mutually
-  Nerode-equivalent.
+  Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of $w$, such
+  that for any word $v$ in $\eqclass{w}{\lang}$ it holds that $v \nero_\lang
+  w$. Lastly, let $\nero_\lang$ be the set of all equivalence classes of
+  $\lang$.
 \end{definition}
-
-In addition, define $\eqclass{w}{\lang}$ to be the equivalence class of $w$,
-such that for any word $v$ in $\eqclass{w}{\lang}$ it holds that
-$v \nero_\lang w$.
 
 According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
 only if the set of equivalence classes $\nero_\lang$ is a finite set. Indeed,
