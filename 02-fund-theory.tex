@@ -32,8 +32,16 @@ in the input alphabet $\Sigma$.
 For some word $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
 executing $w$ from state $q$. Furthermore, denote $\exec{M}{w} = \dstar{q_0}{w}$
 to be the state reached by executing $w$ from the initial state $q_0$, as used
-by Kearns and Vazirani\cite{Kearns94}. Lastly, let $\lang_M$ denote the regular
-language accepted by $M$; that is $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
+by Kearns and Vazirani\cite{Kearns94}. Then $w$ is called the \textit{access
+  string} of the state $\exec{M}{w}$ (see \cref{def:acc-str}). Lastly, let
+$\lang_M$ denote the regular language accepted by $M$; that is
+$\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
+
+\begin{definition}[Access String]\label{def:acc-str}
+  For some alphabet $\Sigma$ and a state $q \in Q$ of some DFA $M$, a string
+  $w \in \Sigma^*$ is called an \textit{access string} of $q$ if
+  $\exec{M}{w} = q$
+\end{definition}
 
 \subsection{Nerode-Equivalence and Equivalence Classes}
 \label{sec:nerode-equiv-equiv}
