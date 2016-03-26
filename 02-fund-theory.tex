@@ -45,6 +45,18 @@ $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
 
 \subsection{Nerode-Equivalence and Equivalence Classes}
 \label{sec:nerode-equiv-equiv}
+It is possible for a DFA $M$ to contain states which are redundant. That is, for
+some states, any word processed from all of those states leads to an accepting
+state or a rejecting state. More formally, for two states $p,q \in Q$ and a word
+$w \in \Sigma^*$, both $\dstar{p}{w}$ and $\dstar{q}{w}$ are either an accepting
+state or a rejecting state. There is no $w$ which \textit{distinguishes} the two
+states.
+
+From this point of view, the states $p$ and $q$ can be considered equivalent, in
+that they pose no difference for any word processed from those states to be
+accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
+are said to be \textit{Nerode-equivalent}, as described in
+\cref{def:nerode-eq}.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
