@@ -85,19 +85,34 @@ Put in terms of equivalence classes, a learning algorithm progressively refines
 a set of equivalence classes $\nero_{\hat M}$, until it eventually converges to
 the set of equivalence classes $\nero_M$ of the target.
 
-According to the Myhill-Nerode theorem, a language $\lang$ is regular if and
-only if $\nero_\lang$ is finite. Thus, since this article is concerned with
-learning regular languages, the set of equivalence classes must be finite. And
-since the active learning algorithms that will be discussed guarantee progress,
-the process of learning is guaranteed to converge.
+Any active learning algorithm has access to a so-called \textit{minimally
+  adequate teacher} (MAT) which can answer two types of queries about the
+target:
 
+\begin{description}
+\item[Membership Query] Given a word, answers ``yes'' or ``no'' depending on
+  whether it is accepted by the target $M$ or not.
+\item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
+  $\hat M$ equals $M$, in which case the algorithm is finished. If the
+  hypothesis is not equal, it provides a counterexample $\gamma$. The
+  counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
+  is an example of an incorrect equivalence class.
+\end{description}
+
+Note that for the equivalence query, the hypothesis can be constructed in a
+manner similar to the construction described in the previous section.
+
+Furthermore, note that the algorithm is guaranteed to converge to the target DFA
+$M$, since $\nero_M$ must be finite according to the Myhill-Nerode theorem, and
+the learning algorithms that will be discussed guarantee progress after every
+equivalence query.
 % TODOs:
 % Done: Explain connection minimal DFA <-> equivalence classes
 % Explain principle of active state machine learning: refining a set of
 %   equivalence classes until it equals the set of equivalence classes of the
 %   target DFA.
 % Cite Myhill & Nerode and Hopcroft & Ullman
-% Explain membership and equivalence queries and relationship with key
+% Done: Explain membership and equivalence queries and relationship with key
 %   principles.
 
 \subsection{An Algorithm for Learning DFAs}
@@ -108,14 +123,6 @@ set (`the target').
 The target is said to contain only \textit{words}, where each word consists
 of the concatenation of zero or more items from a certain set of of symbols
 called the input alphabet $\Sigma$.
-
-The algorithm requires a so-called \textit{minimally adequate teacher} which can
-answer two types of questions about the target. The first is a membership query;
-it answers whether a given word is accepted by the target. The second is an
-equivalence query: given a hypothesis, it answers `yes' if the hypothesis
-exactly matches the target, or provides counterexample (i.e. a word that is in
-the hypothesis but not in the target or vice versa) if it does not. Using these
-two questions, any regular set can be learned.
 
 \subsubsection{Data structure}
 \label{sec:data-structure}
