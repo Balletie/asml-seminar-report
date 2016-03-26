@@ -10,8 +10,18 @@
 This part introduces the theory fundamental to active state machine learning:
 the notion of Nerode-equivalence, and the original learning algorithm due to
 Angluin called $L^*$. Before this, an explanation of the notation used
-throughout the article is in order. First, the assumed definition of a DFA is
-introduced.
+throughout the article is in order.
+
+\subsection{Basic Notation}
+\label{sec:basic-notation}
+
+Define $\Sigma^*$ to be all of the words constructed from the input alphabet
+$\Sigma$. Furthermore, $\epsilon$ represents the empty word. Note that by
+definition it holds that $\epsilon \in \Sigma^*$. The concatenation operator is
+denoted $v \concat w$ for two strings $v$ and $w$ in $\Sigma^*$, or for elements
+in the input alphabet $\Sigma$.
+
+\Cref{def:dfa} below shows the definition of a DFA used in the article.
 
 \begin{definition}[Deterministic Finite Automaton]\label{def:dfa}
   A DFA $M$ is a 5-tuple $(Q, q_0, \Sigma, \delta, F)$ where $Q$ is the set of
@@ -19,20 +29,14 @@ introduced.
   transition function, and $F$ the set of accepting states.
 \end{definition}
 
-Define $\Sigma^*$ to be all of the words constructed from the input alphabet
-$\Sigma$. Furthermore, $\epsilon$ represents the empty word. Note that by
-definition it holds that $\epsilon \in \Sigma^*$. The concatenation operator is
-denoted $v \concat w$ for two strings in $\Sigma^*$ or elements in the input
-alphabet $\Sigma$.
-
 For some word $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
 executing $w$ from state $q$. Furthermore, denote $\exec{M}{w} = \dstar{q_0}{w}$
 to be the state reached by executing $w$ from the initial state $q_0$, as used
 by Kearns and Vazirani\cite{Kearns94}. Lastly, let $\lang_M$ denote the regular
 language accepted by $M$; that is $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
 
-Below two definitions are given which together provide the necessary background
-theory of the field of active state machine learning.
+\subsection{Nerode-Equivalence and Equivalence Classes}
+\label{sec:nerode-equiv-equiv}
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
