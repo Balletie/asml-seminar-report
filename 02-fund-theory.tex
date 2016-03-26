@@ -21,7 +21,9 @@ introduced.
 
 Define $\Sigma^*$ to be all of the words constructed from the input alphabet
 $\Sigma$. Furthermore, $\epsilon$ represents the empty word. Note that by
-definition it holds that $\epsilon \in \Sigma^*$.
+definition it holds that $\epsilon \in \Sigma^*$. The concatenation operator is
+denoted $v \concat w$ for two strings in $\Sigma^*$ or elements in the input
+alphabet $\Sigma$.
 
 For some word $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
 executing $w$ from state $q$. Furthermore, denote $\exec{M}{w} = \dstar{q_0}{w}$
@@ -33,10 +35,10 @@ Below two definitions are given which together provide the necessary background
 theory of the field of active state machine learning.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
-  Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$
-  and $z$ be words in $\Sigma^*$. Then $z$ is a \textit{distinguishing
-    extension} for $v$ and $w$ if and only if \textit{exactly one} of $vz$ and
-  $wz$ is in $\lang$.
+  Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
+  $z$ be words in $\Sigma^*$. Then $z$ is a \textit{distinguishing extension}
+  for $v$ and $w$ if and only if \textit{exactly one} of $v \concat z$ and
+  $w \concat z$ is in $\lang$.
 \end{definition}
 \begin{definition}[Nerode-equivalence]\label{def:nerode-eq}
   For some language $\lang$ over an alphabet $\Sigma$, define two words
