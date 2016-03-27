@@ -4,59 +4,18 @@
 \section{Applications}
 \label{sec:applications}
 
+
 \subsection{Tools}
 \label{ssec:tools}
 
 In order to facilitate and promote active automata learning in a practical 
-setting, tools have been created. This section will give a brief overview of a 
-selection of tools that use active automata learning. This selection does not 
-include tools that are used for automata modeling and verification. First, the 
-tools Libalf(\ref{sssec:libalf}) and Learnlib (\ref{sssec:learnlib}) will be 
-discussed. Those tools provide various active automata learning algorithms and 
-optimizations. The last tool that will be discussed is 
-Tomte(\ref{sssec:tomte}), which automatically generates abstractions for 
-automatons in order to apply active automata learning on them. 
-This selection is based on availability and researches that have used those 
-tools.
-
-\subsubsection{Libalf}
-\label{sssec:libalf}
-Libalf\footnote{No support available,but can be downloaded from 
-	\url{http://libalf.informatik.rwth-aachen.de}} is a library for learning 
-and manipulating formal languages. It has both active and passive learning 
-algorithms. For this paper, only the active part is covered.
-
-The library consists of a core library as well as two additional libraries, 
-liblangen(random regular language generator) and AMoRE++(automata library).
-
-The core consists of the learning algorithms and the knowledgebase. The latter 
-stores language information and collects the different queries that are used 
-for that language. This storage makes it possible to switch learning algorithms 
-or to use multiple learning algorithms during the learning process. Therefore, 
-Libalf is suitable for experimenting with different kind of learning algorithms 
-and see how they would affect the learn process. Libalf also comes with a demo 
-application where the user is the Teacher. This means that the user can go 
-through the learning algorithms step by step and see how it handles the 
-membership queries and the reaction on the counterexample. The active learning 
-algorithms that it offers are listed below.
-
-\begin{itemize}
-	\item L* (Explained in section \ref{sec:fundamental-theory})
-	\item Rivest \& Schapnire's (Summarized in 
-	%\ref{sec:rivest-schap-count))
-	\item NL* \cite{Bollig2009}
-	\item Kearns \& Vazirani's (Summarized in 
-	%\ref{sec:classification-trees)
-\end{itemize}
-
-Besides the algorithms and the knowledgebase, it has filters for reducing the 
-amount of queries asked to the teacher. These filters use domain specific 
-knowledge. %Is hier theorie over?
-Also, it provides methods that uses domain specific equivalence relations 
-supplied by the user to determine equivalence classes(data that is used by 
-equivalence queries). This does reduce the amount of memory needed.
-
-More information on Libalf is published in \cite{Bollig2010}.
+setting, tools have been created. This section will give a brief overview of
+two tools. First, the tool Learnlib (\ref{sssec:learnlib}) will be discussed. 
+This tool provide various active automata learning algorithms and 
+optimizations. The second tool is Tomte(\ref{sssec:tomte}), which automatically 
+generates abstractions for automatons in order to apply active automata 
+learning on them. This selection is based on the importance of the tool, 
+availability and the amount of researches that have used those tools.
 
 \subsubsection{Learnlib}
 \label{sssec:learnlib}
@@ -129,11 +88,6 @@ It also contains a parallellization component that can speed up the process by
 using multiple teachers and parallel execution of membership 
 queries\cite{Henrix15}\cite{Howar2012}. 
 
-There is also a plugin \footnote{Available here: 
-\url{https://github.com/LearnLib/learnlib-libalf-native}} available for using 
-Learnlib together with Libalf as a 
-native client.
-
 \subsubsection{Tomte}
 \label{sssec:tomte}
 Tomte \footnote{In active development and available from 
@@ -199,13 +153,6 @@ all the modules is as follows(see numbering in figure
 	state variables of the Learner. It sends those updates and other 
 	information to the Learner as an abstract answer. 
 \end{enumerate}
-
-
-\todo{Make section about different researches that used those tools, only when 
-there is still sufficient wordcount left}
-%\cite{Aarts2014}\cite{Aarts2015}
-%Biometric Passport \cite{Aarts2010}
-
 
 
 \end{document}
