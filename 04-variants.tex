@@ -41,7 +41,7 @@ testing the inputs and outputs of a system.
 However, exhaustively testing a black box is undecidably hard.
 
 In order to solve this issue model-based testing techniques have been used,
-such as \textit{Chow's W-method} or the \textit{WP-method} \todo{Cite here}.
+such as \textit{Chow's W-method} \cref{sec:chow} or the \textit{WP-method}.
 These methods rely on approximating \textit{EQUIV (M)} queries by using
 \textit{MEMBER (w)} queries.
 
@@ -51,7 +51,6 @@ The \textit{ZULU} challenge asked participants to find a DFA corresponding
 to a certain system as accurately as possible, while imposing a restriction
 on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
 queries completely.
-\todo{Elaborate on ZULU some more}
 
 \subsection{Limiting the amount of membership queries}
 In a theoretical framework the learning algorithm doesn't have to account
@@ -59,11 +58,11 @@ for execution times of individual \textit{MEMBER (w)} queries.
 In practice, such queries might take time or be expensive to execute.
 Therefore algorithms benefit from reducing the amount of queries needed.
 Some generic improvements in this regard have already been covered in
-\todo{Reference previous chapter}.
+\cref{sec:improvements}.
 
 However, when using for example \textit{Chow's method} for \textit{EQUIV (M)}
 queries, the amount of membership queries needed grows exponentially
-in the number of states \todo{Cite source for exponential complexity of Chow's}.
+in the number of states \cref{sec:chow}.
 
 \todo{Cite ZULU participant here, since the challenge also imposed
       a maximum on \textit{MEMBER (w)} queries}
@@ -84,7 +83,7 @@ Say we have a mealy automaton $M$ with input alphabet $\Sigma_M$ and output
 alphabet $O$ that we want to transform into a DFA $D$ with input alphabet
 $\Sigma_D$. There are two ways to do this.
 
-The first first way is define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar03}.
+The first first way is to define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar03}.
 This transformation defines that each state in $M$ is also a state in $D$. For
 each transition in $M$ from state $q_a$ to $q_b$ constrained by $i$ and output
 symbol $o$, a new intermediate state $q_t$ is introduced in $D$. Two
