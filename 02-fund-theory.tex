@@ -101,18 +101,20 @@ accepting state if and only if $\eqclass{w}{\lang_M} \subseteq \lang_M$.
 
 \subsection{Key Principle of Active Learning}
 \label{sec:key-principle-active}
-In active state machine learning, the goal is to learn an unknown DFA $M$ (the
-\textit{target}), which is assumed to be minimal. The key principle of all
-active state machine learning algorithms is to progressively refine a hypothesis
-DFA $\hat M$ until it equals $M$.
+In active state machine learning, the goal is to learn an unknown finite state
+automaton $M$ (the \textit{target}), which is assumed to be minimal. The key
+principle of all active state machine learning algorithms is to progressively
+refine a hypothesis automaton $\hat M$ until it equals $M$.
 
 Put in terms of equivalence classes, a learning algorithm progressively refines
 a set of equivalence classes $\nero_{\hat M}$, until it eventually converges to
 the set of equivalence classes $\nero_M$ of the target.
 
-Any active learning algorithm has access to a so-called \textit{minimally
-  adequate teacher} (MAT) which can answer two types of queries concerning the
-target:
+To ensure progress at each step, any active learning algorithm has access to a
+so-called \textit{minimally adequate teacher} (MAT) which can answer two types
+of queries concerning the target. This is what sets \textit{active} state
+machine learning apart from \textit{passive} state machine learning, where there
+is no notion of a MAT or of queries. The two types of queries are the following:
 
 \begin{description}
 \item[Membership Query] Given a word, answers ``yes'' or ``no'' depending on
@@ -125,12 +127,16 @@ target:
 \end{description}
 
 Note that for the equivalence query, the hypothesis can be constructed in a
-manner similar to the construction described in the previous section.
+manner similar to the construction of a minimal $DFA$ described in the previous
+section.
 
-Furthermore, note that the algorithm is guaranteed to converge to the target DFA
-$M$, since $\nero_M$ must be finite according to the Myhill-Nerode theorem, and
-the learning algorithms that will be discussed guarantee progress after every
-equivalence query.
+If a learning algorithm ensures progress at each step using the above queries,
+the algorithm is guaranteed to converge to a target automaton $M$. This holds
+because $\nero_M$ must be finite for some DFA $M$ according to the Myhill-Nerode
+theorem, thus the amount of progress that can be made must also be finite. The
+same can be said for other types of automata for which the Myhill-Nerode theorem
+is applicable. An example is the Mealy machine, which will be the scope of
+discussion of \cref{sec:variants}.
 % TODOs:
 % Done: Explain connection minimal DFA <-> equivalence classes
 % Done: Explain principle of active state machine learning: refining a set of
