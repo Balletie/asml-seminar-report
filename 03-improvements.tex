@@ -1,8 +1,6 @@
 \documentclass[multi,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
 
-\onlyifstandalone{\input{common}}
-
 \begin{document}
 \section{Improvements}
 \label{sec:improvements}
@@ -14,7 +12,6 @@ In discussing them, we make two kinds of comparisons between the algorithms.
 The first comparison is in terms of the amount of
 \textit{queries} (the \textit{query complexity}), which gives an indication of
 the running time of the algorithm.
-
 The second comparison is in terms of the \textit{space complexity}.
 We also discuss the TTT-algorithm, which according
 to Isberner~et~al. exhibits an optimal space complexity\cite{Isberner14b}.
@@ -132,74 +129,6 @@ In the next section we will show another version of the algorithm due to
 Isberner~et~al., which combines Kearns and Vazirani's discrimination tree, and
 Rivest and Schapire-style counterexample analysis.
 \todo{actually write this section?}
-
-\subsection{Chow's W-method}
-\label{sec:chow}
-Part of the algorithm for active state machine learning is the equivalence check.
-Since the actual state machine is usually unknown it needs to approximated by
-utilizing model-based testing.
-This can be done by using Chow's W-method \cite{deRuiter15, Chow78}.
-
-According to \cite{vasilevskii73}, the maximal number of test sequences is 
-$n^{2} \times k^{m-n+1}$ and the maximal length is $n^{2} \times m \times k^{m-n+1}$,
-where n is the number of states in the provided automaton, m is the number
-of states in the correct automaton, and k is the size of the input alphabet.
-
-By refining the test suites and the specification at the same time,
-and by using a divide and conquer approach, the size of the test is
-considerably reduced in comparison to defining the tests from
-the final specification\cite{Ipate07}.
-This is especially beneficial because complex systems are usually
-created in multiple iterations.
-Unlike some other test selection methods the W-method does not require
-that the number of states is exactly the same between
-the implementation and protocol.
-The W-method generates tests that guarantee correctness of an
-implementation with a number of states below a certain upper bound.
-
-The W-method generates input sequences that reach every state in the
-diagram, checks all the transitions in the diagram and identifies all the
-destination states and verifies them against their counterparts in
-the implementation\cite{Ipate07}.
-To achieve this, the W-method constructs two sets of input sequences:
-\begin{itemize}
-  \item A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the
-    final state machine, including the empty sequence to reach the initial state.
-  \item A characterization set $W \subseteq \Sigma^{*}$ that has different
-    outputs for at least one sequence in $W$ for every pair of different states.
-\end{itemize}
-
-Given a specification P that can be modelled by an unknown finite state machine M,
-the only information the algorithm needs is an estimate of the maximum number of
-states of an unknown model for the specification.
-Suppose $d = \text{estimated maximum number of states for P}
-- \text{number of states in M}$.
-Naturally, it follows that $d \geq 0$.
-We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
-making $\Sigma\left[ n \right]$ a random word with a maximal length of n.
-For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
-The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup S
-\concat \Sigma$, which is also called the transition cover of $M$, ensures that all the
-states and transition in $P$ are also present in $M$, while
-$\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
-performing all the transitions.
-
-In order to use the W-method there are four requirements.
-The machine must be minimal, completely specified, completely reachable, 
-and have a fixed initial state.
-With some additional manipulation these four assumptions may be violated.
-The method consists of three steps:
-\begin{enumerate}
-\item estimation of the maximum number of states.
-\item generation of test sequences.
-\item verification of the responses.
-\end{enumerate}
-
-By exploiting domain specific knowledge, the W-method can be adapted to reduce
-the number of test cases even further.
-When dealing with a networked application for example, there are usually no
-further possible transitions when a connection is closed by a remote machine.
-Exploiting such knowledge can greatly reduce the number of tests necessary\cite{deRuiter15}.
 
 \end{document}
 

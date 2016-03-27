@@ -41,7 +41,7 @@ testing the inputs and outputs of a system.
 However, exhaustively testing a black box is undecidably hard.
 
 In order to solve this issue model-based testing techniques have been used,
-such as \textit{Chow's W-method} \cref{sec:chow} or the \textit{WP-method}.
+such as \textit{Chow's W-method}~\cite{deRuiter15, Chow78} or the \textit{WP-method}.
 These methods rely on approximating \textit{EQUIV (M)} queries by using
 \textit{MEMBER (w)} queries.
 
@@ -51,6 +51,72 @@ The \textit{ZULU} challenge asked participants to find a DFA corresponding
 to a certain system as accurately as possible, while imposing a restriction
 on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
 queries completely.
+\todo{add some more text and a fluid intro to Chow's method}
+
+\subsubsection{Chow's W-method}
+\label{sec:chow}
+According to \cite{vasilevskii73}, the maximum number of test sequences needed
+to converge to a correct approximation of the system under learning
+is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
+and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
+where n is the number of states in the provided automaton, m is the number
+of states in the correct automaton, and k is the size of the input alphabet.
+
+By refining the test suites and the specification at the same time,
+and by using a divide and conquer approach, the size of the test is
+considerably reduced in comparison to defining the tests from
+the final specification\cite{Ipate07}.
+This is especially beneficial because complex systems are usually
+created in multiple iterations.
+Unlike some other test selection methods the W-method does not require
+that the number of states is exactly the same between
+the implementation and protocol.
+The W-method generates tests that guarantee correctness of an
+implementation with a number of states below a certain upper bound.
+
+The W-method generates input sequences that reach every state in the
+diagram, checks all the transitions in the diagram and identifies all the
+destination states and verifies them against their counterparts in
+the implementation\cite{Ipate07}.
+To achieve this, the W-method constructs two sets of input sequences:
+\begin{itemize}
+  \item A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the
+    final state machine, including the empty sequence to reach the initial state.
+  \item A characterization set $W \subseteq \Sigma^{*}$ that has different
+    outputs for at least one sequence in $W$ for every pair of different states.
+\end{itemize}
+
+Given a specification P that can be modelled by an unknown finite state machine M,
+the only information the algorithm needs is an estimate of the maximum number of
+states of an unknown model for the specification.
+Suppose $d = \text{estimated maximum number of states for P}
+- \text{number of states in M}$.
+Naturally, it follows that $d \geq 0$.
+We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
+making $\Sigma\left[ n \right]$ a random word with a maximal length of n.
+For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
+The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup S
+\concat \Sigma$, which is also called the transition cover of $M$, ensures that all the
+states and transition in $P$ are also present in $M$, while
+$\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
+performing all the transitions.
+
+In order to use the W-method there are four requirements.
+The machine must be minimal, completely specified, completely reachable, 
+and have a fixed initial state.
+With some additional manipulation these four assumptions may be violated.
+The method consists of three steps:
+\begin{enumerate}
+\item estimation of the maximum number of states.
+\item generation of test sequences.
+\item verification of the responses.
+\end{enumerate}
+
+By exploiting domain specific knowledge, the W-method can be adapted to reduce
+the number of test cases even further.
+When dealing with a networked application for example, there are usually no
+further possible transitions when a connection is closed by a remote machine.
+Exploiting such knowledge can greatly reduce the number of tests necessary\cite{deRuiter15}.
 
 \subsection{Limiting the amount of membership queries}
 In a theoretical framework the learning algorithm doesn't have to account
@@ -78,7 +144,6 @@ transformed into a DFA, or an adaptation of $L^*$ called $L^*_{M}$ can be used
 to learn the mealy machine directly.
 
 \subsubsection {Transforming a mealy machines into a DFA}
-
 Say we have a mealy automaton $M$ with input alphabet $\Sigma_M$ and output
 alphabet $O$ that we want to transform into a DFA $D$ with input alphabet
 $\Sigma_D$. There are two ways to do this.
@@ -179,7 +244,6 @@ learned which is the transformed version of $M$.
 \end{figure}
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
-
 Adapting Angluin's $L^*$ algorithm has been adjusted for use with mealy
 machines. The new procedure was first informally described in
 \cite{Margaria04}, and later more rigorously in \cite{Shahbaz09}. In $L^*$ the
