@@ -8,15 +8,16 @@
 \label{ssec:tools}
 
 In order to facilitate and promote active automata learning in a practical 
-setting, tools have been created. This section will give a brief overview of 
-some tools that use active automata learning. The tools  Libalf (section 
-\ref{sssec:libalf}) and are tools that Learnlib (section
-\ref{sssec:learnlib})provide various active automata learning algorithms and 
-optimizations whilst the tool Tomte(section \ref{sssec:tomte}) makes automatic 
-abstractions for active automata learning. This selection is based on 
-availability and researches that have used those tools \footnote{These include 
-RALT\cite{Shahbaz2014} and AIDE \cite{Cicala2016}}. Also, tools that are used 
-for automata modeling and verification are not included.
+setting, tools have been created. This section will give a brief overview of a 
+selection of tools that use active automata learning. This selection does not 
+include tools that are used for automata modeling and verification. First, the 
+tools Libalf(\ref{sssec:libalf}) and Learnlib (\ref{sssec:learnlib}) will be 
+discussed. Those tools provide various active automata learning algorithms and 
+optimizations. The last tool that will be discussed is 
+Tomte(\ref{sssec:tomte}), which automatically generates abstractions for 
+automatons in order to apply active automata learning on them. 
+This selection is based on availability and researches that have used those 
+tools.
 
 \subsubsection{Libalf}
 \label{sssec:libalf}
@@ -34,16 +35,16 @@ for that language. This storage makes it possible to switch learning algorithms
 or to use multiple learning algorithms during the learning process. Therefore, 
 Libalf is suitable for experimenting with different kind of learning algorithms 
 and see how they would affect the learn process. Libalf also comes with a demo 
-application where the user is the Teacher. This means that user can go through 
-the learning algorithms step by step and see how it handles the membership 
-queries and the reaction on the counterexample. The active learning algorithms 
-that it offers are listed below.
+application where the user is the Teacher. This means that the user can go 
+through the learning algorithms step by step and see how it handles the 
+membership queries and the reaction on the counterexample. The active learning 
+algorithms that it offers are listed below.
 
 \begin{itemize}
 	\item L* (Explained in section \ref{sec:fundamental-theory})
 	\item Rivest \& Schapnire's (Summarized in 
 	%\ref{sec:rivest-schap-count))
-	\item NL* \cite{Bollig2010}
+	\item NL* \cite{Bollig2009}
 	\item Kearns \& Vazirani's (Summarized in 
 	%\ref{sec:classification-trees)
 \end{itemize}
@@ -85,7 +86,7 @@ third party implementations of automata like the BRICS library
 \cite{Alur2005}. Automatalib includes minimalization 
 algorithms and equivalence testing algorithms based on Hopcroft and Karp's 
 near-linear equivalence algorithm \cite{hopcroft1971} or the W-Method 
-(See section X) %Need a reference to the W-Method  
+(X) \todo{Need a reference to the W-Method}  
 for black-box testing. 
 
 \begin{figure}[!ht]
@@ -100,8 +101,6 @@ infrastructure for automata learning. The learning algorithms consist of a
 other methods. All the different base algorithms with the examples of variants 
 that are officially supported are listed below:
 
-\todo{Should I give a really short explanation of methods that are not 
-described in the theory?}
 \begin{itemize}
 	\item L* (base) (Explained in section \ref{sec:fundamental-theory})
 	\begin{itemize}
@@ -116,7 +115,7 @@ described in the theory?}
 	%\ref{sec:classification-trees)
 	\item DHC (base) \cite{Merten2012}
 	\item TTT (base) %\todo{Reference to theory does not exists, yet}
-	\item NL* \cite{Bollig2010}
+	\item NL* (base) \cite{Bollig2009}
 \end{itemize}
 
 All the algorithms come with both DFA and Mealy versions, expect for DHC and NL*.
