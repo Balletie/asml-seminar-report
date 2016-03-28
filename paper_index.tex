@@ -25,6 +25,7 @@ Drawbacks:
         \href{https://www.cs.bgu.ac.il/~beimel/Courses/Learning/}{here} and
         \href{https://www.cs.bgu.ac.il/~beimel/Courses/Learning/lect3.ps}{here}.
 \end{itemize}
+Also details learning without EQUIV(M) queries somewhere.
 
 \section{\cite{Howar14} Tutorial: Automata Learning in Practice}
 Lists and summarizes improvements that can be made to the $L^*$ learning algorithm.
@@ -67,6 +68,13 @@ improvement upon Kearn's and Vazirani's algorithm, where the counterexample
 analysis had an upper bound of
 $\mathcal{O}(kn^2 + nm)$\cite{Kearns94,Isberner15}.
 \section{\cite{Steffen12} Active Automata Learning: From DFAs to Interface Programs and Beyond}
+
+\section{No EQUIV(M) queries}
+\subsection{\cite{Combe10} Zulu: An Interactive Learning Competition}
+Details a competition with the goal to design active learning algorithms that don't use EQUIV(M) queries. \\
+Baseline for performance is based on L* learning with no EQUIV(M), refer to \cite{Angluin87} for that.
+\subsection{\cite{Balle10} Implementing Kearns-Vazirani Algorithm for Learning DFA Only with Membership Queries}
+This paper is from a participant in the Zulu competition.
 
 \bibliography{references}{}
 \bibliographystyle{plain}
