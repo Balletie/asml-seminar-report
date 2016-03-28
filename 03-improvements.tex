@@ -14,7 +14,7 @@ The first comparison is in terms of the amount of
 the running time of the algorithm.
 The second comparison is in terms of the \textit{space complexity}.
 We also discuss the TTT-algorithm, which according
-to Isberner~et~al. exhibits an optimal space complexity\cite{Isberner14b}.
+to Isberner~et~al. exhibits an optimal space complexity\cite{Isberner2014b}.
 
 The first improvement that will be discussed is \textit{classification trees},
 which forms the basis for multiple subsequent improvements (including
@@ -22,7 +22,7 @@ the TTT-algorithm).
 
 \subsection{Classification Trees}
 \label{sec:classification-trees}
-Introduced by Kearns and Vazirani\cite{Kearns94}, classification trees (or
+Introduced by Kearns and Vazirani\cite{Kearns1994}, classification trees (or
 \textit{discrimination trees}) are meant as a replacement for the observation
 table (see \cref{sec:data-structure}). In other words, it is a different data
 structure for storing the sets $S$ and $E$ of access strings and distinguishing
@@ -48,22 +48,22 @@ access string), corresponds to a state in our hypothesis automaton $\hat M$.
 Howar~et~al. state that a discrimination tree is \textit{redundancy-free} because
 each state in $\hat M$ is distinguished by one distinguishing extension, as
 opposed to observation tables where states are distinguished by a fixed amount
-of distinguishing extensions\cite{Howar14}.
+of distinguishing extensions\cite{Howar2014}.
 
 \subsubsection{Complexity analysis}
 \label{sec:complexity-analysis}
 With their introduction of the \textit{classification tree}, Kearns and Vazirani
 also adapted the original $L^*$ learning algorithm to use the tree
-structure\cite{Kearns94}. The precise operation of the adapted algorithm will not
+structure\cite{Kearns1994}. The precise operation of the adapted algorithm will not
 be given, but we do give an overview of the impact on the query complexity and
 the space complexity.
 
 \paragraph{Query Complexity} The amount of \textit{membership queries} for
 hypothesis construction is bounded by $\mathcal{O}(kn^2)$ membership queries in
-the worst-case (i.e. a degenerated tree)\cite{Howar14,Kearns94,Isberner14b},
+the worst-case (i.e. a degenerated tree)\cite{Howar2014,Kearns1994,Isberner2014b},
 where $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
 counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
-where $m$ is the size of the longest counterexample\cite{Kearns94}. Thus in
+where $m$ is the size of the longest counterexample\cite{Kearns1994}. Thus in
 total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
 improvement over that of $L^*$.
 
@@ -71,15 +71,15 @@ improvement over that of $L^*$.
 the space complexity of discrimination-tree based learners as follows: a
 degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner node
 is labeled by a distinguishing extension of length
-$\mathcal{O}(m)$\cite{Isberner15}.  The space required for the hypothesis
-automaton is $\mathcal{O}(kn)$\cite{Isberner15}. Thus the algorithm requires
-space in $\mathcal{O}(kn + mn)$\cite{Isberner14b,Isberner15}\todo{Compare with
+$\mathcal{O}(m)$\cite{Isberner2015a}.  The space required for the hypothesis
+automaton is $\mathcal{O}(kn)$\cite{Isberner2015a}. Thus the algorithm requires
+space in $\mathcal{O}(kn + mn)$\cite{Isberner2014b,Isberner2015a}\todo{Compare with
   L-star}.
 
 \subsection{Rivest and Schapire's Counterexample Analysis}
 \label{sec:rivest-schap-count}
 In 1993, Rivest and Schapire published a paper on learning without a reset using
-homing sequences\cite{Rivest93}, which will be the scope of discussion of
+homing sequences\cite{Rivest1993}, which will be the scope of discussion of
 \cref{sec:noreset}.
 
 Their paper, however, also included an improvement upon $L^*$, also in the case
@@ -93,8 +93,8 @@ states in the new hypothesis, and adds it to the set $E$ of distinguishing
 extensions. This is in contrast to the original $L^*$ algorithm, which adds
 all prefixes of the counterexample to the set $S$ of access strings.
 
-According to Rivest and Schapire\cite{Rivest93}, and further clarified by
-Steffen\cite{Steffen11} and Isberner\cite{Isberner14a}, there must be a point
+According to Rivest and Schapire\cite{Rivest1993}, and further clarified by
+Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, there must be a point
 where the hypothesis automaton $\hat M$ takes a wrong turn (i.e. there's an
 incorrect transition). Let $e$ be the suffix of the counterexample $\gamma$ from
 the point where the transition of $\hat M$ is inconsistent with the
@@ -115,12 +115,12 @@ hypothesis construction is thus $\mathcal{O}(kn^2 + n\log(m))$, an improvement
 over that of Kearns and Vazarani's (see \cref{sec:complexity-analysis}).
 
 It is worthwhile to note that Isberner~et~al. analyzed and compared multiple
-search strategies by means of an abstract framework\cite{Isberner14a}. Their
+search strategies by means of an abstract framework\cite{Isberner2014a}. Their
 results show that the query complexities of the other search strategy remain the
 same as the original binary search strategy due to Rivest and Schapire, yet
 perform better when put into practice.
 
-\paragraph{Space Complexity} From Isberner's analysis\cite{Isberner14b}, the
+\paragraph{Space Complexity} From Isberner's analysis\cite{Isberner2014b}, the
 space complexity due to the new counterexample analysis is better than that of
 $L^*$, however it is worse than that of Kearns and Vazirani's:
 $\mathcal{O}(kn^2 + nm)$.
