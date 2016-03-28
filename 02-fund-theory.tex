@@ -151,15 +151,18 @@ will be discussed.
 %   principles.
 
 \subsection{An Algorithm for Learning DFAs}
-Angluin defines the $L^*$ algorithm for learning regular sets\cite{Angluin87}.
-The goal of the algorithm is to discover a model that corresponds to the regular
-set (`the target').
+In 1987, Angluin published the $L^*$ algorithm for learning
+DFAs\cite{Angluin87}. Since all of the work on active state machine learning is
+based on the work due to Angluin, a section is devoted to describe the algorithm
+in detail.
 
-The target is said to contain only \textit{words}, where each word consists
-of the concatenation of zero or more items from a certain set of of symbols
-called the input alphabet $\Sigma$.
+The first part explains the data structure which maintains the necessary
+information for constructing a hypothesis. After that, the algorithm is
+described. To get a more intuitive sense of the workings of the algorithm, an
+example demonstration of the algorithm is given. The section then concludes with
+a complexity analysis.
 
-\subsubsection{Data structure}
+\subsubsection{The Data Structure}
 \label{sec:data-structure}
 The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
 \textit{distinguishing extensions} $E$. The answers to the queries are stored in
