@@ -20,7 +20,7 @@ Learnlib \footnote{Supported through bug fixes and available from
 \url{https://github.com/LearnLib/learnlib}} is a library that implements various
 active learning algorithms as well as different configurations for learning
 automata. It has been in development since 2009 \cite{Raffelt2009} and as of
-2015, there has been a total overhaul of the tool \cite{Isberner2015}. To avoid
+2015, there has been a total overhaul of the tool \cite{Isberner2015b}. To avoid
 confusion, the old version was renamed to JLearn.
 
 The current version of this tool consists out of two parts: Automatalib and
@@ -28,7 +28,7 @@ Learnlib.
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{Tool_images/automatalib_architecture.png}
-	\caption{Architecture of Automatalib, source is from \cite{Isberner2015}}
+	\caption{Architecture of Automatalib, source is from \cite{Isberner2015b}}
 	\label{fig:automatalib_arch}
 \end{figure}
 
@@ -39,7 +39,7 @@ algorithms depend on those representations. This makes it easy to add third
 party implementations of automata like the BRICS library \cite{Alur2005}.
 Automatalib includes minimalization algorithms and equivalence testing
 algorithms based on Hopcroft and Karp's near-linear equivalence algorithm
-\cite{hopcroft1971} or the W-Method (X) \todo{Need a reference to the W-Method}
+\cite{Hopcroft1971} or the W-Method (X) \todo{Need a reference to the W-Method}
 for black-box testing.
 
 \begin{figure}[!ht]
@@ -61,9 +61,9 @@ are officially supported are listed below:
 		\item Rivest \& Schapnire's (Summarized in
 		%\ref{sec:rivest-schap-count))
 		\item Shahbaz's \cite{Shahbaz2009}
-		\item Suffix1by1 \cite{irfan2010}
+		\item Suffix1by1 \cite{Irfan2010}
 	\end{itemize}
-	\item Obversation Pack (base) \cite{howar2012a}
+	\item Obversation Pack (base) \cite{Howar2012a}
 	\item Kearns \& Vazirani's (base) (Summarized in
 	%\ref{sec:classification-trees)
 	\item DHC (base) \cite{Merten2012}
@@ -75,13 +75,13 @@ All the algorithms come with both DFA and Mealy versions, expect for DHC and
 NL*.
 
 For finding the counterexamples, Learnlib uses Automatalib as well as other
-methods like randomized tests. More methods can be found in \cite{Isberner2015}.
+methods like randomized tests. More methods can be found in \cite{Isberner2015b}.
 
 Learnlib also offers filters for reducing the amount of queries such as
 elimination of duplicate queries. %Is hier een theoriestuk over? It also
 contains a parallellization component that can speed up the process by using
 multiple teachers and parallel execution of membership
-queries\cite{Henrix15}\cite{Howar2012}.
+queries\cite{Henrix2015}\cite{Howar2012}.
 
 \subsection{Tomte}
 \label{ssec:tomte}
@@ -111,16 +111,16 @@ explained in \cite{Aarts2015}.
 \paragraph{Lookahead Oracle} This oracle is used to annotate events of the SUL
 with information about the impact on the future behaviour of the SUL. This way,
 the Looahead Oracle act as a cache for the Abstractor. The theory and
-implementation of this oracle is found in \cite{Aarts2014} and \cite{tomte14}.
+implementation of this oracle is found in \cite{Aarts2014} and \cite{Tomte2014}.
 
 \paragraph{Abstractor} The Abstractor is the component that creates the mapping
 between the SUL and the learner. The idea behind the Abstractor is to make an
 abstraction of the parameter values of the SUL but leaving the input/output
 symbols unchanged. It uses counterexample-guided abstraction
-refinement\cite{tomte14} for extension of the mapping. In order to make it
+refinement\cite{Tomte2014} for extension of the mapping. In order to make it
 scalable, this component also tries to reduce the length of the counterexample
 by removing loops and single transitions \cite{Koopman2014}. The complete theory
-is found in \cite{tomte14}.
+is found in \cite{Tomte2014}.
 
 \paragraph{Interaction between the modules} The exchange of messages between
 all the modules is as follows(see numbering in figure

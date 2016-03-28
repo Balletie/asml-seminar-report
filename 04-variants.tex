@@ -7,7 +7,7 @@
 \section{Variants}
 \label{sec:variants}
 In the first few years following the introduction of the L* algorithm by
-D. Angluin~\cite{Angluin87}, L* learning was only a theoretical exploration.
+D. Angluin~\cite{Angluin1987}, L* learning was only a theoretical exploration.
 The various improvements described in the previous chapter,
 such as \textit{Classification Trees} \cref{sec:classification-trees} and
 the \textit{TTT} algorithm \cref{sec:ttt}
@@ -15,7 +15,7 @@ made practical applications already more feasible.
 
 In applying L* or improvements thereof to practical applications,
 there were still some practical limitations and restrictions that had to
-be addressed (Steffen 2011, Ch. 6~\cite{Steffen11}).
+be addressed (Steffen 2011, Ch. 6~\cite{Steffen2011}).
 Some of these issues can be summarized as follows:
 \begin{itemize}
   \item Equivalence queries are generally undecidable for black boxes
@@ -41,12 +41,12 @@ testing the inputs and outputs of a system.
 However, exhaustively testing a black box is undecidably hard.
 
 In order to solve this issue model-based testing techniques have been used,
-such as \textit{Chow's W-method}~\cite{deRuiter15, Chow78} or the \textit{WP-method}.
+such as \textit{Chow's W-method}~\cite{deRuiter2015, Chow1978} or the \textit{WP-method}.
 These methods rely on approximating \textit{EQUIV (M)} queries by using
 \textit{MEMBER (w)} queries.
 
 To further research in this area,
-the \textit{ZULU} challenge~\cite{Combe10} was introduced.
+the \textit{ZULU} challenge~\cite{Combe2010} was introduced.
 The \textit{ZULU} challenge asked participants to find a DFA corresponding
 to a certain system as accurately as possible, while imposing a restriction
 on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
@@ -55,7 +55,7 @@ queries completely.
 
 \subsubsection{Chow's W-method}
 \label{sec:chow}
-According to \cite{vasilevskii73}, the maximum number of test sequences needed
+According to \cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
 is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
 and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
@@ -65,7 +65,7 @@ of states in the correct automaton, and k is the size of the input alphabet.
 By refining the test suites and the specification at the same time,
 and by using a divide and conquer approach, the size of the test is
 considerably reduced in comparison to defining the tests from
-the final specification\cite{Ipate07}.
+the final specification\cite{Ipate2007}.
 This is especially beneficial because complex systems are usually
 created in multiple iterations.
 Unlike some other test selection methods the W-method does not require
@@ -77,7 +77,7 @@ implementation with a number of states below a certain upper bound.
 The W-method generates input sequences that reach every state in the
 diagram, checks all the transitions in the diagram and identifies all the
 destination states and verifies them against their counterparts in
-the implementation\cite{Ipate07}.
+the implementation\cite{Ipate2007}.
 To achieve this, the W-method constructs two sets of input sequences:
 \begin{itemize}
   \item A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the
@@ -116,7 +116,7 @@ By exploiting domain specific knowledge, the W-method can be adapted to reduce
 the number of test cases even further.
 When dealing with a networked application for example, there are usually no
 further possible transitions when a connection is closed by a remote machine.
-Exploiting such knowledge can greatly reduce the number of tests necessary\cite{deRuiter15}.
+Exploiting such knowledge can greatly reduce the number of tests necessary\cite{deRuiter2015}.
 
 \subsection{Limiting the amount of membership queries}
 In a theoretical framework the learning algorithm doesn't have to account
@@ -148,7 +148,7 @@ Say we have a mealy automaton $M$ with input alphabet $\Sigma_M$ and output
 alphabet $O$ that we want to transform into a DFA $D$ with input alphabet
 $\Sigma_D$. There are two ways to do this.
 
-The first first way is to define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar03}.
+The first first way is to define $\Sigma_D = \Sigma_M \cup O$ \cite{Hungar2003}.
 This transformation defines that each state in $M$ is also a state in $D$. For
 each transition in $M$ from state $q_a$ to $q_b$ constrained by $i$ and output
 symbol $o$, a new intermediate state $q_t$ is introduced in $D$. Two
@@ -161,7 +161,7 @@ $\sigma$ is added from $q$ to $k$. An example of this transformation can be
 seen in figure \ref{fig:transformation_hungar}.
 
 The second way to transform $M$ is to define $\Sigma_D = \Sigma_M \times O$
-\cite{Makinen01}. In other words, $\Sigma_D$ contains all combinations of
+\cite{Makinen2001}. In other words, $\Sigma_D$ contains all combinations of
 input and output symbols from $M$. This removes the need for intermediate
 states, but can have a significant impact on the size of the input alphabet.
 Similarly to the previous transformation, one error state is defined and all
@@ -246,7 +246,7 @@ learned which is the transformed version of $M$.
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
 Adapting Angluin's $L^*$ algorithm has been adjusted for use with mealy
 machines. The new procedure was first informally described in
-\cite{Margaria04}, and later more rigorously in \cite{Shahbaz09}. In $L^*$ the
+\cite{Margaria2004}, and later more rigorously in \cite{Shahbaz2009}. In $L^*$ the
 membership queries return a boolean value; either it's a member, or it's not.
 For $L^*_{M}$, the membership query is replaced by a output query, which
 returns an output string. The observation table is modified to store these
@@ -285,7 +285,7 @@ In such a system queries are no longer independent of each other,
 since after a certain amount of authentication requests
 the systems behaviour suddenly changes for the same membership queries.
 In order to solve this issue, the L* algorithm implicitly requires a means
-of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest93}.
+of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest1993}.
 
 However, not all systems support a \textit{reset} function.
 As we'll see in \cref{sec:applications}, the system under learning
