@@ -7,10 +7,10 @@
 \begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
-This part introduces the theory fundamental to active state machine learning:
-the notion of Nerode-equivalence, and the original learning algorithm due to
-Angluin called $L^*$. Before this, an explanation of the notation used
-throughout the article is in order.
+This section introduces the theory fundamental to active state machine learning:
+the notion of Nerode-equivalence and the original learning algorithm due to
+Angluin called $L^*$\cite{Angluin1987}. Before this, an explanation of the
+notation used throughout this article is in order.
 
 \subsection{Basic Notation}
 \label{sec:basic-notation}
@@ -18,16 +18,17 @@ throughout the article is in order.
 Define $\Sigma^*$ to be all of the words constructed from the input alphabet
 $\Sigma$. Furthermore, $\epsilon$ represents the empty word. Note that by
 definition it holds that $\epsilon \in \Sigma^*$. The concatenation operator is
-denoted $v \concat w$ for two strings $v,w \in \Sigma^*$, or for elements in the
-input alphabet $\Sigma$. When $\concat$ is applied to sets, it equals the
-concatenation of all the elements in the Cartesian product of the two sets.
+denoted $v \concat w$ for two strings $v,w \in \Sigma^*$. When $\concat$ is
+applied to sets, it equals the concatenation for each element in the Cartesian
+product of the two sets.
 
-\Cref{def:dfa} below shows the definition of a DFA used in the article.
+\Cref{def:dfa} below shows the definition of a deterministic finite automaton
+used in the article.
 
 \begin{definition}[Deterministic Finite Automaton]\label{def:dfa}
   A DFA $M$ is a 5-tuple $(Q, q_0, \Sigma, \delta, F)$ where $Q$ is the set of
-  states, $q_0$ the initial state, $\Sigma$ the input alphabet, $\delta$ the
-  transition function, and $F$ the set of accepting states.
+  states, $q_0$ is the initial state, $\Sigma$ is the input alphabet, $\delta$
+  is the transition function and $F$ is the set of accepting states.
 \end{definition}
 
 For some word $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
