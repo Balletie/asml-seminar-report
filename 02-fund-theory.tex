@@ -275,19 +275,19 @@ $\mathcal{O}(m+n)$, she concludes that the total space required for storing the
 observation table is $\mathcal{O}(m^2n^2 + mn^3)$.
 
 In \cref{sec:improvements} various improvements are discussed. The complexities
-of these improvements usually contain a $k$ term. In order to be able to
+of these improvements usually contain a term $k$. In order to be able to
 directly compare these improvements to $L^*$, we need to slightly modify
-Angluin's result. By keeping $k$ as a variable, the upperbound of the number of
-items in the observation table is $\mathcal{O}(kmn^2)$ (this follows directly
-from the left-hand side of equation \ref{eq:obs_table_items}). Since for each
-item in the observation table exactly one membership query is performed, we
-conclude that this is also the query complexity\footnote{Angluin notes that the
-maximum number of equivalence queries is $n$, thus for $L^*$ the membership
-queries indeed far outnumber the equivalence queries.}. The total space required
-for the observation table becomes $\mathcal{O}(kmn^2) \cdot \mathcal{O}(m+n) =
-O(km^2n^2 + kmn^3)$. This is equal to the total space complexity, since adding
-the space required for the hypothesis (which is $\mathcal{O}(kn)$) does not
-change the complexity.
+Angluin's result. By keeping $k$ as a variable instead of a constant, the
+upperbound of the number of items in the observation table is
+$\mathcal{O}(kmn^2)$ (this follows directly from the left-hand side of equation
+\ref{eq:obs_table_items}). We conclude that the query complexity is also
+$\mathcal{O}(kmn^2)$, since for each item in the observation table exactly one
+membership query is performed.\footnote{Angluin notes that the maximum number of
+equivalence queries is $n$, thus for $L^*$ the membership queries indeed far
+outnumber the equivalence queries.} The total space required for the observation
+table becomes $\mathcal{O}(kmn^2) \cdot \mathcal{O}(m+n) = O(km^2n^2 + kmn^3)$.
+This is equal to the total space complexity, since adding the space required for
+the hypothesis (which is $\mathcal{O}(kn)$) does not change the complexity.
 
 \end{document}
 
