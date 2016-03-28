@@ -57,7 +57,9 @@ From this point of view, the states $p$ and $q$ can be considered equivalent, in
 that they pose no difference for any word processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
 are said to be \textit{Nerode-equivalent}, as described in
-\cref{def:nerode-eq}.
+\cref{def:nerode-eq}. A group of access strings form an \textit{equivalence
+  class} if they are mutually Nerode-equivalent. Thus any set of access strings
+can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
@@ -71,11 +73,11 @@ are said to be \textit{Nerode-equivalent}, as described in
   $\lang$ if and only if there is no distinguishing extension $z$ for $v$
   and $w$. We write $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
 
-  Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of $w$, such
-  that for any word $v$ in $\eqclass{w}{\lang}$ it holds that $v \nero_\lang
-  w$. Lastly, let $\nero_\lang$ be the set of all equivalence classes of
-  $\lang$. For convenience, denote $\nero_M$ to be the same set for some DFA
-  $M$.
+  Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of an access
+  string $w$, such that for any word $v$ in $\eqclass{w}{\lang}$ it holds that
+  $v \nero_\lang w$. Lastly, let $\nero_\lang$ be the set of all equivalence
+  classes of $\lang$. For convenience, denote $\nero_M$ to be the same set for
+  some DFA $M$.
 \end{definition}
 
 %TODO: Cite Myhill and Nerode
