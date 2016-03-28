@@ -57,10 +57,10 @@ states.
 From this point of view, the states $p$ and $q$ can be considered equivalent, in
 that they pose no difference for any word processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
-are said to be \textit{Nerode-equivalent}, as described in
-\cref{def:nerode-eq}. A group of access strings form an \textit{equivalence
-  class} if they are mutually Nerode-equivalent. Thus any set of access strings
-can be partitioned into equivalence classes.
+are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
+and originally published by Nerode\cite{Nerode1958}. A group of access strings
+form an \textit{equivalence class} if they are mutually Nerode-equivalent. Thus
+any set of access strings can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
@@ -81,19 +81,17 @@ can be partitioned into equivalence classes.
   some DFA $M$.
 \end{definition}
 
-%TODO: Cite Myhill and Nerode
 From the above \cref{def:nerode-eq}, the Myhill-Nerode theorem makes a strong
 statement: a language $\lang$ is regular if and only if the set of equivalence
 classes $\nero_\lang$ is a finite set. Indeed, this theorem is stronger than the
 pumping lemma for regular languages, which can only prove that a language is
 \textit{not} regular.
 
-%TODO: Cite Hopcroft and Ullman
 According to Hopcroft and Ullman, it follows from the Myhill-Nerode theorem that
-each regular language $\lang$ has a minimal DFA $M$ which accepts $\lang$. In
-fact, the amount of states of $M$ is precisely equal to the amount of
-equivalence classes in $\nero_\lang$, thus there is a one-to-one correspondence
-between $\nero_\lang$ and the states of $M$.
+each regular language $\lang$ has a minimal DFA $M$ which accepts
+$\lang$\cite{Hopcroft2001}. In fact, the amount of states of $M$ is precisely
+equal to the amount of equivalence classes in $\nero_\lang$, thus there is a
+one-to-one correspondence between $\nero_\lang$ and the states of $M$.
 
 Thus, from a set of equivalence classes $\nero_M$, a DFA $M$ can be constructed
 as follows. Let $\nero_M$ represent the set of states of $M$. For each state
@@ -129,14 +127,6 @@ which will be the scope of discussion of \cref{sec:learn-mealy-mach}.
 
 Before that, however, the original algorithm due to Angluin for learning DFAs
 will be discussed.
-% TODOs:
-% Done: Explain connection minimal DFA <-> equivalence classes
-% Done: Explain principle of active state machine learning: refining a set of
-%   equivalence classes until it equals the set of equivalence classes of the
-%   target DFA.
-% Cite Myhill & Nerode and Hopcroft & Ullman
-% Done: Explain membership and equivalence queries and relationship with key
-%   principles.
 
 \subsection{An Algorithm for Learning DFAs}
 In 1987, Angluin published the $L^*$ algorithm for learning
