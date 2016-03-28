@@ -192,8 +192,8 @@ has to maintain two invariants related to the observation table: one of closure
 and of consistence, defined in \cref{def:closure,def:consistence} respectively.
 
 \begin{definition}[Closure]\label{def:closure}
-  Let $t \in S\concat \Sigma$. An observation table is \textit{closed} if there
-  exists some $s \in S$ such that $\row(t) = \row(s)$.
+  An observation table is \textit{closed} if for all $t \in S\concat \Sigma$
+  there exists some $s \in S$ such that $\row(t) = \row(s)$.
 \end{definition}
 \begin{definition}[Consistence]\label{def:consistence}
   Let $s_1, s_2 \in S$ be two strings such that $\row(s_1) = \row(s_2)$. An
