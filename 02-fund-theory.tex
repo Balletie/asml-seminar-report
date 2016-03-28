@@ -174,19 +174,21 @@ While learning, the algorithm maintains a set of access strings $S$ (see
 are split into an upper part and a lower part, which are labelled by items from
 $S$ and $S \concat \Sigma$ respectively. Lastly, the cells corresponding with a
 row $s$ and a column $e$, are labelled with $1$ or $0$ depending on whether
-$s \concat e \in \lang_M$. The observation table is initialized with
-$S = E = \{\epsilon\}$, as can be seen in \cref{tbl:observation_1}.
+$s \concat e \in \lang_M$, which is denoted as $T(s,e)$. The observation table
+is initialized with $S = E = \{\epsilon\}$, as can be seen in
+\cref{tbl:observation_1}.
 
 An observation table provides sufficient information for constructing a
-hypothesis, as each row is a representation of an equivalence class of
-$\lang_M$. Let $\row(s)$ represent the finite function $f : E \rightarrow \bool$
-such that $f(e) = (s \concat e \in \lang_M)$. Then $\row(s)$ has a direct
-correspondence to the equivalence class $\eqclass{s}{\lang_M}$. Moreover, the
-rows in the lower part of the observation table represents the equivalence
-classes needed for constructing the state transitions. Lastly, since the table
-is initialized with $\epsilon$, the initial state can also be constructed. Thus
-a hypothesis automaton $\hat M$ can be constructed following the same procedure
-described in \cref{sec:nerode-equiv-equiv}.
+hypothesis, as will be explained now. Let $\row(s)$ represent the finite
+function $f : E \rightarrow \{0,1\}$ such that $f(e) = T(s,e)$. Then $\row(s)$
+has a direct correspondence to the equivalence class $\eqclass{s}{\lang_M}$,
+since if $\row(v) = \row(w)$ for some $v,w \in S$, then there is no suffix
+$e \in E$ such that $T(v,e) \neq T(w,e)$. Moreover, the rows in the lower part
+of the observation table represents the equivalence classes needed for
+constructing the state transitions. Lastly, since the table is initialized with
+$\epsilon$, the initial state can also be constructed. Thus a hypothesis
+automaton $\hat M$ can be constructed following the same procedure described in
+\cref{sec:nerode-equiv-equiv}.
 
 However, to ensure that the constructed transitions are correct, the algorithm
 has to maintain two invariants related to the observation table: one of closure
@@ -221,11 +223,10 @@ executing the required membership queries.
 
 Furthermore, if the property of consistence (\cref{def:consistence}) is not
 satisfied, then there exists some $s_1,s_2 \in S$, $e \in E$ and
-$\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but the value in the cell
-corresponding with $s_1\concat\sigma\concat e$ is unequal with the one
-corresponding with $s_2\concat\sigma\concat e$. Thus, $\sigma\concat e$ defines
-a new distinguishing extension, and is added to $E$. Again, the table is filled
-by executing membership queries where needed.
+$\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but
+$T(s_1,\sigma\concat e)$ is unequal with $T(s_2,\sigma\concat e)$. Thus,
+$\sigma\concat e$ defines a new distinguishing extension, and should be added to
+$E$. Again, the table is filled by executing membership queries where needed.
 
 \paragraph{The second phase} By now the observation table is both closed and
 consistent. The algorithm uses the observation table to construct a hypothesis
