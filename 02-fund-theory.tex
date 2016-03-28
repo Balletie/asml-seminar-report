@@ -164,77 +164,79 @@ a complexity analysis.
 
 \subsubsection{The Data Structure}
 \label{sec:data-structure}
-The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
-\textit{distinguishing extensions} $E$. The answers to the queries are stored in
-a two-dimensional table called an observation table. The columns of this table
-are headered by the items of $E$. The rows are split into two parts. The rows of
-the upper and lower parts are headered by items from $S$ and $S \concat \Sigma$
-respectively, where `$\concat$' is the concatenation operator.
+While learning, the algorithm maintains a set of \textit{access strings} $S$
+(see \cref{def:acc-str}) and a set of \textit{distinguishing extensions} $E$
+(see \cref{def:dist-ext}) in a two-dimensional table called the
+\textit{observation table}. The columns of this table are labelled by the items
+of $E$. The rows are split into an upper part and a lower part, which are
+labelled by items from $S$ and $S \concat \Sigma$ respectively. Lastly, the
+cells corresponding with a row $s$ and a column $e$, are labelled with $1$ or
+$0$ depending on whether $s \concat e \in \lang_M$. The observation table is
+initialized with $S = E = \{\epsilon\}$, as can be seen in
+\cref{tbl:observation_1}.
 
-% not quite happy with this phrasing yet.. 
-Rows in the observation table correspond to state candidates for the hypothesis.
-Two state candidates are considered to represent the same state if they react
-identically under the same input (i.e. if the corresponding rows have the same
-values under all columns). Consider a cell at the row $x$ labelled by access
-string $s$ and column $e$. The value at column $e$ represents whether applying
-the string $e$ from the state corresponding to $x$ results in an accepting
-state. Equivalently, this can be interpreted to mean whether applying $s \concat
-e$ from the initial state results in an accepting state.
+An observation table provides sufficient information for constructing a
+hypothesis, as each row is a representation of an equivalence class of
+$\lang_M$. Let $\row(s)$ represent the finite function $f : E \rightarrow \bool$
+such that $f(e) = (s \concat e \in \lang_M)$. Then $\row(s)$ has a direct
+correspondence to the equivalence class $\eqclass{s}{\lang_M}$. Moreover, the
+rows in the lower part of the observation table represents the equivalence
+classes needed for constructing the state transitions. Lastly, since the table
+is initialized with $\epsilon$, the initial state can also be constructed. Thus
+a hypothesis automaton $\hat M$ can be constructed following the same procedure
+described in \cref{sec:nerode-equiv-equiv}.
 
-\subsubsection {The algorithm}
-\todo{Introduce equivalence classes}
+However, to ensure that the constructed transitions are correct, the algorithm
+has to maintain two invariants related to the observation table: one of closure
+and of consistence, defined in \cref{def:closure,def:consistence} respectively.
 
-The algorithm begins by initializing $S$ and $E$ to $\{\epsilon\}$ (where
-$\epsilon$ is the empty access string) and performing membership queries to fill
-in the observation table. After the initialization is done, the main loop runs
-until a hypothesis matching the target is found. The main loop is split up into
-two phases. The first phase is repeated until a closed and consistent model is
-found.
+\begin{definition}[Closure]\label{def:closure}
+  Let $t \in S\concat \Sigma$. An observation table is \textit{closed} if there
+  exists some $s \in S$ such that $\row(t) = \row(s)$.
+\end{definition}
+\begin{definition}[Consistence]\label{def:consistence}
+  Let $s_1, s_2 \in S$ be two strings such that $\row(s_1) = \row(s_2)$. An
+  observation table is \textit{consistent} if for all $\sigma \in \Sigma$ it
+  holds that $\row(s_1\concat\sigma) = \row(s_2\concat\sigma)$.
+\end{definition}
 
-A model is called inconsistent if and only if the observation table contains
-distinct rows with identical values under $E$ (i.e. the rows appear to represent
-the same state), but inputting some $\sigma \in \Sigma$ results in rows with
-different values for some $e \in E$. Thus if a model is found to be
-inconsistent, feeding the input $\sigma \concat e$ results in different states,
-and so $\sigma \concat e$ is discovered to be a distinguishing experiment.
-Therefore, $\sigma \concat e$ is added to $E$, making the two rows in $S$
-distinct under the columns of $E$, thus removing the inconsistency. New
-membership queries are performed in order to fill in the blank cells in the
-table.
+\subsubsection{The Algorithm}
+\label{sec:algorithm}
+As said in the previous section, the algorithm begins by initializing $S$ and
+$E$ to $\{\epsilon\}$. The initial cells of the table are filled by performing
+membership queries. After the initialization is done, the algorithm enters the
+main loop, which is split up into two phases. The first phase ensures the
+properties of closure and consistence, and is repeated until these properties
+are satisfied. In the second phase the algorithm constructs a hypothesis
+automaton, and uses it to perform an equivalence query.
 
-A model is considered to be closed if $S \concat \Sigma$ does not contain any
-states that are not in $S$. If there is a row $x$ in $S \concat \Sigma$ that is
-not in $S$, then it is unknown how $x$ reacts to $\Sigma$. This means that the
-current hypothesis of the state machine does not describe what happens in state
-$x \concat \Sigma$. To address this problem, $x$ is moved to $S$ and for each $y
-\in x \concat \Sigma$, a row labelled by $y$ is added to the lower part of the
-observation table. The values in the new rows in the lower part of the table are
-set by executing the required membership queries.
+\paragraph{The first phase} If the property of closure (\cref{def:closure}) is
+not satisfied, then there exists some $t \in S \concat \Sigma$ such that
+$\row(t) \neq \row(s)$ for all $s \in S$. This means that when constructing a
+hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
+be made. To address this problem, $t$ is added to $S$ and the table is filled by
+executing the required membership queries.
 
-In the second phase of the algorithm, the observation table is both closed and
-consistent. The algorithm uses the observation table to construct a hypothesis.
-Each row from the table represents a candidate state, but since the table can
-contain duplicate rows, multiple rows (and therefore, candidate states) can map
-to the same state. The hypothesis contains one state for each unique row in the
-table. Let $f(x)$ denote the state in the hypothesis corresponding to the access
-string $x$. The initial state in the hypothesis is the state $f(\sigma)$. All
-states corresponding to rows that have a $1$ under the column $\epsilon$ are
-accepting states. For each unique row in the upper part of the table, let $s \in
-S$ denote the label corresponding to the row. Then the hypothesis contains a
-transition for each $\sigma \in \Sigma$ from $f(s)$ to $f(s \concat \sigma)$,
-constrained by $\sigma$. Note that since the observation table is closed, the
-upper part of the table contains all unique rows, so $\row(s \concat \sigma)$
-can always be looked up in the lower part of the table.
+Furthermore, if the property of consistence (\cref{def:consistence}) is not
+satisfied, then there exists some $s_1,s_2 \in S$, $e \in E$ and
+$\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but the value in the cell
+corresponding with $s_1\concat\sigma\concat e$ is unequal with the one
+corresponding with $s_2\concat\sigma\concat e$. Thus, $\sigma\concat e$ defines
+a new distinguishing extension, and is added to $E$. Again, the table is filled
+by executing membership queries where needed.
 
-Once the hypothesis is constructed, the equivalence query is executed upon it.
-If the hypothesis matches the target then the algorithm stops. If instead a
-counterexample is replied, the counterexample and all of its prefixes are added
-to $S$, after which $S \concat \Sigma$ is updated and the algorithm moves back
-to phase 1.
+\paragraph{The second phase} By now the observation table is both closed and
+consistent. The algorithm uses the observation table to construct a hypothesis
+in the manner defined in \cref{sec:nerode-equiv-equiv}. Once the hypothesis is
+constructed, the equivalence query is executed upon it. If the response is
+``yes'', the algorithm is done and halts. If instead the response is a
+counterexample, the counterexample and all of its prefixes are added to $S$,
+after which $S \concat \Sigma$ is updated and the algorithm moves back to phase
+1.
 
-\subsubsection {Example run}
-
-Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
+\subsubsection{Example run}
+\label{sec:example-run}
+Suppose $L^*$ is used to learn the target DFA $M$ of figure \ref{fig:target}.
 The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
 and $E$ to $\{\epsilon\}$, and performs three membership queries to build the
 initial observation table of table \ref{tbl:observation_1}.
@@ -368,7 +370,7 @@ $bbbb$     & $0$        & $0$   & $0$  \\
 
 Since the table is both closed and consistent, the algorithm moves on to phase 2
 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
-equivalence query with the hypothesis as parameter. Since it does not match $U$,
+equivalence query with the hypothesis as parameter. Since it does not match $M$,
 the oracle will provide a counterexample. Assume the counterexample provided is
 $bbb$ (it could also have provided other counterexamples such as $bbbbbbb$).
 Now, the counterexample and all prefixes are added to $S$. After performing the
