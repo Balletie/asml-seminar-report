@@ -95,8 +95,8 @@ fact, the amount of states of $M$ is precisely equal to the amount of
 equivalence classes in $\nero_\lang$, thus there is a one-to-one correspondence
 between $\nero_\lang$ and the states of $M$.
 
-Thus, from a set of equivalence classes $\nero_M$, $M$ can be constructed as
-follows. Let $\nero_M$ represent the set of states of $M$. For each state
+Thus, from a set of equivalence classes $\nero_M$, a DFA $M$ can be constructed
+as follows. Let $\nero_M$ represent the set of states of $M$. For each state
 $\eqclass{w}{\lang_M}$ and for each $\sigma \in \Sigma$, an outgoing transition
 can be constructed to the state $\eqclass{w\concat\sigma}{\lang_M}$. The initial
 state would be represented by the equivalence class
@@ -131,7 +131,7 @@ is no notion of a MAT or of queries. The two types of queries are the following:
 \end{description}
 
 Note that for the equivalence query, the hypothesis can be constructed in a
-manner similar to the construction of a minimal $DFA$ described in the previous
+manner similar to the construction of a minimal DFA described in the previous
 section.
 
 If a learning algorithm ensures progress at each step using the above queries,
