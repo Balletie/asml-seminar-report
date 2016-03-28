@@ -115,32 +115,17 @@ a set of equivalence classes $\nero_{\hat M}$, until it eventually converges to
 the set of equivalence classes $\nero_M$ of the target.
 
 To ensure progress at each step, any active learning algorithm has access to a
-so-called \textit{minimally adequate teacher} (MAT) which can answer two types
-of queries concerning the target. This is what sets \textit{active} state
-machine learning apart from \textit{passive} state machine learning, where there
-is no notion of a MAT or of queries. The two types of queries are the following:
+so-called \textit{Teacher} which can answer queries concerning the target. This
+is what sets \textit{active} state machine learning apart from \textit{passive}
+state machine learning, where there is no notion of a Teacher or of queries.
 
-\begin{description}
-\item[Membership Query] Given a word, answers ``yes'' or ``no'' depending on
-  whether it is accepted by the target $M$ or not.
-\item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
-  $\hat M$ equals $M$, in which case the algorithm is finished. If the
-  hypothesis is not equal, it provides a counterexample $\gamma$. The
-  counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
-  is an example of an incorrect equivalence class.
-\end{description}
-
-Note that for the equivalence query, the hypothesis can be constructed in a
-manner similar to the construction of a minimal DFA described in the previous
-section.
-
-If a learning algorithm ensures progress at each step using the above queries,
-the algorithm is guaranteed to converge to a target automaton $M$. This holds
-because $\nero_M$ must be finite for some DFA $M$ according to the Myhill-Nerode
-theorem, thus the amount of progress that can be made must also be finite. The
-same can be said for other types of automata for which the Myhill-Nerode theorem
-is applicable. An example is the Mealy machine, which will be the scope of
-discussion of \cref{sec:variants}.
+Note that if a learning algorithm ensures progress at each step by asking
+questions to a Teacher, the algorithm is guaranteed to converge to a target
+automaton $M$. This holds because $\nero_M$ must be finite for some DFA $M$
+according to the Myhill-Nerode theorem, thus the amount of progress that can be
+made must also be finite. The same can be said for other types of automata for
+which the Myhill-Nerode theorem is applicable. An example is the Mealy machine,
+which will be the scope of discussion of \cref{sec:learn-mealy-mach}.
 
 Before that, however, the original algorithm due to Angluin for learning DFAs
 will be discussed.
@@ -159,11 +144,26 @@ DFAs\cite{Angluin1987}. Since all of the work on active state machine learning i
 based on the work due to Angluin, a section is devoted to describe the algorithm
 in detail.
 
-The first part explains the data structure which maintains the necessary
-information for constructing a hypothesis. After that, the algorithm is
-described. To get a more intuitive sense of the workings of the algorithm, an
-example demonstration of the algorithm is given. The section then concludes with
-a complexity analysis.
+Central to Angluin's style of active state machine learning is the notion of a
+\textit{minimally adequate} Teacher (MAT). Such a Teacher is one that can answer
+two types of queries:
+
+\begin{description}
+\item[Membership Query] Given a word, answers ``yes'' or ``no'' depending on
+  whether it is accepted by the target $M$ or not.
+\item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
+  $\hat M$ equals $M$, in which case the algorithm is finished. If the
+  hypothesis is not equal, it provides a counterexample $\gamma$. The
+  counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
+  is an example of an incorrect equivalence class.
+\end{description}
+
+Now that the framework in which the algorithm operates is known, the workings of
+the algorithm itself can be explained. The first part explains the data
+structure which maintains the necessary information for constructing a
+hypothesis. After that, the algorithm is described. To get a more intuitive
+sense of how the algorithm works, an example run of the algorithm is given. The
+section then concludes with a complexity analysis.
 
 \subsubsection{The Data Structure}
 \label{sec:data-structure}
