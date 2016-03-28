@@ -335,11 +335,11 @@ $bbbb$     & $0$        \\
 $\epsilon$ & $0$        & $0$ \\ 
 $b$        & $0$        & $0$ \\ 
 $bb$       & $0$        & $1$ \\ 
-$bbb$      & $1$        & $1$ \\ \hline \hline
+$bbb$      & $1$        & $0$ \\ \hline \hline
 $a$        & $0$        & $0$ \\
 $ba$       & $0$        & $0$ \\
-$bba$      & $0$        & $0$ \\
-$bbba$     & $1$        & $1$ \\
+$bba$      & $0$        & $1$ \\
+$bbba$     & $1$        & $0$ \\
 $bbbb$     & $0$        & $0$ \\
 \hline
 \end{tabular}
@@ -356,11 +356,11 @@ $bbbb$     & $0$        & $0$ \\
 $\epsilon$ & $0$        & $0$   & $0$  \\ 
 $b$        & $0$        & $0$   & $1$  \\ 
 $bb$       & $0$        & $1$   & $0$  \\ 
-$bbb$      & $1$        & $1$   & $0$  \\ \hline \hline
+$bbb$      & $1$        & $0$   & $0$  \\ \hline \hline
 $a$        & $0$        & $0$   & $0$  \\
 $ba$       & $0$        & $0$   & $1$  \\
-$bba$      & $0$        & $0$   & $0$  \\
-$bbba$     & $1$        & $1$   & $0$  \\
+$bba$      & $0$        & $1$   & $0$  \\
+$bbba$     & $1$        & $0$   & $0$  \\
 $bbbb$     & $0$        & $0$   & $0$  \\
 \hline
 \end{tabular}
@@ -388,6 +388,45 @@ membership queries now results in table \ref{tbl:observation_4}. The table is
 now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns `yes' and the algorithm terminates.
+
+\subsection {Complexity}
+
+% Note: Angluin considers k to be constant, and therefore drops the term in the
+% asymptotic upperbounds of both the query complexity and space complexity. She
+% also doesn't explicitly state the required number of membership queries, but
+% it is easy to see that this will be equal to the number of cells in the
+% observation table.
+
+Since the runtime complexity is dependent on the implementation of the queries
+(which are application specific), it is more useful to consider the number of
+queries made. Specifically, the number of membership queries, as these normally
+far outnumber the equivalence queries. The asymptotic number of membership
+queries is called the \textit{query complexity}.
+
+Angluin states that the number of items in the observation table is at most
+\begin{equation} \label{eq:obs_table_items}
+(k+1)(n+m(n-1))n = \mathcal{O}(mn^2)
+\end{equation}
+In this equation $k = |\Sigma|$, $n$ is the number of states in the minimum
+acceptor of the target and $m$ is equal to length of the longest
+counterexample\cite{Angluin1987}. Since each item has a length of at most
+$\mathcal{O}(m+n)$, she concludes that the total space required for storing the
+observation table is $\mathcal{O}(m^2n^2 + mn^3)$.
+
+In \cref{sec:improvements} various improvements are discussed. The complexities
+of these improvements usually contain a term $k$. In order to be able to
+directly compare these improvements to $L^*$, we need to slightly modify
+Angluin's result. By keeping $k$ as a variable instead of a constant, the
+upperbound of the number of items in the observation table is
+$\mathcal{O}(kmn^2)$ (this follows directly from the left-hand side of equation
+\ref{eq:obs_table_items}). We conclude that the query complexity is also
+$\mathcal{O}(kmn^2)$, since for each item in the observation table exactly one
+membership query is performed.\footnote{Angluin notes that the maximum number of
+equivalence queries is $n$, thus for $L^*$ the membership queries indeed far
+outnumber the equivalence queries.} The total space required for the observation
+table becomes $\mathcal{O}(kmn^2) \cdot \mathcal{O}(m+n) = O(km^2n^2 + kmn^3)$.
+This is equal to the total space complexity, since adding the space required for
+the hypothesis (which is $\mathcal{O}(kn)$) does not change the complexity.
 
 \end{document}
 
