@@ -44,7 +44,7 @@ uniquely identifies a distinct equivalence class of the target automaton
 $M$. When we construct a hypothesis, each equivalence class (and thus each
 access string), corresponds to a state in our hypothesis automaton $\hat M$.
 
-Howar~et~al. state that a discrimination tree is \textit{redundancy-free}
+Howar~et~al. state that a classification tree is \textit{redundancy-free}
 because each state in $\hat M$ is distinguished by one distinguishing extension,
 as opposed to observation tables where states are distinguished by a fixed
 amount of distinguishing extensions\cite{Howar2014}.
@@ -66,7 +66,7 @@ total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
 improvement over that of $L^*$.
 
 \paragraph{Space Complexity} In chapter 4 of his dissertation, Isberner analyzed
-the space complexity of discrimination-tree based learners as follows: a
+the space complexity of classification tree based learners as follows: a
 degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner node
 is labeled by a distinguishing extension of length
 $\mathcal{O}(m)$\cite{Isberner2015a}.  The space required for the hypothesis
@@ -124,7 +124,7 @@ $L^*$, however it is worse than that of Kearns and Vazirani's:
 $\mathcal{O}(kn^2 + nm)$.
 
 In the next section we will show another version of the algorithm due to
-Isberner~et~al., which combines Kearns and Vazirani's discrimination tree, and
+Isberner~et~al., which combines Kearns and Vazirani's classification tree, and
 Rivest and Schapire-style counterexample analysis.  \todo{actually write this
   section?}
 
