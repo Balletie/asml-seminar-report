@@ -2,103 +2,234 @@
 \onlyifstandalone{\input{common}}
 \usepackage{amsmath}
 \DeclareMathOperator{\row}{row}
-
 \usetikzlibrary{automata,arrows}
-
 
 \begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
+This chapter introduces the theory fundamental to active state machine learning:
+the notion of Nerode-equivalence and the original learning algorithm due to
+Angluin called $L^*$\cite{Angluin1987}. Before this, an explanation of the
+notation used throughout this article is in order.
 
-Angluin defines the $L^*$ algorithm for learning regular sets\cite{Angluin1987}.
-The goal of the algorithm is to discover a model that corresponds to the regular
-set (`the target').
+\subsection{Basic Notation}
+\label{sec:basic-notation}
 
-The target is said to contain only \textit{words}, where each word consists
-of the concatenation of zero or more items from a certain set of of symbols
-called the input alphabet $\Sigma$.
+Define $\Sigma^*$ to be all of the strings constructed from the input alphabet
+$\Sigma$. Furthermore, $\epsilon$ represents the empty string. Note that by
+definition it holds that $\epsilon \in \Sigma^*$. The concatenation operator is
+denoted $v \concat w$ for two strings $v,w \in \Sigma^*$. When $\concat$ is
+applied to sets, it equals the concatenation for each element in the Cartesian
+product of the two sets.
 
-The algorithm requires a so-called \textit{minimally adequate teacher} which can
-answer two types of questions about the target. The first is a membership query;
-it answers whether a given word is accepted by the target. The second is an
-equivalence query: given a hypothesis, it answers `yes' if the hypothesis
-exactly matches the target, or provides counterexample (i.e. a word that is in
-the hypothesis but not in the target or vice versa) if it does not. Using these
-two questions, any regular set can be learned.
+\Cref{def:dfa} below shows the definition of a deterministic finite automaton
+used in the article.
 
-\subsection{Data structure}
+\begin{definition}[Deterministic Finite Automaton]\label{def:dfa}
+  A DFA $M$ is a 5-tuple $(Q, q_0, \Sigma, \delta, F)$ where $Q$ is the set of
+  states, $q_0$ is the initial state, $\Sigma$ is the input alphabet, $\delta$
+  is the transition function and $F$ is the set of accepting states.
+\end{definition}
+
+For some string $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
+processing $w$ from state $q$. Furthermore, denote
+$\exec{M}{w} = \dstar{q_0}{w}$ to be the state reached by processing $w$ from
+the initial state $q_0$, as used by Kearns and Vazirani\cite{Kearns1994}. Then
+$w$ is called the \textit{access string} of the state $\exec{M}{w}$ (see
+\cref{def:acc-str}). Lastly, let $\lang_M$ denote the regular language accepted
+by $M$; that is $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
+
+\begin{definition}[Access String]\label{def:acc-str}
+  For some alphabet $\Sigma$ and a state $q \in Q$ of some DFA $M$, a string
+  $w \in \Sigma^*$ is called an \textit{access string} of $q$ if
+  $\exec{M}{w} = q$
+\end{definition}
+
+\subsection{Nerode-Equivalence and Equivalence Classes}
+\label{sec:nerode-equiv-equiv}
+It is possible for a DFA $M$ to contain states which are redundant. That is, for
+some states, any string processed from all of those states leads to an accepting
+state or a rejecting state. More formally, for two states $p,q \in Q$ and a
+string $w \in \Sigma^*$, both $\dstar{p}{w}$ and $\dstar{q}{w}$ are either an
+accepting state or a rejecting state. There is no $w$ which
+\textit{distinguishes} the two states.
+
+From this point of view, the states $p$ and $q$ can be considered equivalent, in
+that they pose no difference for any string processed from those states to be
+accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
+are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
+and originally published by Nerode\cite{Nerode1958}. A group of access strings
+form an \textit{equivalence class} if they are mutually Nerode-equivalent. Thus
+any set of access strings can be partitioned into equivalence classes.
+
+\begin{definition}[Distinguishing Extension]\label{def:dist-ext}
+  Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
+  $z$ be strings in $\Sigma^*$. Then $z$ is a \textit{distinguishing extension}
+  for $v$ and $w$ if and only if \textit{exactly one} of $v \concat z$ and
+  $w \concat z$ is in $\lang$.
+\end{definition}
+\begin{definition}[Nerode-equivalence]\label{def:nerode-eq}
+  For some language $\lang$ over an alphabet $\Sigma$, define two strings
+  $v,w \in \Sigma^*$ to be \textit{Nerode-equivalent} with respect to $\lang$ if
+  and only if there is no distinguishing extension $z$ for $v$ and $w$. We write
+  $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
+
+  Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of an access
+  string $w$, such that for any string $v$ in $\eqclass{w}{\lang}$ it holds that
+  $v \nero_\lang w$. Lastly, let $\nero_\lang$ be the set of all equivalence
+  classes of $\lang$. For convenience, denote $\nero_M$ to be the same set for
+  some DFA $M$.
+\end{definition}
+
+From the above \cref{def:nerode-eq}, the Myhill-Nerode theorem makes a strong
+statement: a language $\lang$ is regular if and only if the set of equivalence
+classes $\nero_\lang$ is a finite set. Indeed, this theorem is stronger than the
+pumping lemma for regular languages, which can only prove that a language is
+\textit{not} regular.
+
+According to Hopcroft and Ullman, it follows from the Myhill-Nerode theorem that
+each regular language $\lang$ has a minimal DFA $M$ which accepts
+$\lang$\cite{Hopcroft2001}. In fact, the amount of states of $M$ is precisely
+equal to the amount of equivalence classes in $\nero_\lang$, thus there is a
+one-to-one correspondence between $\nero_\lang$ and the states of $M$.
+
+Thus, from a set of equivalence classes $\nero_M$, a DFA $M$ can be constructed
+as follows. Let $\nero_M$ represent the set of states of $M$. For each state
+$\eqclass{w}{\lang_M}$ and for each $\sigma \in \Sigma$, an outgoing transition
+can be constructed to the state $\eqclass{w\concat\sigma}{\lang_M}$. The initial
+state would be represented by the equivalence class
+$\eqclass{\epsilon}{\lang_M}$. Lastly, a state $\eqclass{w}{\lang_M}$ is an
+accepting state if and only if $\eqclass{w}{\lang_M} \subseteq \lang_M$.
+
+\subsection{Key Principle of Active Learning}
+\label{sec:key-principle-active}
+In active state machine learning, the goal is to learn an unknown finite state
+automaton $M$ (the \textit{target}). The key principle of all active state
+machine learning algorithms is to progressively refine a hypothesis automaton
+$\hat M$ until it equals $M$.
+
+Put in terms of equivalence classes, a learning algorithm progressively refines
+a set of equivalence classes $\nero_{\hat M}$, until it eventually converges to
+the set of equivalence classes $\nero_M$ of the target.
+
+To ensure progress at each step, any active learning algorithm has access to a
+so-called \textit{Teacher} which can answer queries concerning the target. This
+is what sets \textit{active} state machine learning apart from \textit{passive}
+state machine learning, where there is no notion of a Teacher or of queries.
+
+Note that if a learning algorithm ensures progress at each step by asking
+questions to a Teacher, the algorithm is guaranteed to converge to a target
+automaton $M$. This holds because $\nero_M$ must be finite for some DFA $M$
+according to the Myhill-Nerode theorem, thus the amount of progress that can be
+made must also be finite. The same can be said for other types of automata for
+which the Myhill-Nerode theorem is applicable. An example is the Mealy machine,
+which will be the scope of discussion of \cref{sec:learn-mealy-mach}.
+
+Before that, however, the original algorithm due to Angluin for learning DFAs
+will be discussed.
+
+\subsection{An Algorithm for Learning DFAs}
+In 1987, Angluin published the $L^*$ algorithm for learning
+DFAs\cite{Angluin1987}. Since all of the work on active state machine learning is
+based on the work due to Angluin, a section is devoted to describe the algorithm
+in detail.
+
+Central to Angluin's style of active state machine learning is the notion of a
+\textit{minimally adequate} Teacher (MAT). Such a Teacher is one that can answer
+two types of queries:
+
+\begin{description}
+\item[Membership Query] Given a string, answers ``yes'' or ``no'' depending on
+  whether it is accepted by the target $M$ or not.
+\item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
+  $\hat M$ equals $M$, in which case the algorithm is finished. If the
+  hypothesis is not equal to $M$, it provides a counterexample $\gamma$. The
+  counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
+  is an example of an incorrect equivalence class.
+\end{description}
+
+Now that the framework in which the algorithm operates is known, the workings of
+the algorithm itself can be explained. The first part explains the data
+structure which maintains the necessary information for constructing a
+hypothesis. After that, the algorithm is described. To get a more intuitive
+sense of how the algorithm works, an example run of the algorithm is given. The
+section then concludes with a complexity analysis.
+
+\subsubsection{The Data Structure}
 \label{sec:data-structure}
-The algorithm keeps track of a set of \textit{access strings} $S$ and a set of
-\textit{distinguishing extensions} $E$. The answers to the queries are stored in
-a two-dimensional table called an observation table. The columns of this table
-are headered by the items of $E$. The rows are split into two parts. The rows of
-the upper and lower parts are headered by items from $S$ and $S \concat \Sigma$
-respectively, where `$\concat$' is the concatenation operator.
+While learning, the algorithm maintains a set of access strings $S$ (see
+\cref{def:acc-str}) and a set of distinguishing extensions $E$ (see
+\cref{def:dist-ext}) in a two-dimensional table called the \textit{observation
+  table}. The columns of this table are labelled by the items of $E$. The rows
+are split into an upper part and a lower part, which are labelled by items from
+$S$ and $S \concat \Sigma$ respectively. Lastly, the cells corresponding with a
+row $s$ and a column $e$, are labelled with $1$ or $0$ depending on whether
+$s \concat e \in \lang_M$, which is denoted as $T(s,e)$. The observation table
+is initialized with $S = E = \{\epsilon\}$, as can be seen in
+\cref{tbl:observation_1}.
 
-% not quite happy with this phrasing yet.. 
-Rows in the observation table correspond to state candidates for the hypothesis.
-Two state candidates are considered to represent the same state if they react
-identically under the same input (i.e. if the corresponding rows have the same
-values under all columns). Consider a cell at the row $x$ labelled by access
-string $s$ and column $e$. The value at column $e$ represents whether applying
-the string $e$ from the state corresponding to $x$ results in an accepting
-state. Equivalently, this can be interpreted to mean whether applying $s \concat
-e$ from the initial state results in an accepting state.
+An observation table provides sufficient information for constructing a
+hypothesis, as will be explained now. Let $\row(s)$ represent the finite
+function $f : E \rightarrow \{0,1\}$ such that $f(e) = T(s,e)$. Then $\row(s)$
+has a direct correspondence to the equivalence class $\eqclass{s}{\lang_M}$,
+since if $\row(v) = \row(w)$ for some $v,w \in S$, then there is no suffix
+$e \in E$ such that $T(v,e) \neq T(w,e)$. Moreover, the rows in the lower part
+of the observation table represents the equivalence classes needed for
+constructing the state transitions. Lastly, since the table is initialized with
+$\epsilon$, the initial state can also be constructed. Thus a hypothesis
+automaton $\hat M$ can be constructed following the same procedure described in
+\cref{sec:nerode-equiv-equiv}.
 
-\subsection {The algorithm}
-\todo{Introduce equivalence classes}
+However, to ensure that the constructed transitions are correct, the algorithm
+has to maintain two invariants related to the observation table: one of closure
+and of consistence, defined in \cref{def:closure,def:consistence} respectively.
 
-The algorithm begins by initializing $S$ and $E$ to $\{\epsilon\}$ (where
-$\epsilon$ is the empty access string) and performing membership queries to fill
-in the observation table. After the initialization is done, the main loop runs
-until a hypothesis matching the target is found. The main loop is split up into
-two phases. The first phase is repeated until a closed and consistent model is
-found.
+\begin{definition}[Closure]\label{def:closure}
+  An observation table is \textit{closed} if for all $t \in S\concat \Sigma$
+  there exists some $s \in S$ such that $\row(t) = \row(s)$.
+\end{definition}
+\begin{definition}[Consistence]\label{def:consistence}
+  Let $s_1, s_2 \in S$ be two strings such that $\row(s_1) = \row(s_2)$. An
+  observation table is \textit{consistent} if for all $\sigma \in \Sigma$ it
+  holds that $\row(s_1\concat\sigma) = \row(s_2\concat\sigma)$.
+\end{definition}
 
-A model is called inconsistent if and only if the observation table contains
-distinct rows with identical values under $E$ (i.e. the rows appear to represent
-the same state), but inputting some $\sigma \in \Sigma$ results in rows with
-different values for some $e \in E$. Thus if a model is found to be
-inconsistent, feeding the input $\sigma \concat e$ results in different states,
-and so $\sigma \concat e$ is discovered to be a distinguishing experiment.
-Therefore, $\sigma \concat e$ is added to $E$, making the two rows in $S$
-distinct under the columns of $E$, thus removing the inconsistency. New
-membership queries are performed in order to fill in the blank cells in the
-table.
+\subsubsection{The Algorithm}
+\label{sec:algorithm}
+As said in the previous section, the algorithm begins by initializing $S$ and
+$E$ to $\{\epsilon\}$. The initial cells of the table are filled by performing
+membership queries. After the initialization is done, the algorithm enters the
+main loop, which is split up into two phases. The first phase ensures the
+properties of closure and consistence, and is repeated until these properties
+are satisfied. In the second phase the algorithm constructs a hypothesis
+automaton, and uses it to perform an equivalence query.
 
-A model is considered to be closed if $S \concat \Sigma$ does not contain any
-states that are not in $S$. If there is a row $x$ in $S \concat \Sigma$ that is
-not in $S$, then it is unknown how $x$ reacts to $\Sigma$. This means that the
-current hypothesis of the state machine does not describe what happens in state
-$x \concat \Sigma$. To address this problem, $x$ is moved to $S$ and for each $y
-\in x \concat \Sigma$, a row labelled by $y$ is added to the lower part of the
-observation table. The values in the new rows in the lower part of the table are
-set by executing the required membership queries.
+\paragraph{The first phase} If the property of closure (\cref{def:closure}) is
+not satisfied, then there exists some $t \in S \concat \Sigma$ such that
+$\row(t) \neq \row(s)$ for all $s \in S$. This means that when constructing a
+hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
+be made. To address this problem, $t$ is added to $S$ and the table is filled by
+executing the required membership queries.
 
-In the second phase of the algorithm, the observation table is both closed and
-consistent. The algorithm uses the observation table to construct a hypothesis.
-Each row from the table represents a candidate state, but since the table can
-contain duplicate rows, multiple rows (and therefore, candidate states) can map
-to the same state. The hypothesis contains one state for each unique row in the
-table. Let $f(x)$ denote the state in the hypothesis corresponding to the access
-string $x$. The initial state in the hypothesis is the state $f(\sigma)$. All
-states corresponding to rows that have a $1$ under the column $\epsilon$ are
-accepting states. For each unique row in the upper part of the table, let $s \in
-S$ denote the label corresponding to the row. Then the hypothesis contains a
-transition for each $\sigma \in \Sigma$ from $f(s)$ to $f(s \concat \sigma)$,
-constrained by $\sigma$. Note that since the observation table is closed, the
-upper part of the table contains all unique rows, so $\row(s \concat \sigma)$
-can always be looked up in the lower part of the table.
+Furthermore, if the property of consistence (\cref{def:consistence}) is not
+satisfied, then there exists some $s_1,s_2 \in S$, $e \in E$ and
+$\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but
+$T(s_1,\sigma\concat e) \neq T(s_2,\sigma\concat e)$. Thus, $\sigma\concat e$
+defines a new distinguishing extension, and should be added to $E$. Again, the
+table is filled by executing membership queries where needed.
 
-Once the hypothesis is constructed, the equivalence query is executed upon it.
-If the hypothesis matches the target then the algorithm stops. If instead a
-counterexample is replied, the counterexample and all of its prefixes are added
-to $S$, after which $S \concat \Sigma$ is updated and the algorithm moves back
-to phase 1.
+\paragraph{The second phase} By now the observation table is both closed and
+consistent. The algorithm uses the observation table to construct a hypothesis
+in the manner defined in \cref{sec:nerode-equiv-equiv}. Once the hypothesis is
+constructed, the equivalence query is executed upon it. If the response is
+``yes'', the algorithm is done and halts. If instead the response is a
+counterexample, the counterexample and all of its prefixes are added to $S$,
+after which $S \concat \Sigma$ is updated and the algorithm moves back to phase
+1.
 
-\subsection {Example run}
-
-Suppose $L^*$ is used to learn the target DFA $U$ of figure \ref{fig:target}.
+\subsubsection{Example run}
+\label{sec:example-run}
+Suppose $L^*$ is used to learn the target DFA $M$ of figure \ref{fig:target}.
 The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
 and $E$ to $\{\epsilon\}$, and performs three membership queries to build the
 initial observation table of table \ref{tbl:observation_1}.
@@ -232,7 +363,7 @@ $bbbb$     & $0$        & $0$   & $0$  \\
 
 Since the table is both closed and consistent, the algorithm moves on to phase 2
 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
-equivalence query with the hypothesis as parameter. Since it does not match $U$,
+equivalence query with the hypothesis as parameter. Since it does not match $M$,
 the oracle will provide a counterexample. Assume the counterexample provided is
 $bbb$ (it could also have provided other counterexamples such as $bbbbbbb$).
 Now, the counterexample and all prefixes are added to $S$. After performing the
@@ -250,8 +381,8 @@ now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns `yes' and the algorithm terminates.
 
-\subsection {Complexity}
-
+\subsubsection{Complexity Analysis}
+\label{sec:complexity-analysis-lstar}
 % Note: Angluin considers k to be constant, and therefore drops the term in the
 % asymptotic upperbounds of both the query complexity and space complexity. She
 % also doesn't explicitly state the required number of membership queries, but

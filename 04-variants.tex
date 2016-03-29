@@ -93,7 +93,7 @@ Suppose $d = \text{estimated maximum number of states for P}
 - \text{number of states in M}$.
 Naturally, it follows that $d \geq 0$.
 We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
-making $\Sigma\left[ n \right]$ a random word with a maximal length of n.
+making $\Sigma\left[ n \right]$ a random string with a maximal length of n.
 For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
 The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup S
 \concat \Sigma$, which is also called the transition cover of $M$, ensures that all the
@@ -134,6 +134,7 @@ in the number of states \cref{sec:chow}.
       a maximum on \textit{MEMBER (w)} queries}
 
 \subsection{Learning Mealy machines}
+\label{sec:learn-mealy-mach}
 The $L^*$ algorithm of Angluin is able to learn DFA's, but it can not directly
 learn mealy machines. A mealy machine, as opposed to a DFA, has no accepting
 states. Instead, mealy machines additionally define an output symbol on each
