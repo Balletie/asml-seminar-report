@@ -15,8 +15,8 @@ notation used throughout this article is in order.
 \subsection{Basic Notation}
 \label{sec:basic-notation}
 
-Define $\Sigma^*$ to be all of the words constructed from the input alphabet
-$\Sigma$. Furthermore, $\epsilon$ represents the empty word. Note that by
+Define $\Sigma^*$ to be all of the strings constructed from the input alphabet
+$\Sigma$. Furthermore, $\epsilon$ represents the empty string. Note that by
 definition it holds that $\epsilon \in \Sigma^*$. The concatenation operator is
 denoted $v \concat w$ for two strings $v,w \in \Sigma^*$. When $\concat$ is
 applied to sets, it equals the concatenation for each element in the Cartesian
@@ -31,7 +31,7 @@ used in the article.
   is the transition function and $F$ is the set of accepting states.
 \end{definition}
 
-For some word $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
+For some string $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
 processing $w$ from state $q$. Furthermore, denote
 $\exec{M}{w} = \dstar{q_0}{w}$ to be the state reached by processing $w$ from
 the initial state $q_0$, as used by Kearns and Vazirani\cite{Kearns1994}. Then
@@ -48,14 +48,14 @@ by $M$; that is $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
 \subsection{Nerode-Equivalence and Equivalence Classes}
 \label{sec:nerode-equiv-equiv}
 It is possible for a DFA $M$ to contain states which are redundant. That is, for
-some states, any word processed from all of those states leads to an accepting
-state or a rejecting state. More formally, for two states $p,q \in Q$ and a word
-$w \in \Sigma^*$, both $\dstar{p}{w}$ and $\dstar{q}{w}$ are either an accepting
-state or a rejecting state. There is no $w$ which \textit{distinguishes} the two
-states.
+some states, any string processed from all of those states leads to an accepting
+state or a rejecting state. More formally, for two states $p,q \in Q$ and a
+string $w \in \Sigma^*$, both $\dstar{p}{w}$ and $\dstar{q}{w}$ are either an
+accepting state or a rejecting state. There is no $w$ which
+\textit{distinguishes} the two states.
 
 From this point of view, the states $p$ and $q$ can be considered equivalent, in
-that they pose no difference for any word processed from those states to be
+that they pose no difference for any string processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
 are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
 and originally published by Nerode\cite{Nerode1958}. A group of access strings
@@ -64,18 +64,18 @@ any set of access strings can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
-  $z$ be words in $\Sigma^*$. Then $z$ is a \textit{distinguishing extension}
+  $z$ be strings in $\Sigma^*$. Then $z$ is a \textit{distinguishing extension}
   for $v$ and $w$ if and only if \textit{exactly one} of $v \concat z$ and
   $w \concat z$ is in $\lang$.
 \end{definition}
 \begin{definition}[Nerode-equivalence]\label{def:nerode-eq}
-  For some language $\lang$ over an alphabet $\Sigma$, define two words
-  $v,w \in \Sigma^*$ to be \textit{Nerode-equivalent} with respect to
-  $\lang$ if and only if there is no distinguishing extension $z$ for $v$
-  and $w$. We write $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
+  For some language $\lang$ over an alphabet $\Sigma$, define two strings
+  $v,w \in \Sigma^*$ to be \textit{Nerode-equivalent} with respect to $\lang$ if
+  and only if there is no distinguishing extension $z$ for $v$ and $w$. We write
+  $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
 
   Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of an access
-  string $w$, such that for any word $v$ in $\eqclass{w}{\lang}$ it holds that
+  string $w$, such that for any string $v$ in $\eqclass{w}{\lang}$ it holds that
   $v \nero_\lang w$. Lastly, let $\nero_\lang$ be the set of all equivalence
   classes of $\lang$. For convenience, denote $\nero_M$ to be the same set for
   some DFA $M$.
@@ -139,7 +139,7 @@ Central to Angluin's style of active state machine learning is the notion of a
 two types of queries:
 
 \begin{description}
-\item[Membership Query] Given a word, answers ``yes'' or ``no'' depending on
+\item[Membership Query] Given a string, answers ``yes'' or ``no'' depending on
   whether it is accepted by the target $M$ or not.
 \item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
   $\hat M$ equals $M$, in which case the algorithm is finished. If the
