@@ -24,25 +24,35 @@ the TTT-algorithm).
 Introduced by Kearns and Vazirani\cite{Kearns1994}, classification trees (or
 \textit{discrimination trees}) are meant as a replacement for the observation
 table (see \cref{sec:data-structure}). In other words, it is a different data
-structure for storing the sets $S$ and $E$ of access strings and distinguishing
-extensions. The main characteristic of a classification tree is that it is
-\textit{redundancy-free}, which will be explained in this section.
+structure for maintaining the necessary information to form a hypothesis
+automaton.
 
-Say that we have a classification tree for some target automaton $M$. The labels
-of the internal nodes of the tree are distinguishing extensions from the set
-$E$, and the labels of leaf nodes are access strings from $S$. The tree's
-structure is such that for any internal node $e \in E$, its left subtree
-contains all $s \in S$ such that $s \concat e$ is rejected by $M$, and its right
-subtree contains those $s$ such that $s \concat e$ is accepted by $M$.
+The structure of a classification tree is as follows. All internal nodes of the
+tree are labelled by a distinguishing extension $e \in E$, such that all the
+leaf nodes in its left subtree contains all access strings $s \in S$ such that
+$s \concat e \not\in \lang_M$, and all of the leafs in the right subtree
+contains those $s$ such that $s \concat e \in \lang_M$. The root of the tree is
+labelled with $\epsilon$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
-distinguished by their \textit{lowest common ancestor} in the tree. Thus, $v$
-and $w$ are distinguished by exactly \textit{one} distinguishing extension. In
-other words, any pair of access strings in the classification tree are
-Nerode-inequivalent (see \cref{def:nerode-eq}), and thus each access string
-uniquely identifies a distinct equivalence class of the target automaton
-$M$. When we construct a hypothesis, each equivalence class (and thus each
-access string), corresponds to a state in our hypothesis automaton $\hat M$.
+distinguished by their \textit{lowest common ancestor} in the tree. It follows
+that, since any pair is distinguished by a distinguishing extension, any pair of
+access strings in the classification tree are Nerode-inequivalent (see
+\cref{def:nerode-eq}). Therefore each access string $s \in S$ uniquely
+identifies an equivalence class $\eqclass{s}{\lang_M}$ of the target automaton
+$M$.
+
+An essential concept is the \textit{sifting} operation, which for any string $w$
+finds the access string representing the equivalence class
+$\eqclass{w}{\lang_M}$. The operation works as follows: starting at the root
+node, for each internal node labeled with $e$, perform a membership query
+$s \concat e$. If the result is \textit{yes}, do the same for the node at the
+right tree; if it is \textit{no}, go to the left tree. This is done until a leaf
+node has been reached, which is labelled with the correct access string. The
+sifting operation can be seen as the replacement for the $\row(w)$ operation for
+observation tables, to identify equivalence classes (and thus states) in the
+hypothesis. Hypothesis construction is thus done in the same way, using the
+sifting operation.
 
 Howar~et~al. state that a classification tree is \textit{redundancy-free}
 because each state in $\hat M$ is distinguished by one distinguishing extension,
