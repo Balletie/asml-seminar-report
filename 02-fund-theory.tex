@@ -143,7 +143,7 @@ two types of queries:
   whether it is accepted by the target $M$ or not.
 \item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
   $\hat M$ equals $M$, in which case the algorithm is finished. If the
-  hypothesis is not equal, it provides a counterexample $\gamma$. The
+  hypothesis is not equal to $M$, it provides a counterexample $\gamma$. The
   counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
   is an example of an incorrect equivalence class.
 \end{description}
@@ -214,9 +214,9 @@ executing the required membership queries.
 Furthermore, if the property of consistence (\cref{def:consistence}) is not
 satisfied, then there exists some $s_1,s_2 \in S$, $e \in E$ and
 $\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but
-$T(s_1,\sigma\concat e)$ is unequal with $T(s_2,\sigma\concat e)$. Thus,
-$\sigma\concat e$ defines a new distinguishing extension, and should be added to
-$E$. Again, the table is filled by executing membership queries where needed.
+$T(s_1,\sigma\concat e) \neq T(s_2,\sigma\concat e)$. Thus, $\sigma\concat e$
+defines a new distinguishing extension, and should be added to $E$. Again, the
+table is filled by executing membership queries where needed.
 
 \paragraph{The second phase} By now the observation table is both closed and
 consistent. The algorithm uses the observation table to construct a hypothesis
