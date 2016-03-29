@@ -81,46 +81,38 @@ improvement on the space complexity of the observation table of $L^*$.
 
 \subsection{Rivest and Schapire's Counterexample Analysis}
 \label{sec:rivest-schap-count}
-In 1993, Rivest and Schapire published a paper on learning without a reset using
-homing sequences\cite{Rivest1993}, which will be the scope of discussion of
-\cref{sec:noreset}.
-
-Their paper, however, also included an improvement upon $L^*$, also in the case
-that a reset \textit{is} available. Specifically, they improved the
+Rivest and Schapire made a significant improvement\cite{Rivest1993} to the
 \textit{counterexample analysis} stage, which is the part that handles
 counterexamples returned by an equivalence query.
 
 When a counterexample $\gamma$ is obtained, Rivest and Schapire's improved
-algorithm finds a \textit{single} extension $e$ from $\gamma$ distinguishing two
-states in the new hypothesis and adds it to the set $E$ of distinguishing
+algorithm finds a \textit{single} extension $e$ from $\gamma$ that distinguishes
+two states in the new hypothesis and adds it to the set $E$ of distinguishing
 extensions. This is in contrast to the original $L^*$ algorithm, which adds all
 prefixes of the counterexample to the set $S$ of access strings.
 
 According to Rivest and Schapire\cite{Rivest1993} and further clarified by
 Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, there must be a
-point where the hypothesis automaton $\hat M$ takes a wrong turn (i.e. there's
+point where the hypothesis automaton $\hat M$ takes a wrong turn (i.e. there is
 an incorrect transition). Let $e$ be the suffix of the counterexample $\gamma$
 from the point where the transition of $\hat M$ is inconsistent with the
 corresponding transition of the target $M$. Then $e$ can be found by means of a
 search strategy such as binary search and membership queries.
 
-As in the previous section, this section concludes with an analysis of the
-impact on the amount of membership queries needed and the space requirement.
-
 \paragraph{Query complexity} Rivest and Schapire's original improvement used a
 binary search strategy to find the single suffix $e$. As expected from a binary
 search, this results in $\mathcal{O}(\log(m))$ membership queries per
 counterexample of length $m$. The amount of equivalence queries is
-$\mathcal{O}(n)$, thus the amount of membership queries due to
-counterexample analysis is $\mathcal{O}(n\log(m))$. The total amount of
-membership queries including hypothesis construction is thus
-$\mathcal{O}(kn^2 + n\log(m))$, an improvement over that of Kearns and
-Vazarani's (see \cref{sec:complexity-analysis}).
+$\mathcal{O}(n)$, thus the amount of membership queries due to counterexample
+analysis is $\mathcal{O}(n\log(m))$. The total amount of membership queries
+including hypothesis construction is thus $\mathcal{O}(kn^2 + n\log(m))$, an
+improvement over that of Kearns and Vazarani's (see
+\cref{sec:complexity-analysis}).
 
 It is worthwhile to note that Isberner~et~al. analyzed and compared multiple
 search strategies by means of an abstract framework\cite{Isberner2014a}. Their
-results show that the query complexities of the other search strategy remain the
-same as the original binary search strategy due to Rivest and Schapire, yet
+results show that the query complexities of the other search strategies remain
+the same as the original binary search strategy due to Rivest and Schapire, yet
 perform better when put into practice.
 
 \paragraph{Space Complexity} From Isberner's analysis\cite{Isberner2014b}, the
