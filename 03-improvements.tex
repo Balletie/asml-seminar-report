@@ -60,11 +60,10 @@ and the space complexity.
 \paragraph{Query Complexity} The amount of \textit{membership queries} for
 hypothesis construction is bounded by $\mathcal{O}(kn^2)$ membership queries in
 the worst-case (i.e. a degenerated
-tree)\cite{Howar2014,Kearns1994,Isberner2014b}, where $k = |\Sigma |$ and $n$ is
-the size of the target automaton $M$. For the counterexample analysis the amount
-of queries is bounded by $\mathcal{O}(nm)$, where $m$ is the size of the longest
-counterexample\cite{Kearns1994}. Thus in total the query complexity is bounded
-by $\mathcal{O}(kn^2 + nm)$, an improvement over that of $L^*$.
+tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the counterexample analysis
+the amount of queries is bounded by $\mathcal{O}(nm)$\cite{Kearns1994}. Thus in
+total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
+improvement over that of $L^*$.
 
 \paragraph{Space Complexity} In chapter 4 of his dissertation, Isberner analyzed
 the space complexity of discrimination-tree based learners as follows: a
@@ -108,10 +107,10 @@ binary search strategy to find the single suffix $e$. As expected from a binary
 search, this results in $\mathcal{O}(\log(m))$ membership queries per
 counterexample of length $m$. The amount of equivalence queries is
 $\mathcal{O}(n)$, and thus the amount of membership queries due to
-counterexample analysis is $\mathcal{O}(n\log(m))$, where $m$ is the size of the
-longest counterexample. The total amount of membership queries including
-hypothesis construction is thus $\mathcal{O}(kn^2 + n\log(m))$, an improvement
-over that of Kearns and Vazarani's (see \cref{sec:complexity-analysis}).
+counterexample analysis is $\mathcal{O}(n\log(m))$. The total amount of
+membership queries including hypothesis construction is thus
+$\mathcal{O}(kn^2 + n\log(m))$, an improvement over that of Kearns and
+Vazarani's (see \cref{sec:complexity-analysis}).
 
 It is worthwhile to note that Isberner~et~al. analyzed and compared multiple
 search strategies by means of an abstract framework\cite{Isberner2014a}. Their
