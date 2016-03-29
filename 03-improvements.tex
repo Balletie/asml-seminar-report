@@ -25,9 +25,9 @@ automaton.
 The structure of a classification tree is as follows. All internal nodes of the
 tree are labelled by a distinguishing extension $e \in E$, such that all the
 leaf nodes in its left subtree contains all access strings $s \in S$ such that
-$s \concat e \not\in \lang_M$, and all of the leafs in the right subtree
-contains those $s$ such that $s \concat e \in \lang_M$. The root of the tree is
-labelled with $\epsilon$.
+$s \concat e \not\in \lang_M$ and all of the leafs in the right subtree contains
+those $s$ such that $s \concat e \in \lang_M$. The root of the tree is labelled
+with $\epsilon$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
 distinguished by their \textit{lowest common ancestor} in the tree. It follows
@@ -92,11 +92,11 @@ counterexamples returned by an equivalence query.
 
 When a counterexample $\gamma$ is obtained, Rivest and Schapire's improved
 algorithm finds a \textit{single} extension $e$ from $\gamma$ distinguishing two
-states in the new hypothesis, and adds it to the set $E$ of distinguishing
+states in the new hypothesis and adds it to the set $E$ of distinguishing
 extensions. This is in contrast to the original $L^*$ algorithm, which adds all
 prefixes of the counterexample to the set $S$ of access strings.
 
-According to Rivest and Schapire\cite{Rivest1993}, and further clarified by
+According to Rivest and Schapire\cite{Rivest1993} and further clarified by
 Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, there must be a
 point where the hypothesis automaton $\hat M$ takes a wrong turn (i.e. there's
 an incorrect transition). Let $e$ be the suffix of the counterexample $\gamma$
@@ -111,7 +111,7 @@ impact on the amount of membership queries needed and the space requirement.
 binary search strategy to find the single suffix $e$. As expected from a binary
 search, this results in $\mathcal{O}(\log(m))$ membership queries per
 counterexample of length $m$. The amount of equivalence queries is
-$\mathcal{O}(n)$, and thus the amount of membership queries due to
+$\mathcal{O}(n)$, thus the amount of membership queries due to
 counterexample analysis is $\mathcal{O}(n\log(m))$. The total amount of
 membership queries including hypothesis construction is thus
 $\mathcal{O}(kn^2 + n\log(m))$, an improvement over that of Kearns and
