@@ -30,8 +30,8 @@ those $s$ such that $s \concat e \in \lang_M$. The root of the tree is labelled
 with $\epsilon$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
-distinguished by their \textit{lowest common ancestor} in the tree. It follows
-that, since any pair is distinguished by a distinguishing extension, any pair of
+distinguished by their lowest common ancestor in the tree. It follows that,
+since any pair is distinguished by a distinguishing extension, any pair of
 access strings in the classification tree are Nerode-inequivalent (see
 \cref{def:nerode-eq}). Therefore each access string $s \in S$ uniquely
 identifies an equivalence class $\eqclass{s}{\lang_M}$ of the target automaton
@@ -49,22 +49,22 @@ observation tables, to identify equivalence classes (and thus states) in the
 hypothesis. Hypothesis construction is thus done in the same way, using the
 sifting operation.
 
-Howar~et~al. state that a classification tree is \textit{redundancy-free}
-because each state in $\hat M$ is distinguished by one distinguishing extension,
-as opposed to observation tables where states are distinguished by a fixed
-amount of distinguishing extensions\cite{Howar2014}.
+Howar~et~al. state that a classification tree is redundancy-free because each
+state in $\hat M$ is distinguished by one distinguishing extension, as opposed
+to observation tables where states are distinguished by a fixed amount of
+distinguishing extensions\cite{Howar2014}.
 
 \subsubsection{Complexity analysis}
 \label{sec:complexity-analysis}
-With their introduction of the \textit{classification tree}, Kearns and Vazirani
-also adapted the original $L^*$ learning algorithm to use the tree
+With their introduction of the classification tree, Kearns and Vazirani also
+adapted the original $L^*$ learning algorithm to use the tree
 structure\cite{Kearns1994}. The precise operation of the adapted algorithm will
 not be given, but we do give an overview of the impact on the query complexity
 and the space complexity.
 
-\paragraph{Query Complexity} The amount of \textit{membership queries} for
-hypothesis construction is bounded by $\mathcal{O}(kn^2)$ membership queries in
-the worst-case (i.e. a degenerated
+\paragraph{Query Complexity} The amount of membership queries for hypothesis
+construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
+worst-case (i.e. a degenerated
 tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the counterexample analysis
 the amount of queries is bounded by $\mathcal{O}(nm)$\cite{Kearns1994}. Thus in
 total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
