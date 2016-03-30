@@ -1,7 +1,6 @@
 \documentclass[multi,tikz,crop=false,class=article]{standalone}
 \onlyifstandalone{\input{common}}
 \usepackage{amsmath}
-\DeclareMathOperator{\row}{row}
 \usetikzlibrary{automata,arrows}
 
 \begin{document}
@@ -139,13 +138,15 @@ Central to Angluin's style of active state machine learning is the notion of a
 two types of queries:
 
 \begin{description}
-\item[Membership Query] Given a string, answers ``yes'' or ``no'' depending on
-  whether it is accepted by the target $M$ or not.
+\item[Membership Query] Given a string $w \in \Sigma^*$, answers ``yes'' or
+  ``no'' depending on whether it is accepted by the target $M$ or not. It is
+  denoted as $\mq(w)$.
 \item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
   $\hat M$ equals $M$, in which case the algorithm is finished. If the
   hypothesis is not equal to $M$, it provides a counterexample $\gamma$. The
   counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
-  is an example of an incorrect equivalence class.
+  is an example of an incorrect equivalence class. It is denoted as
+  $\eq(\hat M)$.
 \end{description}
 
 Now that the framework in which the algorithm operates is known, the workings of
