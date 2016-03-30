@@ -73,8 +73,8 @@ According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
 is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
 and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
-where n is the number of states in the provided automaton, m is the number
-of states in the correct automaton, and k is the size of the input alphabet.
+where $n$ is the number of states in the provided automaton, $m$ is the number
+of states in the correct automaton, and $k$ is the size of the input alphabet.
 
 By refining the test suites and the specification at the same time,
 and by using a divide and conquer approach, the size of the test is
@@ -100,16 +100,16 @@ To achieve this, the W-method constructs two sets of input sequences:
     outputs for at least one sequence in $W$ for every pair of different states.
 \end{itemize}
 
-Given a specification P that can be modelled by an unknown finite state machine M,
+Given a specification $P$ that can be modeled by an unknown finite state machine $M$,
 the only information the algorithm needs is an estimate of the maximum number of
 states of an unknown model for the specification.
-Suppose $d$ is the difference between the estimated maximum number of states in P
-and the number of states in the machine M.
+Suppose $d$ is the difference between the estimated maximum number of states in $P$
+and the number of states in the machine $M$.
 We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
-making $\Sigma\left[ n \right]$ a random string with a maximal length of n.
+making $\Sigma\left[ n \right]$ a random string with a maximal length of $n$.
 For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
-The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup S
-\concat \Sigma$, which is also called the transition cover of $M$, ensures that all the
+The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup (S
+\concat \Sigma)$, which is also called the transition cover of $M$, ensures that all the
 states and transition in $P$ are also present in $M$, while
 $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
 performing all the transitions.
