@@ -36,7 +36,7 @@ applying active state machine learning to real world scenarios, such as:
 For each of these challenges we will discuss a variant of the
 $L^*$ algorithm that has been proposed to solve it.
 
-\subsection{Approximating \eq(M) queries with \mq(w) queries}
+\subsection{Approximating $\eq(M)$ queries with $\mq(w)$ queries}
 In theoretical simulations, equivalence testing is often easy because
 the target system (in some cases even the model!) is known.
 In practice, however, the system under learning is generally
@@ -47,15 +47,15 @@ testing the inputs and outputs of a system.
 However, exhaustively testing a black box is undecidably hard.
 
 This means that equivalence queries will have to be approximated,
-typically using membership queries. These approximated membership queries are in
+typically using membership queries. These approximated equivalence queries are in
 general also not decidable without assuming any extra knowledge~\cite{Steffen2011a},
 such as the number of states of the system under learning: it is impossible to
 be certain that the system has been tested extensively enough.
 
-An alternative to using membership queries to simulate equivalence queries, is
-to use model-based testing methods~\cite{Broy2005, Tretmans2011}. An example of
+An alternative to using equivalence queries, is to use model-based testing
+methods~\cite{Broy2005, Tretmans2011}. An example of
 model-based testing is Chow's W-method~\cite{deRuiter2015, Chow1978},
-which relies on approximating \eq(M) queries by using \mq(w) queries.
+which relies on approximating $\eq(M)$ queries by using $\mq(w)$ queries.
 
 %To further research in this area,
 %the \textit{ZULU} challenge~\cite{Combe2010} was introduced.
@@ -129,12 +129,13 @@ Membership queries are the most straightforward
 to translate to real world applications: they can be realized via testing.
 An important thing to note, however, is the amount of membership queries required.
 In a theoretical framework the learning algorithm doesn't have to account
-for execution times of individual \mq(w) queries.
+for execution times of individual $\mq(w)$ queries.
 In practice, such queries might take time or be expensive to execute.
 
 Learning a real world application can easily require several thousand membership
-queries\todo{Add citation}. When using for example \textit{Chow's method} for
-\eq(M) queries, the amount of membership queries needed grows even faster.
+queries~\cite[p. 100]{Tomte2014}. Furthermore, when using for example
+\textit{Chow's method} for $\eq(M)$ queries, the amount of membership
+queries needed grows exponentially in the number of states~\cite{Chow1978}.
 This means that the time required to learn a model can be greatly reduced
 either by speeding up membership queries
 (executing them in parallel~\cite{Howar2012}),
@@ -345,10 +346,10 @@ strings on the transitions.
 
 \subsection{Systems without a \textit{reset} function}
 \label{sec:noreset}
-In the $L^*$ learning algorithm, every \mq(w) query is implicitly
+In the $L^*$ learning algorithm, every $\mq(w)$ query is implicitly
 independent of other queries.
 However, when learning a system in practice, it might happen that
-\mq(w) queries are not independent at all.
+$\mq(w)$ queries are not independent at all.
 Suppose for example that the system under learning requires authentication
 while also imposing a restriction on the maximum amount of failed requests.
 In such a system queries are no longer independent of each other,
@@ -372,25 +373,27 @@ application-specific solutions have to be applied.~\cite{Steffen2011a}.
 \subsubsection{Homing sequences}
 In 1993 Rivest \& Schapire proposed an extension to $L^*$~\cite[p. 312]{Rivest1993}
 that replaces the implicitly required reset by homing sequences.
-A homing sequence is an input strings for which the automaton is
-guaranteed to produce outputs that completely determines the final reached state.
-Suppose $M$ is a DFA. A homing sequence $h$ for $M$ with output $s$ is then a
-sequence of strings, such that $(\forall{q_1 \in Q})(\forall{q_2 \in Q})
-(\delta(q_1, h) = \delta(q_2, h) = s)$, for some state $q \in Q$.
+A homing sequence is an input string for which the automaton is guaranteed to
+produce a sequence of outputs that completely determines the final reached state.
+The sequence of outputs on input $w$ starting from a state $q$ is denoted as
+$q \langle w \rangle$.
+Now suppose $M$ is a DFA. A homing sequence $h$ for $M$ with outputs $s$ is then
+a sequence of strings, such that $(\forall{q_1 \in Q})(\forall{q_2 \in Q})
+(q_1 \langle h \rangle = q_2 \langle h \rangle = s)$.
 
 This also implies that every distinguisting sequence is a homing sequence,
 since for all states $q_1$ and $q_2$ and a distinguishing extension $a$,
 it can be deduced that $\delta(q_1, a) = \delta(q_2, a) \Rightarrow q_1 = q_2$,
-and therefore $\delta(q_1, a) = \delta(q_2, a)$.
+and therefore $q_1 \langle a \rangle = q_2 \langle a \rangle$.
 
 Given this definition of a homing sequence, together with the prerequisite
-that some state with output $s$ can be reached regularly by executing $h$,
+that some state with outputs $s$ can be reached regularly by executing $h$,
 it can immediately be seen how a homing sequence can be used to simulate a reset:
 \begin{algorithm}[hb]
   \caption{Simulate a reset of the system with a homing sequence.}
   \label{alg:reset-homing}
   \begin{algorithmic}[1]
-    \Function{Reset}{$M,h,s$} \Comment{}
+    \Function{Reset}{$M,h,s$} \Comment{With $M$ a DFA, $h$ a homing sequence and $s$ a sequence of outputs}
       \Do
         \State $o \gets $ result of executing $h$ on $M$
       \doWhile{$o \neq s$}
@@ -399,9 +402,9 @@ it can immediately be seen how a homing sequence can be used to simulate a reset
 \end{algorithm}
 
 From the definition, given a homing sequence $h$, the state that is reached
-by executing $h$ can be identified by an output $s$.
-Therefore we can just execute $h$ for as long as its output differs from $o$
-and eventually the state identified by $s$ will be reached.
+by executing $h$ can be identified by a sequence of outputs $s$.
+Therefore we can just execute $h$ for as long as its sequence of outputs differs
+$o$ from $s$ and eventually the state identified by $s$ will be reached.
 The L* algorithm can now just substitute its initial state with the state
 reached eventually by executing $h$, giving it the ability to simulate a reset.
 
