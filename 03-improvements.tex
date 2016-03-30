@@ -22,11 +22,11 @@ table (see \cref{sec:data-structure}). In other words, it is a different data
 structure for maintaining the necessary information to form a hypothesis
 automaton.
 
-The structure of a classification tree is as follows. All internal nodes of the
-tree are labelled by a distinguishing extension $e \in E$, such that all the
-leaf nodes in its left subtree contains all access strings $s \in S$ such that
-$s \concat e \not\in \lang_M$ and all of the leafs in the right subtree contains
-those $s$ such that $s \concat e \in \lang_M$. The root of the tree is labelled
+The structure of a classification tree is as follows: all internal nodes of the
+tree are labeled by a distinguishing extension $e$, and the leaf nodes are
+labeled by an access string $s$. For each internal node labeled $e$, the leaf
+nodes are in its right or left subtree depending on whether
+$\mq(s\concat e)$ equals ``yes'' or ``no''. The root of the tree is labeled
 with $\epsilon$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
