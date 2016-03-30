@@ -40,12 +40,14 @@ which for any string $w$ finds the identifying access string of
 $\eqclass{w}{\lang_M}$. The operation is denoted as $\sift(w)$ and works as
 follows: starting at the root node, for each internal node labeled with $e$, go
 left or right in the tree depending on $\mq(s \concat e)$. This is done until a
-leaf node has been reached, which is labeled with the correct access string. The
-sifting operation can be seen as the replacement for the $\row(w)$ operation for
-observation tables, to identify equivalence classes (and thus states) in the
-hypothesis. The construction of the hypothesis $\hat M$ is thus done in the same
-way, using the sifting operation. Note that all the leaf nodes that are in the
-right subtree of the root node define the accepting states of $\hat M$.
+leaf node has been reached, which is labeled with the correct access string.
+
+The purpose of the $\sift$ operation is the same as the $\row$ operation for
+observation tables, namely to identify equivalence classes (and thus states) in
+the hypothesis~\cite{Kearns1994}. The construction of the hypothesis $\hat M$ is
+thus done in the same way, except using the $\sift$ operation. Also note that
+all the leaf nodes that are in the right subtree of the root node define the
+accepting states of $\hat M$.
 
 \begin{algorithm}[b]
   \caption{Find the identifying access string of the equivalence class of a
