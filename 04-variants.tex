@@ -135,10 +135,12 @@ in the number of states \cref{sec:chow}.
 
 \subsection{Learning Mealy machines}
 \label{sec:learn-mealy-mach}
-The $L^*$ algorithm of Angluin is only able to learn DFA's (and equivalents).
-However, some applications are not easily modeled by a DFA, but are instead more
-naturally modeled as mealy machines (see definition \ref{def:mealy_machine}).
-Such applications include reactive systems and I/O programs.
+
+The $L^*$ algorithm of Angluin is only able to learn DFA's (and equivalent
+models). However, some applications are characterized by their I/O behaviour.
+Such behaviour is not easily modeled by a DFA. Instead, they are more naturally
+modeled by mealy machines\cite{Shahbaz2009} (see definition
+\ref{def:mealy_machine}).
 
 \begin{definition}[Mealy machine]\label{def:mealy_machine}
   A mealy machine $M$ is a 6-tuple $(Q, q_0, \Sigma, \Lambda, \delta, \lambda)$
@@ -148,9 +150,9 @@ Such applications include reactive systems and I/O programs.
 \end{definition}
 
 A mealy machine is similar to a DFA, but instead of defining accepting states,
-it defines a function $\lambda: Q \times \Sigma \to \Lambda$, which defines
+it defines a function $\lambda: Q \times \Sigma \to \Lambda$ that defines
 the output symbol returned on each state transition. To learn a mealy machine
-with $L^*$, some adaptions are required. Either the mealy machine can be
+with $L^*$, some adaptions are required: either the mealy machine can be
 transformed into a DFA, or an adaptation of $L^*$ called $L^*_{M}$ can be used
 to learn the mealy machine directly.
 
@@ -160,14 +162,13 @@ A mealy machine $\mathcal{M}$ can be transformed into a DFA $D$. By using the
 alphabet of the transformed model, $D$ can be learned by the $L^*$ algorithm.
 The only required change to the algorithm is the implementation of the
 membership query, as will be explained below. There are two ways to transform
-$\mathcal{M}$ into $D$. Both transformations have in common that they
-introduce a single error state $q_{err}$, which is the only non-accepting
-state in $D$. The main difference between the transformations is in the input
-alphabet they define. One uses $\Sigma = \Sigma_\mathcal{M} \cup
-\Lambda$\cite{Hungar2003}, while the other uses $\Sigma = \Sigma_\mathcal{M}
-\times O$ \cite{Makinen2001}. Note that in this section the $_{\mathcal{M}}$
-subscript is used to disambiguate between items from the DFA and the mealy
-tuple.
+$\mathcal{M}$ into $D$. Both transformations have in common that they introduce
+a single error state $q_{err}$, which is the only non-accepting state in $D$.
+The main difference between the transformations is in the input alphabet they
+define. One uses $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$\cite{Hungar2003},
+while the other uses $\Sigma = \Sigma_\mathcal{M} \times O$ \cite{Makinen2001}.
+Note that in this section the $_{\mathcal{M}}$ subscript is used to disambiguate
+between items from the DFA and mealy tuples.
 
 \begin{definition}
 [Transforming a mealy machine into a DFA using $\Sigma = \Sigma_\mathcal{M}
@@ -203,14 +204,14 @@ constrained by $o$. All inputs that are not defined after this step transition
 into $q_{err}$. An example can be seen in figure
 \ref{fig:transformation_hungar}. The transformed model of $\mathcal{M}$ can be
 learned by $L^*$ by taking $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$ and
-defining membership queries such that they return ``yes'' if and only each of
+defining membership queries such that they return ``yes'' if and only if each of
 the following is true:
 
 \begin{itemize}
-  \item the first symbol is an input symbol
-  \item input and output symbols are alternating
+  \item the first symbol is an input symbol;
+  \item input and output symbols are alternating;
   \item for each successive pair of input symbol $\sigma$ and output symbol $o$
-        in the access string, if $i$ is applied, $o$ is returned
+        in the access string, if $\sigma$ is applied, $o$ is returned;
 \end{itemize}
 
 \begin{figure}[t]
@@ -283,15 +284,15 @@ the following is true:
 The second transformation is shown in definition
 \ref{def:transformation_makinen}. This transformation creates a DFA that uses
 pairs from $\Sigma_\mathcal{M} \times \Lambda$ as input symbols. This removes
-the need for intermediate states, but can have a significant impact on the size
-of the input alphabet. If from a certain state an input/output combination does
-not occur, then a transition into the error state constrained by that
+the need for intermediate states, but it can have a significant impact on the
+size of the input alphabet. If from a certain state an input/output combination
+does not occur, then a transition into the error state constrained by that
 combination is added. An example of this transformation can be seen in figure
 \ref{fig:transformation_makinen}. The transformed model can be learned by $L^*$
 by using $\Sigma = \Sigma_\mathcal{M} \times \Lambda$ and defining membership
 queries such that they return ``yes'' if and only if each successive combination
-of input symbol $i$ and output symbol $o$ yields $o$ when $i$ is applied.
-
+of input symbol $\sigma$ and output symbol $o$ yields $o$ when $\sigma$ is
+applied.
 
 \begin{definition}
 [Transforming a mealy machine into a DFA using $\Sigma = \Sigma_\mathcal{M}
