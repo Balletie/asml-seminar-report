@@ -6,12 +6,13 @@
 \onlyifstandalone{\DeclareCaptionType{algorithm}}
 
 \usetikzlibrary{automata,arrows}
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
 
 \begin{document}
 \section{Variants}
 \label{sec:variants}
-In the first few years following the introduction of the L* algorithm by
-D. Angluin~\cite{Angluin1987}, L* learning was only a theoretical exploration.
+In the first few years following the introduction of the $L^*$ algorithm by
+D. Angluin~\cite{Angluin1987}, $L^*$ learning was only a theoretical exploration.
 The various improvements described in the previous chapter,
 such as \textit{Classification Trees} \cref{sec:classification-trees} and
 the \textit{TTT} algorithm \cref{sec:ttt}
@@ -21,19 +22,19 @@ The learning algorithms discussed in the previous chapters all required an
 (abstract, formal) input alphabet, an (abstract, formal) output alphabet,
 membership queries and equivalence queries. 
 In practice, it is in many cases quite difficult to realize these requirements
-for a specific system under learning\cite{Steffen2011a}.
+for a specific system under learning~\cite{Steffen2011a}.
 This section discusses some of these challenges faced when
 applying active state machine learning to real world scenarios, such as:
 \begin{itemize}
   \item Equivalence queries are generally undecidable for black boxes
-  \item L* can only interact with regular languages, not with real systems
   \item The amount of required membership queries can grow very fast
+  \item $L^*$ can only interact with regular languages, not with real systems
   \item Membership queries might not be independent in practice,
         which imposes the requirement for a \textit{reset} function
   \item Not all systems might support a \textit{reset} function.
 \end{itemize}
 For each of these challenges we will discuss a variant of the
-L* algorithm that has been proposed to solve it.
+$L^*$ algorithm that has been proposed to solve it.
 
 \subsection{Approximating \eq(M) queries with \mq(w) queries}
 In theoretical simulations, equivalence testing is often easy because
@@ -47,13 +48,13 @@ However, exhaustively testing a black box is undecidably hard.
 
 This means that equivalence queries will have to be approximated,
 typically using membership queries. These approximated membership queries are in
-general also not decidable without assuming any extra knowledge\cite{Steffen2011a},
+general also not decidable without assuming any extra knowledge~\cite{Steffen2011a},
 such as the number of states of the system under learning: it is impossible to
 be certain that the system has been tested extensively enough.
 
 An alternative to using membership queries to simulate equivalence queries, is
-to use model-based testing methods\cite{Broy2005, Tretmans2011}. An example of
-model-based testing is Chow's W-method\cite{deRuiter2015, Chow1978},
+to use model-based testing methods~\cite{Broy2005, Tretmans2011}. An example of
+model-based testing is Chow's W-method~\cite{deRuiter2015, Chow1978},
 which relies on approximating \eq(M) queries by using \mq(w) queries.
 
 %To further research in this area,
@@ -66,7 +67,7 @@ which relies on approximating \eq(M) queries by using \mq(w) queries.
 
 \subsubsection{Chow's W-method}
 \label{sec:chow}
-According to \cite{Vasilevskii1973}, the maximum number of test sequences needed
+According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
 is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
 and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
@@ -76,7 +77,7 @@ of states in the correct automaton, and k is the size of the input alphabet.
 By refining the test suites and the specification at the same time,
 and by using a divide and conquer approach, the size of the test is
 considerably reduced in comparison to defining the tests from
-the final specification\cite{Ipate2007}.
+the final specification~\cite{Ipate2007}.
 This is especially beneficial because complex systems are usually
 created in multiple iterations.
 Unlike some other test selection methods the W-method does not require
@@ -88,7 +89,7 @@ implementation with a number of states below a certain upper bound.
 The W-method generates input sequences that reach every state in the
 diagram, checks all the transitions in the diagram and identifies all the
 destination states and verifies them against their counterparts in
-the implementation\cite{Ipate2007}.
+the implementation~\cite{Ipate2007}.
 To achieve this, the W-method constructs two sets of input sequences:
 \begin{itemize}
   \item A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the
@@ -144,7 +145,7 @@ exactly that. Additionally, application-specific optimizations can be used to
 further reduce the number of membership queries required.
 When dealing with a networked application for example, there are usually no
 further possible transitions when a connection is closed by a remote machine.
-Exploiting such knowledge can greatly reduce the number of tests necessary\cite{deRuiter2015}.
+Exploiting such knowledge can greatly reduce the number of tests necessary~\cite{deRuiter2015}.
 
 %\todo{Cite ZULU participant here, since the challenge also imposed
 %      a maximum on \textit{MEMBER (w)} queries}
@@ -344,31 +345,76 @@ strings on the transitions.
 
 \subsection{Systems without a \textit{reset} function}
 \label{sec:noreset}
-In the L* learning algorithm, every \textit{MEMBER (w)} query is implicitly
+In the $L^*$ learning algorithm, every \mq(w) query is implicitly
 independent of other queries.
 However, when learning a system in practice, it might happen that
-\textit{MEMBER (w)} queries are not independent at all.
+\mq(w) queries are not independent at all.
 Suppose for example that the system under learning requires authentication
 while also imposing a restriction on the maximum amount of failed requests.
 In such a system queries are no longer independent of each other,
 since after a certain amount of authentication requests
 the systems behaviour suddenly changes for the same membership queries.
-In order to solve this issue, the L* algorithm implicitly requires a means
-of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest1993}
+In order to solve this issue, the $L^*$ algorithm implicitly requires a means
+of \textit{reset}ting the system under learning~\cite[p. 301]{Rivest1993}
 in between successive membership queries.
 
 However, not all systems support a \textit{reset} function.
 As we'll see in \cref{sec:applications}, the system under learning
 could also be a system that the learning algorithm has totally no control over.
-\todo{Explain homing sequences here}
 
 Another obstacle to overcome is that of parameters used in real world
 applications. Think, for example, about increasing sequence numbers in
 communication protocols. This is still a huge challenge to
-resolve\cite{Steffen2011a}, and, for now, besides the creation of prototypical
-solutions\cite{Aarts2010,Shahbaz2007,Howar2010}, application-specific solutions have
-to be applied.\cite{Steffen2011a}.
-\\\\
+resolve~\cite{Steffen2011a}, and, for now, besides the creation of prototypical
+solutions~\cite{Aarts2010,Shahbaz2007,Howar2010},
+application-specific solutions have to be applied.~\cite{Steffen2011a}.
+
+\subsubsection{Homing sequences}
+In 1993 Rivest \& Schapire proposed an extension to $L^*$~\cite[p. 312]{Rivest1993}
+that replaces the implicitly required reset by homing sequences.
+A homing sequence is an input strings for which the automaton is
+guaranteed to produce outputs that completely determines the final reached state.
+Suppose $M$ is a DFA. A homing sequence $h$ for $M$ with output $s$ is then a
+sequence of strings, such that $(\forall{q_1 \in Q})(\forall{q_2 \in Q})
+(\delta(q_1, h) = \delta(q_2, h) = s)$, for some state $q \in Q$.
+
+This also implies that every distinguisting sequence is a homing sequence,
+since for all states $q_1$ and $q_2$ and a distinguishing extension $a$,
+it can be deduced that $\delta(q_1, a) = \delta(q_2, a) \Rightarrow q_1 = q_2$,
+and therefore $\delta(q_1, a) = \delta(q_2, a)$.
+
+Given this definition of a homing sequence, together with the prerequisite
+that some state with output $s$ can be reached regularly by executing $h$,
+it can immediately be seen how a homing sequence can be used to simulate a reset:
+\begin{algorithm}[hb]
+  \caption{Simulate a reset of the system with a homing sequence.}
+  \label{alg:reset-homing}
+  \begin{algorithmic}[1]
+    \Function{Reset}{$M,h,s$} \Comment{}
+      \Do
+        \State $o \gets $ result of executing $h$ on $M$
+      \doWhile{$o \neq s$}
+    \EndFunction{}
+  \end{algorithmic}
+\end{algorithm}
+
+From the definition, given a homing sequence $h$, the state that is reached
+by executing $h$ can be identified by an output $s$.
+Therefore we can just execute $h$ for as long as its output differs from $o$
+and eventually the state identified by $s$ will be reached.
+The L* algorithm can now just substitute its initial state with the state
+reached eventually by executing $h$, giving it the ability to simulate a reset.
+
+With every string there is the possibility that $M$ gets trapped in a loop.
+Therefore it is generally quite hard if not impossible to find such a state.
+Rivest \& Schapire solves this by simulating independent copies of $M$
+for each possible output $s$ on executing $h$~\cite[p. 313]{Rivest1993}.
+Since the set of possible outputs on $h$ is limited by the number of states $n$,
+the amount of independent copies is bounded by $\mathcal{O}(n)$.
+Therefore this algorithm is bounded by $\mathcal{O}(n \cdot (m + e))$,
+with $m$ the amount of $\mq(w)$ queries and $e$ the amount of $\eq(M)$ queries.
+\\
+\\
 All the above problems might give the impression that active state machine
 learning is not yet applicable to real world applications. While it is true that
 practical application is not yet complete, great progress has been made and
