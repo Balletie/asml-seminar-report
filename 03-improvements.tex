@@ -5,120 +5,147 @@
 \section{Improvements}
 \label{sec:improvements}
 Since Angluin's original paper, several improvements have been made with respect
-to the original $L^*$ algorithm described in \cref{sec:fundamental-theory}.
-Some of these will be discussed in this chapter.
-In discussing them, we make two kinds of comparisons between the algorithms.
+to the original $L^*$ algorithm described in \cref{sec:an-algor-learn}. In this
+section, the most important improvements are discussed.
 
-The first comparison is in terms of the amount of
-\textit{queries} (the \textit{query complexity}), which gives an indication of
-the running time of the algorithm.
-The second comparison is in terms of the \textit{space complexity}.
-We also discuss the TTT-algorithm, which according
-to Isberner~et~al. exhibits an optimal space complexity\cite{Isberner2014b}.
-
-The first improvement that will be discussed is \textit{classification trees},
-which forms the basis for multiple subsequent improvements (including
-the TTT-algorithm).
+In discussing the improvements, two kinds of comparisons are made between them
+and the original $L^*$ algorithm. The first comparison is the difference in
+query complexity, the second is in terms of the space complexity.
 
 \subsection{Classification Trees}
 \label{sec:classification-trees}
 Introduced by Kearns and Vazirani\cite{Kearns1994}, classification trees (or
 \textit{discrimination trees}) are meant as a replacement for the observation
 table (see \cref{sec:data-structure}). In other words, it is a different data
-structure for storing the sets $S$ and $E$ of access strings and distinguishing
-extensions. The main characteristic of a classification tree is that it is
-\textit{redundancy-free}, which will be explained in this section.
+structure for maintaining the necessary information to form a hypothesis
+automaton.
 
-Say that we have a classification tree for some target automaton $M$. The labels
-of the internal nodes of the tree are distinguishing extensions from the set
-$E$, and the labels of leaf nodes are access strings from $S$. The tree's
-structure is such that for any internal node $e \in E$, its left subtree
-contains all $s \in S$ such that $s \concat e$ is rejected by $M$, and its right
-subtree contains those $s$ such that $s \concat e$ is accepted by $M$.
+The structure of a classification tree is as follows: all internal nodes of the
+tree are labeled by a distinguishing extension $e$ and the leaf nodes are
+labeled by an access string $s$. For each internal node labeled $e$, the leaf
+nodes are in its right or left subtree depending on whether $\mq(s\concat e)$
+equals ``yes'' or ``no'' respectively. The root of the tree is labeled with
+$\epsilon$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
-distinguished by their \textit{lowest common ancestor} in the tree. Thus, $v$
-and $w$ are distinguished by exactly \textit{one} distinguishing extension. In
-other words, any pair of access strings in the classification tree are
-Nerode-inequivalent (see \cref{def:nerode-eq}), and thus each access
-string uniquely identifies a distinct equivalence class of the target automaton
-$M$. When we construct a hypothesis, each equivalence class (and thus each
-access string), corresponds to a state in our hypothesis automaton $\hat M$.
+distinguished by their lowest common ancestor in the tree. It follows that,
+since any pair is distinguished by a distinguishing extension, any pair of
+access strings in the classification tree are Nerode-inequivalent (see
+\cref{def:nerode-eq}). Therefore each access string $s \in S$ uniquely
+identifies an equivalence class $\eqclass{s}{\lang_M}$ of the target automaton
+$M$.
 
-Howar~et~al. state that a discrimination tree is \textit{redundancy-free} because
-each state in $\hat M$ is distinguished by one distinguishing extension, as
-opposed to observation tables where states are distinguished by a fixed amount
-of distinguishing extensions\cite{Howar2014}.
+An essential concept is the \textit{sifting} operation (see \cref{alg:sift}),
+which for any string $w$ finds the identifying access string of
+$\eqclass{w}{\lang_M}$. The operation is denoted as $\sift(w)$ and works as
+follows: starting at the root node, for each internal node labeled with $e$, go
+left or right in the tree depending on $\mq(s \concat e)$. This is done until a
+leaf node has been reached, which is labeled with the correct access string.
+
+The purpose of the $\sift$ operation is the same as the $\row$ operation for
+observation tables, namely to identify equivalence classes (and thus states) in
+the hypothesis~\cite{Kearns1994}. The construction of the hypothesis $\hat M$ is
+thus done in the same way, except using the $\sift$ operation. Also note that
+all the leaf nodes that are in the right subtree of the root node define the
+accepting states of $\hat M$.
+
+\begin{algorithm}[b]
+  \caption{Find the identifying access string of the equivalence class of a
+    given word $w \in \Sigma^*$.}
+  \label{alg:sift}
+  \begin{algorithmic}[1]
+    \Function{Sift}{n,w} \Comment{In the first call, $n$ is equal to the root
+      node labeled $\epsilon$.}
+      \If{$n$ is a leaf node}
+        \State\Return $n.\text{label}$
+        \Comment{$n.\text{label}$ is the access string that identifies   $\eqclass{w}{\lang_M}$.}
+      \EndIf
+      \If{$\mq(w \concat n.\text{label})$}
+        \Comment{$n.\text{label}$ is a distinguishing extension.}
+        \State $\sift(n.\text{right},w)$
+      \Else
+        \State $\sift(n.\text{left},w)$
+      \EndIf
+    \EndFunction{}
+  \end{algorithmic}
+\end{algorithm}
+
+Howar~et~al. state that a classification tree is redundancy-free because each
+state in $\hat M$ is distinguished by one distinguishing extension, as opposed
+to observation tables where states are distinguished by a fixed amount of
+distinguishing extensions\cite{Howar2014}.
 
 \subsubsection{Complexity analysis}
 \label{sec:complexity-analysis}
-With their introduction of the \textit{classification tree}, Kearns and Vazirani
-also adapted the original $L^*$ learning algorithm to use the tree
-structure\cite{Kearns1994}. The precise operation of the adapted algorithm will not
-be given, but we do give an overview of the impact on the query complexity and
-the space complexity.
+With their introduction of the classification tree, Kearns and Vazirani also
+adapted the original $L^*$ learning algorithm to use the tree
+structure\cite{Kearns1994}. The precise operation of the adapted algorithm will
+not be explained. Nevertheless an overview of the impact on the query- and space
+complexity is given below.
 
-\paragraph{Query Complexity} The amount of \textit{membership queries} for
-hypothesis construction is bounded by $\mathcal{O}(kn^2)$ membership queries in
-the worst-case (i.e. a degenerated tree)\cite{Howar2014,Kearns1994,Isberner2014b},
-where $k = |\Sigma |$ and $n$ is the size of the target automaton $M$. For the
-counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
-where $m$ is the size of the longest counterexample\cite{Kearns1994}. Thus in
+\paragraph{Query Complexity} The amount of membership queries for hypothesis
+construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
+worst case (i.e. a degenerated
+tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the counterexample analysis
+the amount of queries is bounded by $\mathcal{O}(nm)$\cite{Kearns1994}. Thus in
 total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
 improvement over that of $L^*$.
 
-\paragraph{Space Complexity} In chapter 4 of his dissertation, Isberner analyzed
-the space complexity of discrimination-tree based learners as follows: a
-degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner node
-is labeled by a distinguishing extension of length
-$\mathcal{O}(m)$\cite{Isberner2015a}.  The space required for the hypothesis
+\paragraph{Space Complexity} In chapter four of his dissertation, Isberner
+analyzed the space complexity of classification tree based learners as follows:
+a degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner
+node is labeled by a distinguishing extension of length
+$\mathcal{O}(m)$\cite{Isberner2015a}. The space required for the hypothesis
 automaton is $\mathcal{O}(kn)$\cite{Isberner2015a}. Thus the algorithm requires
-space in $\mathcal{O}(kn + mn)$\cite{Isberner2014b,Isberner2015a}\todo{Compare with
-  L-star}.
+space in $\mathcal{O}(kn + mn)$\cite{Isberner2014b,Isberner2015a}, which is an
+improvement on the space complexity of the observation table of $L^*$.
 
 \subsection{Rivest and Schapire's Counterexample Analysis}
 \label{sec:rivest-schap-count}
-In 1993, Rivest and Schapire published a paper on learning without a reset using
-homing sequences\cite{Rivest1993}, which will be the scope of discussion of
-\cref{sec:noreset}.
-
-Their paper, however, also included an improvement upon $L^*$, also in the case
-that a reset \textit{is} available. Specifically, they improved the
+Rivest and Schapire made a significant improvement\cite{Rivest1993} to the
 \textit{counterexample analysis} stage, which is the part that handles
 counterexamples returned by an equivalence query.
 
 When a counterexample $\gamma$ is obtained, Rivest and Schapire's improved
-algorithm finds a \textit{single} extension $e$ from $\gamma$ distinguishing two
-states in the new hypothesis, and adds it to the set $E$ of distinguishing
-extensions. This is in contrast to the original $L^*$ algorithm, which adds
-all prefixes of the counterexample to the set $S$ of access strings.
+algorithm finds a \textit{single} extension $e$ from $\gamma$ that distinguishes
+two states in the new hypothesis and adds it to the set $E$ of distinguishing
+extensions. This is in contrast to the original $L^*$ algorithm, which adds all
+prefixes of the counterexample to the set $S$ of access strings.
 
-According to Rivest and Schapire\cite{Rivest1993}, and further clarified by
-Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, there must be a point
-where the hypothesis automaton $\hat M$ takes a wrong turn (i.e. there's an
-incorrect transition). Let $e$ be the suffix of the counterexample $\gamma$ from
-the point where the transition of $\hat M$ is inconsistent with the
-corresponding transition of the target $M$. Then $e$ can be found by means of a
-search strategy such as binary search and membership queries.
+According to Rivest and Schapire\cite{Rivest1993} and further clarified by
+Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, the counterexample
+$\gamma$ can be decomposed to find the distinguishing extension: let
+$a, e \in \Sigma^*$, $\sigma \in \Sigma$ such that
+$\gamma = a \concat \sigma \concat e$ and
+$\mq(\access{\hat M}{a}\concat\sigma\concat e) \neq \mq(\access{\hat
+  M}{a\concat\sigma}\concat e)$. That is, $e$ witnesses the fact that the states
+reached by $\access{\hat M}{a}$ and $\access{\hat M}{a\concat\sigma}$ are in
+fact different, whereas they reach the same state in $\hat M$ (since $\gamma$ is
+a counterexample). This means that the $\sigma$-transition from the state
+$\access{\hat M}{a}$ is an incorrect transition. Due to $e$ the states are from
+that point on correctly distinguished.
 
-As in the previous section, this section concludes with an analysis of the
-impact on the amount of membership queries needed and the space requirement.
+The correct decomposition of $\gamma$ can be found using a search strategy. The
+search strategy originally used by Rivest and Schapire is a binary search: first
+a membership query is performed with the decomposition in the middle. If it is
+accepted, then this means that the next search should be done in the first half
+of $\gamma$ (assuming that $\mq(\gamma)$ returned ``yes'', but $\gamma
+\not\in \lang_{\hat M}$). Otherwise, the search should be continued in the
+second half.
 
-\paragraph{Query complexity} Rivest and Schapire's original improvement used a
-binary search strategy to find the single suffix $e$. As expected from a binary
-search, this results in $\mathcal{O}(\log(m))$ membership queries per
-counterexample of length $m$. The amount of equivalence queries is
-$\mathcal{O}(n)$, and thus the amount of membership queries due to
-counterexample analysis is $\mathcal{O}(n\log(m))$, where $m$ is the size of the
-longest counterexample. The total amount of membership queries including
-hypothesis construction is thus $\mathcal{O}(kn^2 + n\log(m))$, an improvement
-over that of Kearns and Vazarani's (see \cref{sec:complexity-analysis}).
+\paragraph{Query complexity} As expected from a binary search, this results in
+$\mathcal{O}(\log(m))$ membership queries per counterexample of length $m$. The
+amount of equivalence queries is $\mathcal{O}(n)$, thus the amount of membership
+queries due to counterexample analysis is $\mathcal{O}(n\log(m))$. The total
+amount of membership queries including hypothesis construction is thus
+$\mathcal{O}(kn^2 + n\log(m))$, an improvement over that of Kearns and
+Vazarani's (see \cref{sec:complexity-analysis}).
 
-It is worthwhile to note that Isberner~et~al. analyzed and compared multiple
-search strategies by means of an abstract framework\cite{Isberner2014a}. Their
-results show that the query complexities of the other search strategy remain the
-same as the original binary search strategy due to Rivest and Schapire, yet
-perform better when put into practice.
+It is worthwhile to note that Isberner~et~al. analyzed and compared other search
+strategies by means of an abstract framework for counterexample
+analysis\cite{Isberner2014a}. Their results show that the query complexities of
+the other search strategies remain the same as the original binary search
+strategy due to Rivest and Schapire, yet perform better when put into practice.
 
 \paragraph{Space Complexity} From Isberner's analysis\cite{Isberner2014b}, the
 space complexity due to the new counterexample analysis is better than that of
@@ -126,9 +153,9 @@ $L^*$, however it is worse than that of Kearns and Vazirani's:
 $\mathcal{O}(kn^2 + nm)$.
 
 In the next section we will show another version of the algorithm due to
-Isberner~et~al., which combines Kearns and Vazirani's discrimination tree, and
-Rivest and Schapire-style counterexample analysis.
-\todo{actually write this section?}
+Isberner~et~al., which combines Kearns and Vazirani's classification tree, and
+Rivest and Schapire-style counterexample analysis.  \todo{actually write this
+  section?}
 
 \end{document}
 
