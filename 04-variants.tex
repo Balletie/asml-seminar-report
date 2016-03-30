@@ -17,10 +17,13 @@ such as \textit{Classification Trees} \cref{sec:classification-trees} and
 the \textit{TTT} algorithm \cref{sec:ttt}
 made practical applications already more feasible.
 
-In applying L* or improvements thereof to practical applications,
-there were still some practical limitations and restrictions that had to
-be addressed (Steffen 2011, Ch. 6~\cite{Steffen2011}).
-Some of these issues can be summarized as follows:
+The learning algorithms discussed in the previous chapters all required an
+(abstract, formal) input alphabet, an (abstract, formal) output alphabet,
+membership queries and equivalence queries. 
+In practice, it is in many cases quite difficult to realize these requirements
+for a specific system under learning\cite{Steffen2011a}.
+This section discusses some of these challenges faced when
+applying active state machine learning to real world scenarios, such as:
 \begin{itemize}
   \item Equivalence queries are generally undecidable for black boxes
   \item L* can only interact with regular languages, not with real systems
@@ -29,33 +32,37 @@ Some of these issues can be summarized as follows:
         which imposes the requirement for a \textit{reset} function
   \item Not all systems might support a \textit{reset} function.
 \end{itemize}
+For each of these challenges we will discuss a variant of the
+L* algorithm that has been proposed to solve it.
 
-In order to address these limitations and restrictions,
-several variants of the L* algorithm have been proposed,
-each with the goal to solve such an issue.
-In this chapter we will further elaborate on some of these issues
-and the variants proposed to solve them.
-
-\subsection{Approximating \textit{EQUIV (M)} queries with \textit{MEMBER (w)} queries}
-The target machine on which the learning algorithm is applied is generally
+\subsection{Approximating \eq(M) queries with \mq(w) queries}
+In theoretical simulations, equivalence testing is often easy because
+the target system (in some cases even the model!) is known.
+In practice, however, the system under learning is generally
 a black box, since the main motive for using a learning algorithm is to
 infer knowledge about some unknown system.
 Therefore equivalence queries can generally only be answered by exhaustively
 testing the inputs and outputs of a system.
 However, exhaustively testing a black box is undecidably hard.
 
-In order to solve this issue model-based testing techniques have been used,
-such as \textit{Chow's W-method}~\cite{deRuiter2015, Chow1978} or the \textit{WP-method}.
-These methods rely on approximating \textit{EQUIV (M)} queries by using
-\textit{MEMBER (w)} queries.
+This means that equivalence queries will have to be approximated,
+typically using membership queries. These approximated membership queries are in
+general also not decidable without assuming any extra knowledge\cite{Steffen2011a},
+such as the number of states of the system under learning: it is impossible to
+be certain that the system has been tested extensively enough.
 
-To further research in this area,
-the \textit{ZULU} challenge~\cite{Combe2010} was introduced.
-The \textit{ZULU} challenge asked participants to find a DFA corresponding
-to a certain system as accurately as possible, while imposing a restriction
-on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
-queries completely.
-\todo{add some more text and a fluid intro to Chow's method}
+An alternative to using membership queries to simulate equivalence queries, is
+to use model-based testing methods\cite{Broy2005, Tretmans2011}. An example of
+model-based testing is Chow's W-method\cite{deRuiter2015, Chow1978},
+which relies on approximating \eq(M) queries by using \mq(w) queries.
+
+%To further research in this area,
+%the \textit{ZULU} challenge~\cite{Combe2010} was introduced.
+%The \textit{ZULU} challenge asked participants to find a DFA corresponding
+%to a certain system as accurately as possible, while imposing a restriction
+%on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
+%queries completely.
+%\todo{add some more text and a fluid intro to Chow's method}
 
 \subsubsection{Chow's W-method}
 \label{sec:chow}
@@ -116,26 +123,31 @@ The method consists of three steps:
 \item verification of the responses.
 \end{enumerate}
 
-By exploiting domain specific knowledge, the W-method can be adapted to reduce
-the number of test cases even further.
+\subsection{Limiting the amount of membership queries}
+Membership queries are the most straightforward
+to translate to real world applications: they can be realized via testing.
+An important thing to note, however, is the amount of membership queries required.
+In a theoretical framework the learning algorithm doesn't have to account
+for execution times of individual \mq(w) queries.
+In practice, such queries might take time or be expensive to execute.
+
+Learning a real world application can easily require several thousand membership
+queries\todo{Add citation}. When using for example \textit{Chow's method} for
+\eq(M) queries, the amount of membership queries needed grows even faster.
+This means that the time required to learn a model can be greatly reduced
+either by speeding up membership queries
+(executing them in parallel~\cite{Howar2012}),
+or simply by reducing the number of membership queries required.
+
+Chapter \cref{sec:improvements} has discussed several improvements to achieve
+exactly that. Additionally, application-specific optimizations can be used to
+further reduce the number of membership queries required.
 When dealing with a networked application for example, there are usually no
 further possible transitions when a connection is closed by a remote machine.
 Exploiting such knowledge can greatly reduce the number of tests necessary\cite{deRuiter2015}.
 
-\subsection{Limiting the amount of membership queries}
-In a theoretical framework the learning algorithm doesn't have to account
-for execution times of individual \textit{MEMBER (w)} queries.
-In practice, such queries might take time or be expensive to execute.
-Therefore algorithms benefit from reducing the amount of queries needed.
-Some generic improvements in this regard have already been covered in
-\cref{sec:improvements}.
-
-However, when using for example \textit{Chow's method} for \textit{EQUIV (M)}
-queries, the amount of membership queries needed grows exponentially
-in the number of states \cref{sec:chow}.
-
-\todo{Cite ZULU participant here, since the challenge also imposed
-      a maximum on \textit{MEMBER (w)} queries}
+%\todo{Cite ZULU participant here, since the challenge also imposed
+%      a maximum on \textit{MEMBER (w)} queries}
 
 \subsection{Learning Mealy machines}
 \label{sec:learn-mealy-mach}
@@ -194,7 +206,7 @@ the following is true:
         in the access string, if $\sigma$ is applied, $o$ is returned;
 \end{itemize}
 
-\begin{algorithm}[b]
+\begin{algorithm}[h]
 \caption{Transformation of a mealy machine into a DFA}
 \label{alg:transform_hungar}
 \begin{algorithmic}[1]
@@ -342,12 +354,26 @@ In such a system queries are no longer independent of each other,
 since after a certain amount of authentication requests
 the systems behaviour suddenly changes for the same membership queries.
 In order to solve this issue, the L* algorithm implicitly requires a means
-of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest1993}.
+of \textit{reset}ting the system under learning (Rivest \& Schapire, pg. 301)\cite{Rivest1993}
+in between successive membership queries.
 
 However, not all systems support a \textit{reset} function.
 As we'll see in \cref{sec:applications}, the system under learning
 could also be a system that the learning algorithm has totally no control over.
 \todo{Explain homing sequences here}
+
+Another obstacle to overcome is that of parameters used in real world
+applications. Think, for example, about increasing sequence numbers in
+communication protocols. This is still a huge challenge to
+resolve\cite{Steffen2011a}, and, for now, besides the creation of prototypical
+solutions\cite{Aarts2010,Shahbaz2007,Howar2010}, application-specific solutions have
+to be applied.\cite{Steffen2011a}.
+\\\\
+All the above problems might give the impression that active state machine
+learning is not yet applicable to real world applications. While it is true that
+practical application is not yet complete, great progress has been made and
+great things have already been achieved. The next few highlights of real world
+applications serve to illustrate these facts.
 
 \end{document}
 
