@@ -37,17 +37,39 @@ access strings in the classification tree are Nerode-inequivalent (see
 identifies an equivalence class $\eqclass{s}{\lang_M}$ of the target automaton
 $M$.
 
-An essential concept is the \textit{sifting} operation, which for any string $w$
-finds the access string representing the equivalence class
-$\eqclass{w}{\lang_M}$. The operation works as follows: starting at the root
-node, for each internal node labeled with $e$, perform a membership query
-$s \concat e$. If the result is \textit{yes}, do the same for the node at the
-right tree; if it is \textit{no}, go to the left tree. This is done until a leaf
-node has been reached, which is labelled with the correct access string. The
-sifting operation can be seen as the replacement for the $\row(w)$ operation for
-observation tables, to identify equivalence classes (and thus states) in the
-hypothesis. Hypothesis construction is thus done in the same way, using the
-sifting operation.
+An essential concept is the \textit{sifting} operation (see \cref{alg:sift}),
+which for any string $w$ finds the identifying access string of
+$\eqclass{w}{\lang_M}$. The operation is denoted as $\sift(w)$ and works as
+follows: starting at the root node, for each internal node labeled with $e$, go
+left or right in the tree depending on $\mq(s \concat e)$. This is done until a
+leaf node has been reached, which is labelled with the correct access
+string. The sifting operation can be seen as the replacement for the $\row(w)$
+operation for observation tables, to identify equivalence classes (and thus
+states) in the hypothesis. The construction of the hypothesis $\hat M$ is thus
+done in the same way, using the sifting operation. Note that all the leaf nodes
+that are in the right subtree of the root node define the accepting states of
+$\hat M$.
+
+\begin{algorithm}[b]
+  \caption{Find the identifying access string of the equivalence class of a
+    given word $w \in \Sigma^*$.}
+  \label{alg:sift}
+  \begin{algorithmic}[1]
+    \Function{Sift}{n,w} \Comment{In the first call, $n$ is equal to the root
+      node labeled $\epsilon$.}
+      \If{$n$ is a leaf node}
+        \State\Return $n.\text{label}$
+        \Comment{$n.\text{label}$ is the access string that identifies   $\eqclass{w}{\lang_M}$.}
+      \EndIf
+      \If{$\mq(w \concat n.\text{label})$}
+        \Comment{$n.\text{label}$ is a distinguishing extension.}
+        \State $\sift(n.\text{right},w)$
+      \Else
+        \State $\sift(n.\text{left},w)$
+      \EndIf
+    \EndFunction{}
+  \end{algorithmic}
+\end{algorithm}
 
 Howar~et~al. state that a classification tree is redundancy-free because each
 state in $\hat M$ is distinguished by one distinguishing extension, as opposed
