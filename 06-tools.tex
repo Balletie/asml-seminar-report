@@ -75,7 +75,8 @@ are listed below:
 	\item NL* (base) \cite{Bollig2009}
 \end{itemize}
 
-All the algorithms works with both DFA and Mealy machines, expect for 
+All the algorithms works with both DFA and Mealy machines (see section 
+\ref{sec:learn-mealy-mach}), expect for 
 DHC\cite{Merten2012} and NL*\cite{Bollig2009}.
 
 For finding the counterexamples, Learnlib uses Automatalib as well as other
@@ -124,13 +125,13 @@ implementation of this oracle is found in \cite{Aarts2014} and \cite{Tomte2014}.
 between the SUL and the learner. The idea behind the Abstractor is to make the 
 model that needs to be learned by the Learner smaller than the SUL. This is 
 needed, because a SUL typically have parameter values which make the alphabet 
-large. This is achieved by using an concrete input set $I$ and an output set 
-$O$ used by the SUL. Then, with the help of counterexample-guided abstraction 
-refinement\cite{Tomte2014} an abstracted input set $X$ and output set $Y$ is 
-created. Those abstracted sets then represent a smaller model of the SUL.
-In order to make it scalable, this component also tries to reduce the length of 
-the counterexample by removing loops and single transitions \cite{Koopman2014}. 
-The complete theory is found in \cite{Tomte2014}.
+large. This is achieved by using an concrete input set $\Sigma$ and an output 
+set $\Lambda$ used by the SUL. Then, with the help of counterexample-guided 
+abstraction refinement\cite{Tomte2014} an abstracted input set $X$ and output 
+set $Y$ is created. Those abstracted sets then represent a smaller model of the 
+SUL. In order to make it scalable, this component also tries to reduce the 
+length of the counterexample by removing loops and single transitions 
+\cite{Koopman2014}. The complete theory is found in \cite{Tomte2014}.
 
 \paragraph{Interaction between the modules} The exchange of messages between
 all the modules is as follows (see numbering in figure
@@ -139,7 +140,7 @@ all the modules is as follows (see numbering in figure
 \begin{enumerate}
 	\item The Learner sends an abstract query $x \in X$ to the Abstractor.
 	\item The Abstractor receives an abstract query, selects a concrete input
-	symbol $i \in I$ and sends it as a query to the Lookahead 
+	symbol $i \in \Sigma$ and sends it as a query to the Lookahead 
 	Oracle\cite{Tomte2014}. If no input symbol $i$ exists, return the symbol 
 	$\perp$ to the Learner.
 	\item The Lookahead Oracle checks if $i$ is cached. If not, then $i$ is send
@@ -148,7 +149,8 @@ all the modules is as follows (see numbering in figure
 	the Teacher \cite{Aarts2015}.
 	\item The Determinizer receives the output from the Teacher and transforms 
 	this nondeterministic behavior.
-	\item The Determinizer sends concrete symbol $o \in O$ to the Lookahead 
+	\item The Determinizer sends concrete symbol $o \in \Lambda$ to the 
+	Lookahead 
 	Oracle which caches input output pair $\{i,o\}$
 	\item The Lookahead oracle sends $o$ together with the annotated information
 	that came after the sequence of queries between the last reset query and
