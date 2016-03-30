@@ -152,11 +152,17 @@ space complexity due to the new counterexample analysis is better than that of
 $L^*$, however it is worse than that of Kearns and Vazirani's:
 $\mathcal{O}(kn^2 + nm)$.
 
-In the next section we will show another version of the algorithm due to
-Isberner~et~al., which combines Kearns and Vazirani's classification tree and
-Rivest and Schapire-style counterexample analysis.  \todo{actually write this
-  section?}
+\subsection{The Observation Pack and TTT Algorithms}
+\label{sec:ttt}
+A rather logical improvement would be to use both the classification tree and
+the improved counterexample analysis. Then the improved algorithm benefits from
+both the improved space complexity of the classification tree and the improved
+query complexity of Rivest and Schapire's counterexample analysis. This is, in a
+nutshell, what the Observation Pack algorithm due to Howar is
+about\cite{Howar2012a,Isberner2015a}. \todo{explain node splitting?}
 
+The TTT algorithm due to Isberner\cite{Isberner2014b} builds further upon the
+Observation Pack algorithm by adding \textit{discriminator finalization}.
 \end{document}
 
 %%% Local Variables:
