@@ -61,12 +61,12 @@ queries completely.
 \label{sec:chow}
 According to \cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
-is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
-and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
+is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method.
+The maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
 where n is the number of states in the provided automaton, m is the number
-of states in the correct automaton, and k is the size of the input alphabet.
+of states in the correct automaton and k is the size of the input alphabet.
 
-By refining the test suites and the specification at the same time,
+By refining the test suites and the specification at the same time
 and by using a divide and conquer approach, the size of the test is
 considerably reduced in comparison to defining the tests from
 the final specification\cite{Ipate2007}.
@@ -106,7 +106,7 @@ $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same stat
 performing all the transitions.
 
 In order to use the W-method there are four requirements.
-The machine must be minimal, completely specified, completely reachable, 
+The machine must be minimal, completely specified, completely reachable
 and have a fixed initial state.
 With some additional manipulation these four assumptions may be violated.
 The method consists of three steps:
@@ -236,7 +236,7 @@ the following is true:
   \node        (2) at (3,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge [bend left] node[auto,draw=none] {$a/b$} (2) 
+        (1) edge [bend left] node[auto,draw=none] {$a/b$} (2)
         (2) edge [bend left] node[auto,draw=none] {$a/b$} (1);
 \end{tikzpicture}
 \caption{Mealy representation} \label{fig:transformation_mealy}
@@ -305,7 +305,7 @@ symbol $o$ yields $o$ when $\sigma$ is applied.
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
 Angluin's $L^*$ algorithm has been adjusted for use with mealy
 machines. The new procedure was first informally described in
-\cite{Margaria2004}, and later more rigorously in \cite{Shahbaz2009}. In $L^*$ the
+\cite{Margaria2004} and later more rigorously in \cite{Shahbaz2009}. In $L^*$ the
 membership queries return a boolean value; either it's a member, or it's not.
 For $L^*_{M}$, the membership query is replaced by a output query, which
 returns an output string. The observation table is modified to store these
