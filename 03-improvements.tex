@@ -21,11 +21,10 @@ structure for maintaining the necessary information to form a hypothesis
 automaton.
 
 The structure of a classification tree is as follows: all internal nodes of the
-tree are labeled by a distinguishing extension $e$, and the leaf nodes are
+tree are labeled by a distinguishing extension $e$ and the leaf nodes are
 labeled by an access string $s$. For each internal node labeled $e$, the leaf
-nodes are in its right or left subtree depending on whether
-$\mq(s\concat e)$ equals ``yes'' or ``no''. The root of the tree is labeled
-with $\epsilon$.
+nodes are in its right or left subtree depending on whether $\mq(s\concat e)$
+equals ``yes'' or ``no''. The root of the tree is labeled with $\epsilon$.
 
 From the way the tree is constructed, any pair of access strings $v,w \in S$ are
 distinguished by their lowest common ancestor in the tree. It follows that,
