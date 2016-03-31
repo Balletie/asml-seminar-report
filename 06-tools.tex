@@ -20,10 +20,10 @@ automata in order to apply active automata learning on them.
 \subsubsection{Libalf}
 \label{sssec:libalf}
 Libalf\footnote{No support available,but can be downloaded from 
-	\url{http://libalf.informatik.rwth-aachen.de}}(or Library Automata Learning 
-	Framework) is a library for learning and manipulating formal languages. It 
-	has both active and passive learning algorithms. For this paper, only the 
-	active part is covered.
+	\url{http://libalf.informatik.rwth-aachen.de}} is a library for learning 
+	and manipulating formal languages. It has both active and passive learning 
+	algorithms. The name is short for: Library Automata Learning Framework. For 
+	this paper, only the active part is covered.
 
 The library consists of a core library as well as two additional libraries, 
 liblangen(random regular language generator) and AMoRE++(automata library).
@@ -170,13 +170,18 @@ Studio\footnote{Available from here
 
 \subsection{Tomte}
 \label{ssec:tomte}
-Tomte\footnote{In active development and available from
-\url{http://tomte.cs.ru.nl/Tomte-0-4}} is a tool that automatically makes
-abstractions for automata learning. It is essentially a translator between the
-system under learning (SUL) and the learner. This makes tools such as Learnlib
-easier, since the user does not have to make the mapping manually.
 
-\begin{figure}[!ht]
+Tomte\footnote{In active development and available from
+\url{http://tomte.cs.ru.nl/Tomte-0-4}} is a command-line tool that 
+automatically makes abstractions for automata learning. The name comes from a 
+gnome from the book: The Wonderful Adventures of Nils. The lead character is 
+this book, Nils, is transformed into a gnome. After numorous adventures, Tomte 
+changed him back to normal.
+This is also what the tools does. It transforms the language of the system 
+under learning (SUL) to the language of the learner. This makes tools such as 
+Learnlib easier, since the user does not have to make the mapping manually.
+
+\begin{figure}[!h]
 	\includegraphics[width=\textwidth]{Tool_images/tomte_network.png}
 	\caption{Architecture of Tomte}
 	\label{fig:tomte_arch_interaction}
