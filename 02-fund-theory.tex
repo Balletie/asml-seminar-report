@@ -272,7 +272,7 @@ constructed, the equivalence query is executed upon it. If the response is
 ``yes'', the algorithm is done and halts. If instead the response is a
 counterexample, the counterexample and all of its prefixes are added to $S$,
 after which $S \concat \Sigma$ is updated and the algorithm moves back to phase
-1.
+one.
 
 \subsubsection{Example run}
 \label{sec:example-run}
@@ -408,14 +408,14 @@ $bbbb$     & $0$        & $0$   & $0$  \\
 \caption{Observation tables}
 \end{table}
 
-Since the table is both closed and consistent, the algorithm moves on to phase 2
+Since the table is both closed and consistent, the algorithm moves on to phase two
 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
 equivalence query with the hypothesis as parameter. Since it does not match $M$,
 the oracle will provide a counterexample. Assume the counterexample provided is
 $bbb$ (it could also have provided other counterexamples such as $bbbbbbb$).
 Now, the counterexample and all prefixes are added to $S$. After performing the
 new membership queries, the table \ref{tbl:observation_2} is built and the
-algorithm returns to phase 1.
+algorithm returns to phase one.
 
 The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
 $\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
@@ -424,7 +424,7 @@ Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table
 = row($b$), but row($\epsilon \concat b$) differs from row($b \concat b$) under
 the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new
 membership queries now results in table \ref{tbl:observation_4}. The table is
-now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
+now both consistent and closed, so $L^*$ moves on to phase two and constructs the
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns `yes' and the algorithm terminates.
 
