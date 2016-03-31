@@ -84,12 +84,13 @@ not be explained. Nevertheless an overview of the impact on the query- and space
 complexity is given below.
 
 \paragraph{Query Complexity} The amount of membership queries for hypothesis
-construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
-worst case (i.e. a degenerated
-tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the counterexample analysis
-the amount of queries is bounded by $\mathcal{O}(nm)$\cite{Kearns1994}. Thus in
-total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
-improvement over that of $L^*$.
+construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the worst
+case (i.e. a degenerated tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the
+counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
+which is done $\mathcal{O}(n)$ amount of times over all main loop
+executions\cite{Kearns1994}. Thus in total the query complexity is bounded by
+$\mathcal{O}(kn^2 + n^2m)$~\cite{Isberner2015a}, an improvement over that of
+$L^*$.
 
 \paragraph{Space Complexity} In chapter four of his dissertation, Isberner
 analyzed the space complexity of classification tree based learners as follows:
