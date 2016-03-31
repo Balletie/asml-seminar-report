@@ -350,16 +350,26 @@ In order to solve this issue, the $L^*$ algorithm implicitly requires a means
 of resetting the system under learning~\cite[p. 301]{Rivest1993}
 in between successive membership queries.
 
-However, not all systems support a reset function.
+However, not in all situations a reset function is desirable. An example is a
+system where the reset takes a lot of time compared to the learning process.
+For such systems a reduction in the amount of resets is helpful. The method
+proposed by Bauer~et~al.~\cite{Bauer2012} can be used for this situation. This
+method reuses already (or partially) asked membership queries by only sending
+the remaining part of the query to the teacher. It then combines the answer of
+the teacher (if needed) with the answer of previously asked queries, which is
+sent back to the learning algorithm. The system then only needs to reset if the
+complete membership query has not already been asked before.
+Other systems lack any support for a reset function.
 As we'll see in \cref{sec:applications}, the system under learning
-could also be a system that the learning algorithm has completely no control over.
+could well be a system over which the algorithm has no control.
 
-Another obstacle to overcome is that of parameters used in real world
-applications. Think, for example, about increasing sequence numbers in
-communication protocols. This is still a huge challenge to
-resolve~\cite{Steffen2011a} and for now, besides the creation of prototypical
-solutions~\cite{Aarts2010,Shahbaz2007,Howar2010},
-application-specific solutions have to be applied~\cite{Steffen2011a}.
+%Section 3.5?
+%Another obstacle to overcome is that of parameters used in real world
+%applications. Think, for example, about increasing sequence numbers in
+%communication protocols. This is still a huge challenge to
+%resolve~\cite{Steffen2011a} and for now, besides the creation of prototypical
+%solutions~\cite{Aarts2010,Shahbaz2007,Howar2010},
+%application-specific solutions have to be applied~\cite{Steffen2011a}.
 
 \subsubsection{Homing sequences}
 In 1993 Rivest \& Schapire proposed an extension to $L^*$~\cite[p. 312]{Rivest1993}
