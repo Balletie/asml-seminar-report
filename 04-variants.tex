@@ -19,7 +19,7 @@ the \textit{TTT} algorithm \cref{sec:ttt} made practical applications more feasi
 
 The learning algorithms discussed in the previous chapters all required an
 (abstract, formal) input alphabet, an (abstract, formal) output alphabet,
-membership queries and equivalence queries. 
+membership queries and equivalence queries.
 In practice, it is in many cases quite difficult to realize these requirements
 for a specific system under learning (SUL)~\cite{Steffen2011a}.
 This section discusses some of these challenges faced when
@@ -71,15 +71,15 @@ which relies on approximating $\eq(M)$ queries by using $\mq(w)$ queries.
 \label{sec:chow}
 According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
-is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
-and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
-where n is the number of states in the provided automaton, m is the number
-of states in the correct automaton, and k is the size of the input alphabet.
+is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method.
+The maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
+where $n$ is the number of states in the provided automaton, $m$ is the number
+of states in the correct automaton and $k$ is the size of the input alphabet.
 
-By refining the test suites and the specification at the same time,
+By refining the test suites and the specification at the same time
 and by using a divide and conquer approach, the size of the test is
 considerably reduced in comparison to defining the tests from
-the final specification~\cite{Ipate2007}.
+the final specification~\cite{Ipate2007, Chow1978}.
 This is especially beneficial because complex systems are usually
 created in multiple iterations.
 Unlike some other test selection methods the W-method does not require
@@ -100,37 +100,25 @@ To achieve this, the W-method constructs two sets of input sequences:
     outputs for at least one sequence in $W$ for every pair of different states.
 \end{itemize}
 
-Given a specification P that can be modelled by an unknown finite state machine M,
+Given a specification $P$ that can be modeled by an unknown finite state machine $M$,
 the only information the algorithm needs is an estimate of the maximum number of
 states of an unknown model for the specification.
-Suppose $d = \text{estimated maximum number of states for P}
-- \text{number of states in M}$.
-Naturally, it follows that $d \geq 0$.
+Suppose $d$ is the difference between the estimated maximum number of states in $P$
+and the number of states in the machine $M$.
 We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
-making $\Sigma\left[ n \right]$ a random string with a maximal length of n.
+making $\Sigma\left[ n \right]$ a random string with a maximal length of $n$.
 For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
-The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup S
-\concat \Sigma$, which is also called the transition cover of $M$, ensures that all the
+The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup (S
+\concat \Sigma)$, which is also called the transition cover of $M$, ensures that all the
 states and transition in $P$ are also present in $M$, while
 $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
 performing all the transitions.
-
-In order to use the W-method there are four requirements.
-The machine must be minimal, completely specified, completely reachable, 
-and have a fixed initial state.
-With some additional manipulation these four assumptions may be violated.
-The method consists of three steps:
-\begin{enumerate}
-\item estimation of the maximum number of states.
-\item generation of test sequences.
-\item verification of the responses.
-\end{enumerate}
 
 \subsection{Limiting the amount of membership queries}
 Membership queries are the most straightforward
 to translate to real world applications: they can be realized via testing.
 An important thing to note, however, is the amount of membership queries required.
-In a theoretical framework the learning algorithm doesn't have to account
+In a theoretical framework the learning algorithm does not have to account
 for execution times of individual $\mq(w)$ queries.
 In practice, such queries might take considerable time or be expensive to execute.
 
@@ -144,7 +132,7 @@ either by speeding up membership queries
 or simply by reducing the number of membership queries required~\cref{sec:tools}.
 
 \todo{Needs expansion, see todo list in issues}
-Chapter \cref{sec:improvements} has discussed several improvements to achieve
+Chapter \ref{sec:improvements} has discussed several improvements to achieve
 exactly that. Additionally, application-specific optimizations can be used to
 further reduce the number of membership queries required.
 When dealing with a networked application for example, there are usually no
@@ -216,7 +204,7 @@ the following is true:
 \label{alg:transform_hungar}
 \begin{algorithmic}[1]
 \Function{Transform}{$Q_\mathcal{M}, q_{0_\mathcal{M}}, \Sigma_\mathcal{M},
-                     \Lambda, \delta_\mathcal{M}, \lambda$} 
+                     \Lambda, \delta_\mathcal{M}, \lambda$}
   \State $Q \gets Q_\mathcal{M} \cup \{q_{err}\}$
   \State $q_0 \gets q_{0_\mathcal{M}}$
   \State $\Sigma \gets \Sigma_\mathcal{M} \cup \Lambda$
@@ -253,7 +241,7 @@ the following is true:
   \node        (2) at (3,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge [bend left] node[auto,draw=none] {$a/b$} (2) 
+        (1) edge [bend left] node[auto,draw=none] {$a/b$} (2)
         (2) edge [bend left] node[auto,draw=none] {$a/b$} (1);
 \end{tikzpicture}
 \caption{Mealy representation} \label{fig:transformation_mealy}
@@ -273,14 +261,14 @@ the following is true:
   \node [accepting]         (5) at (3,1)  {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-      (1) edge [bend left] node[auto,draw=none] {$a$} (5) 
-      (4) edge [bend left] node[auto,draw=none] {$b$} (1)
-      (5) edge [bend left] node[auto,draw=none] {$b$} (3)
-      (3) edge [bend left] node[auto,draw=none] {$a$} (4)
-      (1) edge             node[auto,draw=none] {$b$} (2)
-      (3) edge             node[auto,draw=none] {$b$} (2)
-      (4) edge             node[auto,draw=none] {$a$} (2)
-      (5) edge             node[auto,draw=none] {$a$} (2);
+        (1) edge [bend left] node[auto,draw=none] {$a$} (5)
+        (4) edge [bend left] node[auto,draw=none] {$b$} (1)
+        (5) edge [bend left] node[auto,draw=none] {$b$} (3)
+        (3) edge [bend left] node[auto,draw=none] {$a$} (4)
+        (1) edge 			 node[auto,draw=none] {$b$} (2)
+        (3) edge 			 node[auto,draw=none] {$b$} (2)
+        (4) edge 			 node[auto,draw=none] {$a$} (2)
+        (5) edge 			 node[auto,draw=none] {$a$} (2);
 \end{tikzpicture}
 \caption{Hungar's transformation} \label{fig:transformation_hungar}
 \end{subfigure}
@@ -297,7 +285,7 @@ the following is true:
   \node (3) at (2,1) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge              node[auto,draw=none] {$ab$} (2) 
+        (1) edge 			  node[auto,draw=none] {$ab$} (2)
         (2) edge [bend left]  node[auto,draw=none] {$ab$} (1)
         (1) edge [bend left]  node[auto,draw=none] {$ba$} (3)
         (2) edge [bend right] node[auto,draw=none] {$ba$} (3);
