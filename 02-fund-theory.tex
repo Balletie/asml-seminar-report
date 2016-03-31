@@ -198,13 +198,15 @@ and of consistence, defined in \cref{def:closure,def:consistence} respectively.
 
 \subsubsection{The Algorithm}
 \label{sec:algorithm}
-As said in the previous section, the algorithm begins by initializing $S$ and
-$E$ to $\{\epsilon\}$. The initial cells of the table are filled by performing
-membership queries. After the initialization is done, the algorithm enters the
-main loop, which is split up into two phases. The first phase ensures the
-properties of closure and consistence, and is repeated until these properties
-are satisfied. In the second phase the algorithm constructs a hypothesis
-automaton, and uses it to perform an equivalence query.
+As said in the previous section, the \cref{alg:lstar} begins by
+initializing $S$ and $E$ to $\{\epsilon\}$.
+The initial cells of the table are filled by performing membership queries.
+After the initialization is done, the algorithm enters the main
+loop~(line~\ref{line:loop}), which is split up into two phases.
+The first phase~(line~\ref{line:first}) ensures the properties of closure
+and consistence, and is repeated until these properties are satisfied.
+In the second phase~(line~\ref{line:second}) the algorithm constructs a
+hypothesis automaton and uses it to perform an equivalence query.
 
 \begin{algorithm}[h]
 \caption{Angluin's L* algorithm}
@@ -214,7 +216,9 @@ automaton, and uses it to perform an equivalence query.
   \State $S \gets E \gets \{ \epsilon \}$
   \State Construct the observation table $(S,E,T)$ by executing
          $\mq(w)$ for $\epsilon$ and $\forall\sigma \in \Sigma$
+  \label[line]{line:loop}
   \Loop
+    \label[line]{line:first}
     \While{$(S,E,T)$ is not closed or not consistent}
       \If{$(S,E,T)$ is not consistent}
         \State Find some $s_1, s_2 \in S, e \in E$ and $\sigma \in \Sigma$ such that
@@ -230,6 +234,7 @@ automaton, and uses it to perform an equivalence query.
                $w \in (S \cup S \concat \Sigma)\concat E$
       \EndIf
     \EndWhile
+    \label[line]{line:second}
     \State $M \gets M(S,E,T)$
     \State Execute $\eq(M)$
     \If{a counterexample $t$ is given}
