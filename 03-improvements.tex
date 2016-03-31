@@ -84,12 +84,13 @@ not be explained. Nevertheless an overview of the impact on the query- and space
 complexity is given below.
 
 \paragraph{Query Complexity} The amount of membership queries for hypothesis
-construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the
-worst case (i.e. a degenerated
-tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the counterexample analysis
-the amount of queries is bounded by $\mathcal{O}(nm)$\cite{Kearns1994}. Thus in
-total the query complexity is bounded by $\mathcal{O}(kn^2 + nm)$, an
-improvement over that of $L^*$.
+construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the worst
+case (i.e. a degenerated tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the
+counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
+which is done $\mathcal{O}(n)$ amount of times over all main loop
+executions\cite{Kearns1994}. Thus in total the query complexity is bounded by
+$\mathcal{O}(kn^2 + n^2m)$~\cite{Isberner2015a}, an improvement over that of
+$L^*$.
 
 \paragraph{Space Complexity} In chapter four of his dissertation, Isberner
 analyzed the space complexity of classification tree based learners as follows:
@@ -119,11 +120,12 @@ $a, e \in \Sigma^*$, $\sigma \in \Sigma$ such that
 $\gamma = a \concat \sigma \concat e$ and
 $\mq(\access{\hat M}{a}\concat\sigma\concat e) \neq \mq(\access{\hat
   M}{a\concat\sigma}\concat e)$. That is, $e$ witnesses the fact that the states
-reached by $\access{\hat M}{a}$ and $\access{\hat M}{a\concat\sigma}$ are in
-fact different, whereas they reach the same state in $\hat M$ (since $\gamma$ is
-a counterexample). This means that the $\sigma$-transition from the state
-$\access{\hat M}{a}$ is an incorrect transition. Due to $e$ the states are from
-that point on correctly distinguished.
+reached by $\access{\hat M}{a\concat\sigma}$ and
+$\access{\hat M}{a}\concat\sigma$ are in fact different, whereas they reach the
+same state in $\hat M$ (since $\gamma$ is a counterexample). This means that the
+$\sigma$-transition from the state $\access{\hat M}{a}$ is an incorrect
+transition. Due to $e$ the states are from that point on correctly
+distinguished.
 
 The correct decomposition of $\gamma$ can be found using a search strategy. The
 search strategy originally used by Rivest and Schapire is a binary search: first
@@ -152,11 +154,62 @@ space complexity due to the new counterexample analysis is better than that of
 $L^*$, however it is worse than that of Kearns and Vazirani's:
 $\mathcal{O}(kn^2 + nm)$.
 
-In the next section we will show another version of the algorithm due to
-Isberner~et~al., which combines Kearns and Vazirani's classification tree and
-Rivest and Schapire-style counterexample analysis.  \todo{actually write this
-  section?}
+\subsection{The Observation Pack and TTT Algorithms}
+\label{sec:ttt}
+A rather logical improvement would be to use both the classification tree and
+the improved counterexample analysis: the improved algorithm would benefit from
+both the improved space complexity of the classification tree and the improved
+query complexity of Rivest and Schapire's counterexample analysis. This is the
+Observation Pack algorithm due to Howar in a
+nutshell~\cite{Howar2012a,Isberner2015a}.
 
+The interaction of Rivest and Schapire's counterexample analysis with the
+classification tree is as follows: when the decomposition
+$\gamma = a \concat \sigma \concat e$ has been found from the counterexample
+$\gamma$ as per \cref{sec:rivest-schap-count}, the string $e$ forms a
+distinguishing extension for the states in $\hat M$ represented by
+$\access{M}{a\concat\sigma}$ and $\access{M}{a}\concat\sigma$. Thus, the leaf
+node corresponding to $\access{M}{a\concat\sigma}$ needs to be split into an
+inner node labeled with $e$, where its leaves are labeled by
+$\access{M}{a\concat\sigma}$ and
+$\access{M}{a}\concat\sigma$~\cite{Isberner2015a}.
+
+The TTT algorithm due to Isberner~\cite{Isberner2014b} builds further upon the
+Observation Pack algorithm by adding \textit{discriminator
+  finalization}\footnote{Here \textit{discriminator} is a synonym for
+  distinguishing extension}. This algorithm considers that the counterexamples
+returned from an equivalence query need not be short, in fact they can contain
+large amounts of redundancy. The consequence of this is that the space required
+for the classification tree can grow significantly and that membership queries
+are performed with exceptionally long query parameters, resulting in a slow down
+when the algorithm is put into practice.
+
+Therefore the TTT algorithm makes a special effort to reduce these problems by
+cleaning up the data structure. When a distinguishing extension $e$ is added to
+the classification tree, the TTT algorithm marks it as \textit{temporary}. The
+temporary distinguishing extensions are then later replaced with new, typically
+shorter, distinguishing extensions, rendering them \textit{finalized}.
+
+\paragraph{Query Complexity} As noted by Isberner~et~al., the query complexity
+of both the Observation Pack algorithm and the TTT algorithm coincides with that
+of Rivest and Schapire's algorithm; namely $\mathcal{O}(kn^2 + n
+\log(m))$. However, as noted in the original publication of the TTT
+algorithm~\cite{Isberner2014b}, this is a pessimistic query complexity as in
+practice there is a significant difference. In the same publication it is
+concluded that this difference is due to the fact that discriminator
+finalization results in trees that are more balanced. Thus the $\sift$ operation
+requires a smaller amount of membership queries, leaning more towards
+$\mathcal{O}(\log(n))$ for a perfectly balanced tree instead of $\mathcal{O}(n)$
+for a degenerated tree.
+
+\paragraph{Space Complexity} As it makes no effort to improve the space
+requirements, the space complexity of the Observation Pack algorithm remains the
+same as Kearns and Vazirani's algorithm (\cref{sec:complexity-analysis}):
+$\mathcal{O}(kn + nm)$.
+
+The TTT algorithm, in contrast, has an optimal space complexity of $\Theta(kn)$,
+due to the fact that the space needed for storing the hypothesis dominates the
+required space~\cite{Isberner2014b,Isberner2015a}.
 \end{document}
 
 %%% Local Variables:
