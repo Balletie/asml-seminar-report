@@ -165,10 +165,10 @@ While learning, the algorithm maintains a set of access strings $S$ (see
   table}. The columns of this table are labeled by the items of $E$. The rows
 are split into an upper part and a lower part, which are labeled by items from
 $S$ and $S \concat \Sigma$ respectively. Lastly, the cells corresponding with a
-row $s$ and a column $e$, are labeled with $1$ or $0$ depending on whether
-$s \concat e \in \lang_M$, which is denoted as $T(s,e)$. The observation table
-is initialized with $S = E = \{\epsilon\}$, as can be seen in
-\cref{tbl:observation_1}.
+row $s$ and a column $e$, denoted as $T(s,e)$, are labeled with $1$ or $0$
+depending on whether $\mq(s \concat e)$ equals ``yes'' or ``no''
+respectively. The observation table is initialized with $S = E = \{\epsilon\}$,
+as can be seen in \cref{tbl:observation_1}.
 
 An observation table provides sufficient information for constructing a
 hypothesis, as will be explained now. Let $\row(s)$ represent the finite
