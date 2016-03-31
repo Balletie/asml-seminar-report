@@ -29,11 +29,11 @@ applying active state machine learning to real world scenarios, such as:
   \item The amount of required membership queries can grow very fast,
         possibly making applications of $L^*$ learning very time consuming.
   \item $L^*$ can only interact with regular languages, not with real systems.
-  \item Membership queries might not be independent in practice,
-        which imposes the requirement for a \textit{reset} function.
-  \begin{itemize}
-    \item Not all systems might support a \textit{reset} function.
-  \end{itemize}
+  \item $L^*$ assumes that the SUL can always return to its initial state,
+        imposing the requirement that membership queries are independent.
+        In practice the SUL might not be able to do so,
+        which results in the requirement of a \textit{reset} function.
+        However, not all systems support a \textit{reset} function.
 \end{itemize}
 For each of these challenges a variant of the $L^*$ algorithm will be discussed
 that addresses the specific issues encountered.
