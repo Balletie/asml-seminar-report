@@ -206,19 +206,59 @@ properties of closure and consistence, and is repeated until these properties
 are satisfied. In the second phase the algorithm constructs a hypothesis
 automaton, and uses it to perform an equivalence query.
 
-\paragraph{The first phase} If the property of closure (\cref{def:closure}) is
-not satisfied, then there exists some $t \in S \concat \Sigma$ such that
-$\row(t) \neq \row(s)$ for all $s \in S$. This means that when constructing a
-hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
-be made. To address this problem, $t$ is added to $S$ and the table is filled by
-executing the required membership queries.
+\begin{algorithm}[h]
+\caption{Angluin's L* algorithm}
+\label{alg:lstar}
+\begin{algorithmic}[1]
+\Function{Learner}{}
+  \State $S \gets E \gets \{ \epsilon \}$
+  \State Construct the observation table $(S,E,T)$ by executing
+         $\mq(w)$ for $\epsilon$ and $\forall(\sigma \in \Sigma)$
+  \Loop
+    \While{$(S,E,T)$ is not closed or not consistent}
+      \If{$(S,E,T)$ is not consistent}
+        \State Find some $s_1, s_2 \in S, e \in E$ and $\sigma \in \Sigma$ such that
+        \State $\row(s_1) = row(s_2)$ and $T(s_1, \sigma \concat e) \neq T(s_2, \sigma \concat e)$
+        \State $E \gets E \cup \{ \sigma \concat e \}$
+        \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
+               $w \in (S \cup S \concat \Sigma)\concat E$
+      \EndIf
+      \If{$(S,E,T)$ is not closed}
+        \State Find some $t \in S \concat \Sigma$ such that $\forall(s \in S)(\row(s) \neq \row(t))$
+        \State $S \gets S \cup \{ t \}$
+        \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
+               $w \in (S \cup S \concat \Sigma)\concat E$
+      \EndIf
+    \EndWhile
+    \State $M \gets M(S,E,T)$
+    \State Execute $\eq(M)$
+    \If{a counterexample $t$ is given}
+      \ForAll{prefixes $t'$ of $t$}
+        \State $S \gets S \cup \{ t' \}$
+        \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
+               $w \in (S \cup S \concat \Sigma)\concat E$
+      \EndFor
+    \Else
+      \State \Return $M$
+    \EndIf
+  \EndLoop
+\EndFunction{}
+\end{algorithmic}
+\end{algorithm}
 
-Furthermore, if the property of consistence (\cref{def:consistence}) is not
+\paragraph{The first phase} If the property of consistence (\cref{def:consistence}) is not
 satisfied, then there exists some $s_1,s_2 \in S$, $e \in E$ and
 $\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but
 $T(s_1,\sigma\concat e) \neq T(s_2,\sigma\concat e)$. Thus, $\sigma\concat e$
-defines a new distinguishing extension, and should be added to $E$. Again, the
-table is filled by executing membership queries where needed.
+defines a new distinguishing extension, and should be added to $E$.
+Afterwards, the table is filled by executing membership queries where needed.
+
+Furthermore, if the property of closure (\cref{def:closure}) is
+not satisfied, then there exists some $t \in S \concat \Sigma$ such that
+$\row(t) \neq \row(s)$ for all $s \in S$. This means that when constructing a
+hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
+be made. To address this problem, $t$ is added to $S$ and again the table is
+filled by executing the required membership queries.
 
 \paragraph{The second phase} By now the observation table is both closed and
 consistent. The algorithm uses the observation table to construct a hypothesis
