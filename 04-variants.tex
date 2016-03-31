@@ -276,22 +276,58 @@ mentioned papers explicitly define the transformation in detail, no pseudocode
 is given here.
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
-Angluin's $L^*$ algorithm has been adjusted for use with mealy
-machines. The new procedure was first informally described in
-\cite{Margaria2004}, and later more rigorously in \cite{Shahbaz2009}. In $L^*$ the
-membership queries return a boolean value; either it's a member, or it's not.
-For $L^*_{M}$, the membership query is replaced by a output query, which
-returns an output string. The observation table is modified to store these
-output strings instead of boolean values. As in $L^*$, output queries are used
-in order to fill in the observation table. Suppose the algorithm performs an
-output query for $s \concat e$, where $s \in S \cup (S \concat \Sigma)$ and $e
-\in E$. The query will produce a string $r$ with $|r| = |s| + |e|$, where
-$|x|$ denotes the length of the string x. Instead of storing $r$ directly in
-the observation table, only the last $|e|$ symbols of $r$ are stored (since
-the observation is prefix closed, the output corresponding to $s$ is already
-stored in the table). The intuitive meaning of this value is that it
-corresponds to the sequence of output symbols that is produced when the when
-input $e$ is applied from the state corresponding to $s$.
+
+\begin{tabular}{ | l || c | c | }
+\hline
+            & $a$   & $b$ \\ \hline \hline
+$\epsilon$  & $x$   & $x$ \\ 
+$a$         & $y$   & $x$ \\ \hline \hline
+$b$         & $x$   & $x$ \\
+$aa$        & $y$   & $x$ \\
+$ab$        & $x$   & $x$ \\
+\hline
+% \caption{Observation table}
+\end{tabular}
+
+\begin{tikzpicture}
+  [bend angle=40,every node/.style={draw,circle}]
+
+  \tikzstyle{initial} = [dashed]
+
+  \node[initial]   (1) at (1,0) {};
+  \node        (2) at (3,0) {};
+
+  \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
+        (1) edge [bend left] node[auto,draw=none] {$a/x$} (2) 
+        (2) edge [bend left] node[auto,draw=none] {$b/x$} (1)
+        (1) edge [loop above] node[auto,draw=none] {$b/x$} (1)
+        (2) edge [loop above] node[auto,draw=none] {$a/y$} (2);
+% \caption{Example mealy machine}        
+\end{tikzpicture}
+
+Angluin's $L^*$ algorithm has been adjusted for use with mealy machines. The new
+procedure was first informally described in \cite{Margaria2004}, and later more
+rigorously in \cite{Shahbaz2009}. In $L^*$ the membership queries return a
+boolean value; either it's a member, or it's not. For $L^*_{M}$, the membership
+query is replaced by an output query, which returns an output string. The
+observation table is modified to store these output strings instead of boolean
+values. As in $L^*$, output queries are used in order to fill in the observation
+table. Suppose the algorithm performs an output query for $s \concat e$, where
+$s \in S \cup (S \concat \Sigma)$ and $e \in E$. The query will produce a string
+$r$ with $|r| = |s| + |e|$, where $|x|$ denotes the length of the string $x$.
+Instead of storing $r$ directly in the observation table, only the last $|e|$
+symbols of $r$ are stored (since the observation is prefix closed, the output
+corresponding to $s$ is already stored in the table). The intuitive meaning of
+this value in the observation table is that it correspond to the sequence of
+output symbols that is produced when the input $e$ is applied from the state
+corresponding to $s$.
+
+An example Mealy machine $\mathcal{M}$ is shown in figure REF. A possible
+observation table built by $L^*_M$ when it learns $\mathcal{M}$ is shown in
+table REF (source of the example: Shahbaz~et~al \cite{Shahbaz2009}). In this
+table it can be seen that the value in $\row(aa)$ under the column labeled by
+$a$ is $y$, even though the output query would have returned the string $xyy$
+for the input string $aaa$.
 
 With the new meaning of the values in the table, a value of $\epsilon$ in $E$
 becomes nonsensical. This is because $\epsilon$ would denote no change in
