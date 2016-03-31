@@ -352,16 +352,16 @@ in between successive membership queries.
 
 However, not in all situations a reset function is desirable. An example is a
 system where the reset takes a lot of time compared to the learning process.
-For such systems a reduction in the amount of resets is helpful. The method 
-proposed by Bauer~et~al.~\cite{Bauer2012} can be used for this situation. This 
-method reuses already (or partially) asked membership queries by only sending 
-the remaining part of the query to the teacher. It then combines the answer of 
-the teacher (if needed) with the answer of previously asked queries, which is 
-sent back to the learning algorithm. The system then only needs to reset if the 
+For such systems a reduction in the amount of resets is helpful. The method
+proposed by Bauer~et~al.~\cite{Bauer2012} can be used for this situation. This
+method reuses already (or partially) asked membership queries by only sending
+the remaining part of the query to the teacher. It then combines the answer of
+the teacher (if needed) with the answer of previously asked queries, which is
+sent back to the learning algorithm. The system then only needs to reset if the
 complete membership query has not already been asked before.
-Other systems lack all support for a reset function.
+Other systems lack any support for a reset function.
 As we'll see in \cref{sec:applications}, the system under learning
-could well be a system that the algorithm has completely no control over.
+could well be a system over which the algorithm has no control.
 
 %Section 3.5?
 %Another obstacle to overcome is that of parameters used in real world
