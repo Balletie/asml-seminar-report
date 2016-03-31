@@ -3,18 +3,80 @@
 \begin{document}
 \section{Tools and libraries}
 \label{sec:tools}
-The previous sections have shown that active automata learning is a currently
-studied computational learning process. However, as section \ref{sec:variants}
-has shown, there are some challenges in using active automata learning in a
-practical setting. To overcome these challenge as well as to promote active
-automata learning in practice, tools and libraries have been created. This
-section will give a brief overview of one library and one tool. This selection
-is based on the importance, availability and the amount of researches that have
-used those tools and libraries. First, the library Learnlib
-(\cref{ssec:learnlib}) will be discussed. Learnlib provides various active
-automata learning algorithms and optimizations. After that, the tool
-Tomte (\cref{ssec:tomte}) is discussed, which automatically generates
-abstractions for automata in order to apply active automata learning on them.
+The previous sections have shown that active automata learning is a currently 
+studied computational learning process. However, as section 
+\ref{sec:variants} has shown, there are some challenges in using active 
+automata learning in a practical setting. To overcome these challenge as well 
+as to promote active automata learning in practice, tools and libraries have 
+been created. This section will give a brief overview of a couple of tools and 
+libraries. This selection is based on the importance, availability and the 
+amount of researches that have used those tools and libraries. First, the 
+libraries Libalf and Learnlib will be discussed. Those libraries provide 
+various active automata learning algorithms and optimizations. After that, the 
+tool Tomte is discussed, which automatically generates abstractions for 
+automata in order to apply active automata learning on them. 
+
+
+\subsubsection{Libalf}
+\label{sssec:libalf}
+Libalf\footnote{No support available,but can be downloaded from 
+	\url{http://libalf.informatik.rwth-aachen.de}}(or Library Automata Learning 
+	Framework) is a library for learning and manipulating formal languages. It 
+	has both active and passive learning algorithms. For this paper, only the 
+	active part is covered.
+
+The library consists of a core library as well as two additional libraries, 
+liblangen(random regular language generator) and AMoRE++(automata library).
+
+The core consists of the learning algorithms and the Knowledgebase. The 
+Knowledgebase stores language information and collects the different queries 
+that are used for that language. This storage makes it possible to switch 
+learning algorithms or to use multiple learning algorithms during the learning 
+process. Therefore, Libalf is suitable for experimenting with different kind of 
+learning algorithms and see how they would affect the learn process. 
+
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{Tool_images/libalf_demo_interface.png}
+	\caption{Application interface of Libalf}
+	\label{fig:libalf_interface}
+\end{figure}
+
+Besides using Libalf as a library, a demo application is also available, see 
+figure \ref{fig:libalf_interface}. In this application, each learning 
+configuration is stored in a scenario. This scenario contains the learning 
+algorithm, filters, connectivity(server or local), and the implementation of 
+the teacher. The teacher can be either be based on a supplied model(DFA or 
+regular expression) or the user is fills in the role of the teacher.
+
+When a scenario is started, there is an option to let the algorithm run 
+step-by-step. This means that the user can go through the learning algorithms 
+step by step and see how it handles the membership queries and the reaction on 
+the counterexample. 
+
+The active learning algorithms that it offers are listed below.
+
+\begin{itemize}
+	\item L* (see section \ref{sec:an-algor-learn})
+	\item Rivest \& Schapnire's (see section \ref{sec:rivest-schap-count})
+	\item NL* \cite{Bollig2009}
+	\item Kearns \& Vazirani's (see section \ref{sec:classification-trees})
+\end{itemize}
+
+Besides the algorithms and the knowledgebase, it has filters for reducing the 
+amount of queries asked to the teacher. These filters use domain specific 
+knowledge. An example of is the validation of HTML. If a query can already be 
+answered by this validator, then this query is not passed to the teacher, thus 
+reducing the queries asked to the teacher.
+A filter can also be composed of multiple filters by using logical 
+connectors(and,or.not).
+
+Libalf also provides normalizers. A normalizer defines a domain specific 
+equivalence relations(relation between equivalence queries) over all strings 
+and only stores information of one representative of that relation. This 
+reduces the amount of memory needed and could also reduce the amount of 
+equivalence queries.
+
+More information on Libalf is published in \cite{Bollig2010}.
 
 \subsection{Learnlib}
 \label{ssec:learnlib}
@@ -86,6 +148,24 @@ algorithm. An example is the reduction of the amount of queries (see section
 \ref{sec:noreset}). Other examples are a mechanism for reducing the amount of
 resets  and a parallelization component that uses multiple teachers and
 parallel execution of membership queries\cite{Henrix2015,Howar2012}.
+
+
+Besides the library, there also exists an application called Learnlib 
+Studio\footnote{Available from here 
+	\url{http://ls5-www.cs.tu-dortmund.de/projects/learnlib/download.php}}. 
+	This application is based on the older version, JLearn, but it offers a 
+	graphical interface, see figure \ref{fig:learnlib_studio}. 
+	
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Tool_images/learnlib_studio_interface.png}
+		\caption{Graphical interface of Learnlib Studio}
+		\label{fig:learnlib_studio}
+	\end{figure}
+	
+	The interface makes it possible to use the different 
+	building blocks of JLearn(similar to Learnlib) in a graph structure. These 
+	building blocks consists of the different learning algorithms, oracles, 
+	statistics and more. 
 
 
 \subsection{Tomte}
