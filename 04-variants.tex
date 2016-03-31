@@ -12,29 +12,31 @@
 \section{Variants}
 \label{sec:variants}
 In the first few years following the introduction of the $L^*$ algorithm by
-D. Angluin~\cite{Angluin1987}, $L^*$ learning was only a theoretical exploration.
+Angluin~\cite{Angluin1987}, $L^*$ learning was only a theoretical exploration.
 The various improvements described in the previous chapter,
 such as \textit{Classification Trees} \cref{sec:classification-trees} and
-the \textit{TTT} algorithm \cref{sec:ttt}
-made practical applications already more feasible.
+the \textit{TTT} algorithm \cref{sec:ttt} made practical applications more feasible.
 
 The learning algorithms discussed in the previous chapters all required an
 (abstract, formal) input alphabet, an (abstract, formal) output alphabet,
 membership queries and equivalence queries. 
 In practice, it is in many cases quite difficult to realize these requirements
-for a specific system under learning~\cite{Steffen2011a}.
+for a specific system under learning (SUL)~\cite{Steffen2011a}.
 This section discusses some of these challenges faced when
 applying active state machine learning to real world scenarios, such as:
 \begin{itemize}
-  \item Equivalence queries are generally undecidable for black boxes
-  \item The amount of required membership queries can grow very fast
-  \item $L^*$ can only interact with regular languages, not with real systems
+  \item Equivalence queries are generally undecidable for black box systems.
+  \item The amount of required membership queries can grow very fast,
+        possibly making applications of $L^*$ learning very time consuming.
+  \item $L^*$ can only interact with regular languages, not with real systems.
   \item Membership queries might not be independent in practice,
-        which imposes the requirement for a \textit{reset} function
-  \item Not all systems might support a \textit{reset} function.
+        which imposes the requirement for a \textit{reset} function.
+  \begin{itemize}
+    \item Not all systems might support a \textit{reset} function.
+  \end{itemize}
 \end{itemize}
-For each of these challenges we will discuss a variant of the
-$L^*$ algorithm that has been proposed to solve it.
+For each of these challenges a variant of the $L^*$ algorithm will be discussed
+that addresses the specific issues encountered.
 
 \subsection{Approximating $\eq(M)$ queries with $\mq(w)$ queries}
 In theoretical simulations, equivalence testing is often easy because
@@ -130,7 +132,7 @@ to translate to real world applications: they can be realized via testing.
 An important thing to note, however, is the amount of membership queries required.
 In a theoretical framework the learning algorithm doesn't have to account
 for execution times of individual $\mq(w)$ queries.
-In practice, such queries might take time or be expensive to execute.
+In practice, such queries might take considerable time or be expensive to execute.
 
 Learning a real world application can easily require several thousand membership
 queries~\cite[p. 100]{Tomte2014}. Furthermore, when using for example
@@ -139,8 +141,9 @@ queries needed grows exponentially in the number of states~\cite{Chow1978}.
 This means that the time required to learn a model can be greatly reduced
 either by speeding up membership queries
 (executing them in parallel~\cite{Howar2012}),
-or simply by reducing the number of membership queries required.
+or simply by reducing the number of membership queries required~\cref{sec:tools}.
 
+\todo{Needs expansion, see todo list in issues}
 Chapter \cref{sec:improvements} has discussed several improvements to achieve
 exactly that. Additionally, application-specific optimizations can be used to
 further reduce the number of membership queries required.
@@ -155,8 +158,8 @@ Exploiting such knowledge can greatly reduce the number of tests necessary~\cite
 \label{sec:learn-mealy-mach}
 
 The $L^*$ algorithm of Angluin is only able to learn DFA's (and equivalent
-models). However, some applications are characterized by their I/O behaviour.
-Such behaviour is not easily modeled by a DFA. Instead, they are more naturally
+models). However, some applications are characterized by their I/O behavior.
+Such behavior is not easily modeled by a DFA. Instead, they are more naturally
 modeled by mealy machines\cite{Shahbaz2009} (see definition
 \ref{def:mealy_machine}).
 
@@ -354,21 +357,21 @@ Suppose for example that the system under learning requires authentication
 while also imposing a restriction on the maximum amount of failed requests.
 In such a system queries are no longer independent of each other,
 since after a certain amount of authentication requests
-the systems behaviour suddenly changes for the same membership queries.
+the systems behavior suddenly changes for the same membership queries.
 In order to solve this issue, the $L^*$ algorithm implicitly requires a means
-of \textit{reset}ting the system under learning~\cite[p. 301]{Rivest1993}
+of resetting the system under learning~\cite[p. 301]{Rivest1993}
 in between successive membership queries.
 
-However, not all systems support a \textit{reset} function.
+However, not all systems support a reset function.
 As we'll see in \cref{sec:applications}, the system under learning
-could also be a system that the learning algorithm has totally no control over.
+could also be a system that the learning algorithm has completely no control over.
 
 Another obstacle to overcome is that of parameters used in real world
 applications. Think, for example, about increasing sequence numbers in
 communication protocols. This is still a huge challenge to
-resolve~\cite{Steffen2011a}, and, for now, besides the creation of prototypical
+resolve~\cite{Steffen2011a} and for now, besides the creation of prototypical
 solutions~\cite{Aarts2010,Shahbaz2007,Howar2010},
-application-specific solutions have to be applied.~\cite{Steffen2011a}.
+application-specific solutions have to be applied~\cite{Steffen2011a}.
 
 \subsubsection{Homing sequences}
 In 1993 Rivest \& Schapire proposed an extension to $L^*$~\cite[p. 312]{Rivest1993}
@@ -383,7 +386,7 @@ a sequence of strings, such that $(\forall{q_1 \in Q})(\forall{q_2 \in Q})
 
 This also implies that every distinguisting sequence is a homing sequence,
 since for all states $q_1$ and $q_2$ and a distinguishing extension $a$,
-it can be deduced that $\delta(q_1, a) = \delta(q_2, a) \Rightarrow q_1 = q_2$,
+it can be deduced that $\delta(q_1, a) = \delta(q_2, a) \Rightarrow q_1 = q_2$
 and therefore $q_1 \langle a \rangle = q_2 \langle a \rangle$.
 
 Given this definition of a homing sequence, together with the prerequisite
@@ -403,14 +406,14 @@ it can immediately be seen how a homing sequence can be used to simulate a reset
 
 From the definition, given a homing sequence $h$, the state that is reached
 by executing $h$ can be identified by a sequence of outputs $s$.
-Therefore we can just execute $h$ for as long as its sequence of outputs differs
-$o$ from $s$ and eventually the state identified by $s$ will be reached.
-The L* algorithm can now just substitute its initial state with the state
+Therefore the algorithm can just execute $h$ for as long as its sequence of
+outputs differs $o$ from $s$ and eventually the state identified by $s$ will be reached.
+The $L^*$ algorithm can now just substitute its initial state with the state
 reached eventually by executing $h$, giving it the ability to simulate a reset.
 
 With every string there is the possibility that $M$ gets trapped in a loop.
 Therefore it is generally quite hard if not impossible to find such a state.
-Rivest \& Schapire solves this by simulating independent copies of $M$
+Rivest \& Schapire solve this by simulating independent copies of $M$
 for each possible output $s$ on executing $h$~\cite[p. 313]{Rivest1993}.
 Since the set of possible outputs on $h$ is limited by the number of states $n$,
 the amount of independent copies is bounded by $\mathcal{O}(n)$.
@@ -421,8 +424,8 @@ with $m$ the amount of $\mq(w)$ queries and $e$ the amount of $\eq(M)$ queries.
 All the above problems might give the impression that active state machine
 learning is not yet applicable to real world applications. While it is true that
 practical application is not yet complete, great progress has been made and
-great things have already been achieved. The next few highlights of real world
-applications serve to illustrate these facts.
+great things have already been achieved. The last chapter serves to highlight
+some real world applications that illustrates these facts.
 
 \end{document}
 
