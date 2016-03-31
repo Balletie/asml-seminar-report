@@ -71,12 +71,12 @@ which relies on approximating $\eq(M)$ queries by using $\mq(w)$ queries.
 \label{sec:chow}
 According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
-is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method,
-and the maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
+is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method.
+The maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
 where $n$ is the number of states in the provided automaton, $m$ is the number
-of states in the correct automaton, and $k$ is the size of the input alphabet.
+of states in the correct automaton and $k$ is the size of the input alphabet.
 
-By refining the test suites and the specification at the same time,
+By refining the test suites and the specification at the same time
 and by using a divide and conquer approach, the size of the test is
 considerably reduced in comparison to defining the tests from
 the final specification~\cite{Ipate2007, Chow1978}.
@@ -261,14 +261,14 @@ the following is true:
   \node [accepting]         (5) at (3,1)  {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-      (1) edge [bend left] node[auto,draw=none] {$a$} (5)
-      (4) edge [bend left] node[auto,draw=none] {$b$} (1)
-      (5) edge [bend left] node[auto,draw=none] {$b$} (3)
-      (3) edge [bend left] node[auto,draw=none] {$a$} (4)
-      (1) edge             node[auto,draw=none] {$b$} (2)
-      (3) edge             node[auto,draw=none] {$b$} (2)
-      (4) edge             node[auto,draw=none] {$a$} (2)
-      (5) edge             node[auto,draw=none] {$a$} (2);
+        (1) edge [bend left] node[auto,draw=none] {$a$} (5)
+        (4) edge [bend left] node[auto,draw=none] {$b$} (1)
+        (5) edge [bend left] node[auto,draw=none] {$b$} (3)
+        (3) edge [bend left] node[auto,draw=none] {$a$} (4)
+        (1) edge 			 node[auto,draw=none] {$b$} (2)
+        (3) edge 			 node[auto,draw=none] {$b$} (2)
+        (4) edge 			 node[auto,draw=none] {$a$} (2)
+        (5) edge 			 node[auto,draw=none] {$a$} (2);
 \end{tikzpicture}
 \caption{Hungar's transformation} \label{fig:transformation_hungar}
 \end{subfigure}
@@ -285,7 +285,7 @@ the following is true:
   \node (3) at (2,1) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge              node[auto,draw=none] {$ab$} (2)
+        (1) edge 			  node[auto,draw=none] {$ab$} (2)
         (2) edge [bend left]  node[auto,draw=none] {$ab$} (1)
         (1) edge [bend left]  node[auto,draw=none] {$ba$} (3)
         (2) edge [bend right] node[auto,draw=none] {$ba$} (3);
