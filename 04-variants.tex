@@ -2,6 +2,9 @@
 
 \onlyifstandalone{\input{common}}
 \onlyifstandalone{\usepackage{mathtools}}
+\onlyifstandalone{\usepackage{algpseudocode}}
+\onlyifstandalone{\DeclareCaptionType{algorithm}}
+
 \usetikzlibrary{automata,arrows}
 
 \begin{document}
@@ -171,39 +174,15 @@ while the other uses $\Sigma = \Sigma_\mathcal{M} \times O$ \cite{Makinen2001}.
 Note that in this section the $_{\mathcal{M}}$ subscript is used to disambiguate
 between items from the DFA and mealy tuples.
 
-\begin{definition}
-[Transforming a mealy machine into a DFA using $\Sigma = \Sigma_\mathcal{M}
-\cup \Lambda$]
-\label{def:transform_hungar}
 
-The mealy machine $(Q_\mathcal{M}, q_{0_\mathcal{M}}, \Sigma_\mathcal{M},
-\Lambda, \delta_\mathcal{M}, \lambda)$ transforms into a DFA $(Q, q_0, \Sigma,
-\delta, F)$ by specifying:
-\begin{itemize}
-\item $Q \supseteq Q_\mathcal{M} \cup \{q_{err}\}$
-\item $q_0 = q_{0_\mathcal{M}}$
-\item $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$
-\item For each pair of transition $(q,\sigma) \in Q_\mathcal{M} \times
-      \Sigma_\mathcal{M}$, $Q$ contains a state $q_t$ with transitions:
-  \subitem $\delta(q,\sigma) = q_t$
-  \subitem $\delta(q_t, \lambda(q,\sigma)) = \delta_\mathcal{M}(q, \sigma)$
-  \subitem $\delta(q_t, x) = q_{err}$ for each $x \in (\Sigma_\mathcal{M}
-            \cup \Lambda) - \lambda(q,\sigma)$
-\item $\delta(q, o) = q_{err}$ for each $(q,o) \in Q_\mathcal{M} \times
-       \Lambda$
-\item $\delta(q_{err}, \sigma) = q_{err}$ for each $\sigma \in
-       \Sigma_\mathcal{M}$
-\item $F = Q - q_{err}$
-\end{itemize}
-\end{definition} %todo: cite model inference and testing
-
-The transformation of definition \ref{def:transform_hungar} splits each
-transition in $\mathcal{M}$ with input symbol $\sigma$ and output symbol $o$
-into two transitions. The first is constrained by $\sigma$ and transitions to
-a new intermediate state $q_t$. The second transitions from $q_t$ and is
-constrained by $o$. All inputs that are not defined after this step transition
-into $q_{err}$. An example can be seen in figure
-\ref{fig:transformation_hungar}. The transformed model of $\mathcal{M}$ can be
+When using $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$, each transition in
+$\mathcal{M}$ with input symbol $\sigma$ and output symbol $o$ is split into two
+transitions. The first is constrained by $\sigma$ and transitions to a new
+intermediate state $q_t$. The second transitions from $q_t$ and is constrained
+by $o$. All inputs that are not defined after this step transition into
+$q_{err}$. An example can be seen in figure \ref{fig:transformation_hungar}, and
+the psuedocode of this transformation is shown in algorithm
+\ref{alg:transform_hungar}. The transformed model of $\mathcal{M}$ can be
 learned by $L^*$ by taking $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$ and
 defining membership queries such that they return ``yes'' if and only if each of
 the following is true:
@@ -214,6 +193,35 @@ the following is true:
   \item for each successive pair of input symbol $\sigma$ and output symbol $o$
         in the access string, if $\sigma$ is applied, $o$ is returned;
 \end{itemize}
+
+\begin{algorithm}[b]
+\caption{Transformation of a mealy machine into a DFA}
+\label{alg:transform_hungar}
+\begin{algorithmic}[1]
+\Function{Transform}{$Q_\mathcal{M}, q_{0_\mathcal{M}}, \Sigma_\mathcal{M},
+                     \Lambda, \delta_\mathcal{M}, \lambda$} 
+  \State $Q \gets Q_\mathcal{M} \cup \{q_{err}\}$
+  \State $q_0 \gets q_{0_\mathcal{M}}$
+  \State $\Sigma \gets \Sigma_\mathcal{M} \cup \Lambda$
+  \For{$(q,\sigma) \in Q_\mathcal{M} \times \Sigma_\mathcal{M}$}
+  \Comment For each transition in $\mathcal{M}$
+    \State add a new state $q_t$ to $Q$
+    \State $\delta(q,\sigma) \gets q_t$
+    \Comment Add a transition to $q_t$
+    \State $\delta(q_t, \lambda(q,\sigma)) \gets \delta_\mathcal{M}(q, \sigma)$
+    \Comment Add a transition from $q_t$
+  \EndFor
+
+  \For{$q \in Q \times \Sigma$}
+    \If{$\delta(q, \sigma)$ is not yet defined}
+      \State $\delta(q, \sigma) \gets q_{err}$
+    \EndIf
+  \EndFor
+  \State $F \gets Q - \{q_{err}\}$
+  \State \Return $(Q, q_0, \Sigma, \delta, F)$
+\EndFunction{}
+\end{algorithmic}
+\end{algorithm}
 
 \begin{figure}[t]
 \centering
@@ -282,42 +290,20 @@ the following is true:
 \caption{Mealy to DFA transformation} \label{fig:transformation}
 \end{figure}
 
-The second transformation is shown in definition
-\ref{def:transformation_makinen}. This transformation creates a DFA that uses
-pairs from $\Sigma_\mathcal{M} \times \Lambda$ as input symbols. This removes
-the need for intermediate states, but it can have a significant impact on the
-size of the input alphabet. If from a certain state an input/output combination
-does not occur, then a transition into the error state constrained by that
-combination is added. An example of this transformation can be seen in figure
-\ref{fig:transformation_makinen}. The transformed model can be learned by $L^*$
-by using $\Sigma = \Sigma_\mathcal{M} \times \Lambda$ and defining membership
-queries such that they return ``yes'' if and only if each successive combination
-of input symbol $\sigma$ and output symbol $o$ yields $o$ when $\sigma$ is
-applied.
+The second transformation creates a DFA that uses pairs from $\Sigma_\mathcal{M}
+\times \Lambda$ as input symbols. This removes the need for intermediate states,
+but it can have a significant impact on the size of the input alphabet. If from
+a certain state an input/output combination does not occur, then a transition
+into the error state constrained by that combination is added. An example of
+this transformation can be seen in figure \ref{fig:transformation_makinen}. The
+transformed model can be learned by $L^*$ by using $\Sigma = \Sigma_\mathcal{M}
+\times \Lambda$ and defining membership queries such that they return ``yes'' if
+and only if each successive combination of input symbol $\sigma$ and output
+symbol $o$ yields $o$ when $\sigma$ is applied.
 
-\begin{definition}
-[Transforming a mealy machine into a DFA using $\Sigma = \Sigma_\mathcal{M}
-\times \Lambda$]
-\label{def:transformation_makinen}
-The mealy machine $(Q_\mathcal{M}, q_{0_\mathcal{M}}, \Sigma_\mathcal{M},
-\Lambda, \delta_\mathcal{M}, \lambda)$ transforms into a DFA $(Q, q_0, \Sigma,
-\delta, F)$ by specifying:
-\begin{itemize}
-\item $Q = Q_\mathcal{M} \cup \{q_{err}\}$
-\item $q_0 = q_{0_\mathcal{M}}$
-\item $\Sigma = \Sigma_\mathcal{M} \times \Lambda$
-\item For each $(\sigma,o) \in \Sigma_\mathcal{M} \times \Lambda$:
-  \subitem $\delta(q, \sigma \concat o) = \delta_\mathcal{M}(q, \sigma)$ if
-           $\lambda(q, \sigma) = o$.
-  \subitem $\delta(q, \sigma \concat o) = q_{err}$ if $\lambda(q, \sigma) \ne o$
-\item $\delta(q_{err}, \sigma) = q_{err}$ for each $\sigma \in
-       \Sigma_\mathcal{M}$
-\item $F = Q - q_{err}$
-\end{itemize}
-\end{definition} %todo: cite model inference and testing
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
-Adapting Angluin's $L^*$ algorithm has been adjusted for use with mealy
+Angluin's $L^*$ algorithm has been adjusted for use with mealy
 machines. The new procedure was first informally described in
 \cite{Margaria2004}, and later more rigorously in \cite{Shahbaz2009}. In $L^*$ the
 membership queries return a boolean value; either it's a member, or it's not.
