@@ -165,10 +165,10 @@ While learning, the algorithm maintains a set of access strings $S$ (see
   table}. The columns of this table are labeled by the items of $E$. The rows
 are split into an upper part and a lower part, which are labeled by items from
 $S$ and $S \concat \Sigma$ respectively. Lastly, the cells corresponding with a
-row $s$ and a column $e$, are labeled with $1$ or $0$ depending on whether
-$s \concat e \in \lang_M$, which is denoted as $T(s,e)$. The observation table
-is initialized with $S = E = \{\epsilon\}$, as can be seen in
-\cref{tbl:observation_1}.
+row $s$ and a column $e$, denoted as $T(s,e)$, are labeled with $1$ or $0$
+depending on whether $\mq(s \concat e)$ equals ``yes'' or ``no''
+respectively. The observation table is initialized with $S = E = \{\epsilon\}$,
+as can be seen in \cref{tbl:observation_1}.
 
 An observation table provides sufficient information for constructing a
 hypothesis, as will be explained now. Let $\row(s)$ represent the finite
@@ -209,7 +209,7 @@ In the second phase~(line~\ref{line:second}) the algorithm constructs a
 hypothesis automaton and uses it to perform an equivalence query.
 
 \begin{algorithm}[h]
-\caption{Angluin's L* algorithm}
+\caption{Angluin's $L^*$ algorithm}
 \label{alg:lstar}
 \begin{algorithmic}[1]
 \Function{Learner}{}
@@ -420,8 +420,8 @@ algorithm returns to phase one.
 The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
 $\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
 Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table
-\ref{tbl:observation_3}. This table is still inconsistent, since row($\epsilon$)
-= row($b$), but row($\epsilon \concat b$) differs from row($b \concat b$) under
+\ref{tbl:observation_3}. This table is still inconsistent, since $\row(\epsilon)
+= \row(b)$, but $\row(\epsilon \concat b)$ differs from $\row(b \concat b)$ under
 the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new
 membership queries now results in table \ref{tbl:observation_4}. The table is
 now both consistent and closed, so $L^*$ moves on to phase two and constructs the
