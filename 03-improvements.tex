@@ -119,11 +119,12 @@ $a, e \in \Sigma^*$, $\sigma \in \Sigma$ such that
 $\gamma = a \concat \sigma \concat e$ and
 $\mq(\access{\hat M}{a}\concat\sigma\concat e) \neq \mq(\access{\hat
   M}{a\concat\sigma}\concat e)$. That is, $e$ witnesses the fact that the states
-reached by $\access{\hat M}{a}$ and $\access{\hat M}{a\concat\sigma}$ are in
-fact different, whereas they reach the same state in $\hat M$ (since $\gamma$ is
-a counterexample). This means that the $\sigma$-transition from the state
-$\access{\hat M}{a}$ is an incorrect transition. Due to $e$ the states are from
-that point on correctly distinguished.
+reached by $\access{\hat M}{a\concat\sigma}$ and
+$\access{\hat M}{a}\concat\sigma$ are in fact different, whereas they reach the
+same state in $\hat M$ (since $\gamma$ is a counterexample). This means that the
+$\sigma$-transition from the state $\access{\hat M}{a}$ is an incorrect
+transition. Due to $e$ the states are from that point on correctly
+distinguished.
 
 The correct decomposition of $\gamma$ can be found using a search strategy. The
 search strategy originally used by Rivest and Schapire is a binary search: first
@@ -159,10 +160,52 @@ the improved counterexample analysis. Then the improved algorithm benefits from
 both the improved space complexity of the classification tree and the improved
 query complexity of Rivest and Schapire's counterexample analysis. This is, in a
 nutshell, what the Observation Pack algorithm due to Howar is
-about\cite{Howar2012a,Isberner2015a}. \todo{explain node splitting?}
+about~\cite{Howar2012a,Isberner2015a}.
 
-The TTT algorithm due to Isberner\cite{Isberner2014b} builds further upon the
-Observation Pack algorithm by adding \textit{discriminator finalization}.
+When the decomposition $\gamma = a \concat \sigma \concat e$ has been found from
+the counterexample $\gamma$ as per \cref{sec:rivest-schap-count}, the string $e$
+forms a distinguishing extension for the states in $\hat M$ represented by
+$\access{M}{a\concat\sigma}$ and $\access{M}{a}\concat\sigma$. Thus, the leaf
+node corresponding to $\access{M}{a\concat\sigma}$ needs to be split into an
+inner node labeled with $e$, where its leaves are labeled by
+$\access{M}{a\concat\sigma}$ and
+$\access{M}{a}\concat\sigma$~\cite{Isberner2015a}.
+
+The TTT algorithm due to Isberner~\cite{Isberner2014b} builds further upon the
+Observation Pack algorithm by adding \textit{discriminator
+  finalization}\footnote{Here \textit{discriminator} is a synonym for
+  distinguishing extension}. This algorithm considers that the counterexamples
+returned from an equivalence query need not be short, in fact they might be very
+redundant. The consequence of this is that the space required for the
+classification tree can grow significantly, and that membership queries are
+performed with exceptionally long query parameters, resulting in a slow down
+when putting the algorithms into practice.
+
+Therefore the TTT algorithm makes a special effort to reduce these problems by
+cleaning up the data structure. When a distinguishing extension $e$ is added to
+the classification tree, the TTT algorithm marks it as \textit{temporary}. The
+temporary distinguishing extensions are then later replaced with a new,
+typically shorter, distinguishing extension, rendering them \textit{finalized}.
+
+\paragraph{Query Complexity} As noted by Isberner~et~al., the query complexity
+of both the Observation Pack algorithm and the TTT algorithm coincides with that
+of Rivest and Schapire's algorithm; namely $\mathcal{O}(kn^2 + n
+\log(m))$. However, as noted in the original publication of the TTT
+algorithm~\cite{Isberner2014b}, this is a pessimistic query complexity as in
+practice there is a significant difference. In the same publication it is
+concluded that this difference is due to the fact that discriminator
+finalization results in trees that are better balanced. Thus the $\sift$
+requires a less amount of membership queries, leaning more towards
+$\mathcal{O}(\log(n))$ for a perfectly balanced tree.
+
+\paragraph{Space Complexity} As it makes no effort to improve the space
+requirements, the space complexity of the Observation Pack algorithm remains the
+same as Kearns and Vazirani's algorithm (\cref{sec:complexity-analysis}):
+$\mathcal{O}(kn + nm)$.
+
+In contrast however, the TTT algorithm has an optimal space complexity of
+$\Theta(kn)$, due to the fact that the space needed for storing the hypothesis
+dominates the required space~\cite{Isberner2014b,Isberner2015a}.
 \end{document}
 
 %%% Local Variables:
