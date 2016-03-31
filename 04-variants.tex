@@ -180,8 +180,8 @@ $\mathcal{M}$ with input symbol $\sigma$ and output symbol $o$ is split into two
 transitions. The first is constrained by $\sigma$ and transitions to a new
 intermediate state $q_t$. The second transitions from $q_t$ and is constrained
 by $o$. All inputs that are not defined after this step transition into
-$q_{err}$. An example can be seen in figure \ref{fig:transformation_hungar}, and
-the psuedocode of this transformation is shown in algorithm
+$q_{err}$. An example can be seen in figure \ref{fig:transformation_hungar} and
+the pseudocode of this transformation is shown in algorithm
 \ref{alg:transform_hungar}. The transformed model of $\mathcal{M}$ can be
 learned by $L^*$ by taking $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$ and
 defining membership queries such that they return ``yes'' if and only if each of
