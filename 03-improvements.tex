@@ -156,7 +156,7 @@ $\mathcal{O}(kn^2 + nm)$.
 \subsection{The Observation Pack and TTT Algorithms}
 \label{sec:ttt}
 A rather logical improvement would be to use both the classification tree and
-the improved counterexample analysis. Then the improved algorithm benefits from
+the improved counterexample analysis: the improved algorithm would benefit from
 both the improved space complexity of the classification tree and the improved
 query complexity of Rivest and Schapire's counterexample analysis. This is the
 Observation Pack algorithm due to Howar in a
@@ -177,17 +177,17 @@ The TTT algorithm due to Isberner~\cite{Isberner2014b} builds further upon the
 Observation Pack algorithm by adding \textit{discriminator
   finalization}\footnote{Here \textit{discriminator} is a synonym for
   distinguishing extension}. This algorithm considers that the counterexamples
-returned from an equivalence query need not be short, in fact they might be very
-redundant. The consequence of this is that the space required for the
-classification tree can grow significantly, and that membership queries are
-performed with exceptionally long query parameters, resulting in a slow down
-when putting the algorithms into practice.
+returned from an equivalence query need not be short, in fact they can contain
+large amounts of redundancy. The consequence of this is that the space required
+for the classification tree can grow significantly and that membership queries
+are performed with exceptionally long query parameters, resulting in a slow down
+when the algorithm is put into practice.
 
 Therefore the TTT algorithm makes a special effort to reduce these problems by
 cleaning up the data structure. When a distinguishing extension $e$ is added to
 the classification tree, the TTT algorithm marks it as \textit{temporary}. The
-temporary distinguishing extensions are then later replaced with a new,
-typically shorter, distinguishing extension, rendering them \textit{finalized}.
+temporary distinguishing extensions are then later replaced with new, typically
+shorter, distinguishing extensions, rendering them \textit{finalized}.
 
 \paragraph{Query Complexity} As noted by Isberner~et~al., the query complexity
 of both the Observation Pack algorithm and the TTT algorithm coincides with that
@@ -196,18 +196,19 @@ of Rivest and Schapire's algorithm; namely $\mathcal{O}(kn^2 + n
 algorithm~\cite{Isberner2014b}, this is a pessimistic query complexity as in
 practice there is a significant difference. In the same publication it is
 concluded that this difference is due to the fact that discriminator
-finalization results in trees that are better balanced. Thus the $\sift$
-requires a less amount of membership queries, leaning more towards
-$\mathcal{O}(\log(n))$ for a perfectly balanced tree.
+finalization results in trees that are more balanced. Thus the $\sift$ operation
+requires a smaller amount of membership queries, leaning more towards
+$\mathcal{O}(\log(n))$ for a perfectly balanced tree instead of $\mathcal{O}(n)$
+for a degenerated tree.
 
 \paragraph{Space Complexity} As it makes no effort to improve the space
 requirements, the space complexity of the Observation Pack algorithm remains the
 same as Kearns and Vazirani's algorithm (\cref{sec:complexity-analysis}):
 $\mathcal{O}(kn + nm)$.
 
-In contrast however, the TTT algorithm has an optimal space complexity of
-$\Theta(kn)$, due to the fact that the space needed for storing the hypothesis
-dominates the required space~\cite{Isberner2014b,Isberner2015a}.
+The TTT algorithm, in contrast, has an optimal space complexity of $\Theta(kn)$,
+due to the fact that the space needed for storing the hypothesis dominates the
+required space~\cite{Isberner2014b,Isberner2015a}.
 \end{document}
 
 %%% Local Variables:
