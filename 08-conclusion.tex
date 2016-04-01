@@ -4,7 +4,7 @@
 \section*{Conclusion}
 \label{sec:conclusion}
 In this article, the history and development of active state machine learning
-have been discussed. Chapter one explained the fundamental theory behind the
+have been discussed. \Cref{sec:fundamental-theory} explained the fundamental theory behind the
 topic, providing a formal basis for the rest of the article. The notions of
 Nerode-equivalence and equivalence classes were introduced. Furthermore, it was
 explained what purpose active state machine learning serves. The main algorithm,
@@ -12,8 +12,7 @@ the one described by Angluin~\cite{Angluin1987}, was explained in detail. These
 key concepts are fundamental to all further research and development performed
 on the topic.
 
-
-In chapter two, various improvements on the original research are discussed,
+In \cref{sec:improvements}, various improvements on the original research are discussed,
 such as the classification tree as introduced by Kearns and Vazirani~\cite{Kearns1994}.
 This different type of datastructure is, as opposed to the discrimination table
 defined by Angluin, proven to be redundancy-free, resulting in more efficient
@@ -30,8 +29,7 @@ up with the TTT algorithm, focusing on keeping counterexamples and thus the
 classification tree as concise as possible by removing the redundancy from
 counterexamples given by the Teacher.
 
-
-In chapter three, numerous variants arising from problems in applying
+In \cref{sec:variants}, numerous variants arising from problems in applying
 the theory in practice were discussed. It was explained that the W-method,
 as defined by Chow~\cite{deRuiter2015,Chow1978}, can be used to approximate equivalence
 queries with membership queries. Chow also showed that this is a decidable problem
@@ -48,8 +46,7 @@ machine between individual membership queries, Rivest and Schapire~\cite{Rivest1
 proposed the use of homing sequences. When executed, these sequences lead to the
 final state of the machine, simulating a full reset.
 
-
-In chapter four, Learnlib, libalf and Tomte~\cite{Raffelt2009,Bollig2010,Tomte2014}
+In \cref{sec:tools}, Learnlib, libalf and Tomte~\cite{Raffelt2009,Bollig2010,Tomte2014}
 were discussed to illustrate how active state machine learning can be modeled in
 practice. Learnlib provides the user with numerous learning algorithms to choose
 from, including $L^*$ and many of its improved variants and supports both DFAs
@@ -61,8 +58,7 @@ context-specific information, to optimize the amount of membership queries
 required. It also comes with normalizers, optimizing the number of and memory
 required for equivalence queries.
 
-
-The final chapter, chapter five, highlighted practical applications of state
+The final chapter, \cref{sec:applications}, highlighted practical applications of state
 machine learning. Protocol validation~\cite{deRuiter2015} was found to be
 applicable in reality by adding protocol-specific improvements to the
 learning algorithms. Related to this application, the protocol as implemented
