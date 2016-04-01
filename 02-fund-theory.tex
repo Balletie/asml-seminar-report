@@ -160,16 +160,57 @@ section then concludes with a complexity analysis.
 
 \subsubsection{The Data Structure}
 \label{sec:data-structure}
-While learning, the algorithm maintains a set of access strings $S$ and a set of
-distinguishing extensions $E$ (see \cref{def:dist-ext}) in a two-dimensional
-table called the \textit{observation table}. The columns of this table are
-labeled by the elements of $E$. The rows are split into an upper part and a
-lower part. The former is labeled by elements from $S$, the latter by those of
-$S \concat \Sigma$. Lastly, the cells corresponding with a row $s$ and a column
-$e$, denoted as $T(s,e)$, are labeled with $1$ or $0$ depending on whether
-$\mq(s \concat e)$ equals ``yes'' or ``no'' respectively. The observation table
-is initialized with $S = E = \{\epsilon\}$, as can be seen in
-\cref{tbl:observation_1}.
+\begin{table}[t]
+  \centering
+  \begin{subtable}[h]{.45\textwidth}
+    \centering
+    \begin{tabular}{ | l || c | }
+      \hline
+                 & $\epsilon$ \\ \hline \hline
+      $\epsilon$ &         \\ \hline \hline
+      $a$        &         \\
+      $b$        &         \\
+      \hline
+    \end{tabular}
+    \caption{The initial observation table when $\Sigma=\{a,b\}$, before 
+    membership queries are executed}
+    \label{tbl:example_observation_initial}
+  \end{subtable}
+  %
+  \begin{subtable}[h]{.45\textwidth}
+    \centering
+    \begin{tabular}{ | l || c | c | c | }
+      \hline
+                 & $\epsilon$ & $b$   & $bb$ \\ \hline \hline
+      $\epsilon$ & $0$        & $0$   & $0$  \\
+      $b$        & $0$        & $0$   & $1$  \\
+      $bb$       & $0$        & $1$   & $0$  \\
+      $bbb$      & $1$        & $0$   & $0$  \\ \hline \hline
+      $a$        & $0$        & $0$   & $0$  \\
+      $ba$       & $0$        & $0$   & $1$  \\
+      $bba$      & $0$        & $1$   & $0$  \\
+      $bbba$     & $1$        & $0$   & $0$  \\
+      $bbbb$     & $0$        & $0$   & $0$  \\
+      \hline
+    \end{tabular}
+    \label{tbl:example_observation}
+    \caption{A closed and consistent observation table}
+    \label{tbl:example_observation}
+  \end{subtable}
+  \caption{Examples of observation tables}
+\end{table}
+
+While learning, the algorithm maintains a set of access strings $S$ (see
+\cref{def:acc-str}) and a set of distinguishing extensions $E$ (see
+\cref{def:dist-ext}) in a two-dimensional table called the \textit{observation
+  table}. The columns of this table are labeled by the items of $E$. The rows
+are split into an upper part and a lower part. The former is labeled by elements
+from $S$, the latter by those of $S \concat \Sigma$. Lastly, the cells
+corresponding with a row $s$ and a column $e$, denoted as $T(s,e)$, are labeled
+with $1$ or $0$ depending on the output of $\mq(s \concat e)$. The observation
+table is initialized with $S = E = \{\epsilon\}$, as can be seen in
+\cref{tbl:example_observation_initial}. An example of a filled observation table
+is shown in \cref{tbl:example_observation}.
 
 An observation table provides sufficient information for constructing a
 hypothesis, as will be explained now. Let $\row(s)$ represent the finite
