@@ -71,8 +71,8 @@ any set of strings can be partitioned into equivalence classes.
 \begin{definition}[Nerode-equivalence]\label{def:nerode-eq}
   For some language $\lang$ over an alphabet $\Sigma$, define two strings
   $v,w \in \Sigma^*$ to be \textit{Nerode-equivalent} with respect to $\lang$ if
-  and only if there is no distinguishing extension $z$ for $v$ and $w$. We write
-  $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
+  and only if there is no distinguishing extension $z$ for $v$ and $w$. $v
+  \nero_\lang w$ indicate that $v$ and $w$ are Nerode-equivalent.
 
   Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of a string
   $w$, such that for any string $v$ in $\eqclass{w}{\lang}$ it holds that
@@ -172,7 +172,7 @@ section then concludes with a complexity analysis.
       $b$        &         \\
       \hline
     \end{tabular}
-    \caption{The initial observation table when $\Sigma=\{a,b\}$, before 
+    \caption{The initial observation table when $\Sigma=\{a,b\}$, before
     membership queries are executed}
     \label{tbl:example_observation_initial}
   \end{subtable}
@@ -493,11 +493,11 @@ observation table is $\mathcal{O}(m^2n^2 + mn^3)$.
 
 In \cref{sec:improvements} various improvements are discussed. The complexities
 of these improvements usually contain a term $k$. In order to be able to
-directly compare these improvements to $L^*$, we need to slightly modify
-Angluin's result. By keeping $k$ as a variable instead of a constant, the
+directly compare these improvements to $L^*$, Angluin's result needs to be
+modified slightly. By keeping $k$ as a variable instead of a constant, the
 upperbound of the number of items in the observation table is
 $\mathcal{O}(kmn^2)$ (this follows directly from the left-hand side of equation
-\ref{eq:obs_table_items}). We conclude that the query complexity is also
+\ref{eq:obs_table_items}). It can be concluded that the query complexity is also
 $\mathcal{O}(kmn^2)$, since for each item in the observation table exactly one
 membership query is performed.\footnote{Angluin notes that the maximum number of
 equivalence queries is $n$, thus for $L^*$ the membership queries indeed far

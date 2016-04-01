@@ -108,7 +108,7 @@ the only information the algorithm needs is an estimate of the maximum number of
 states of an unknown model for the specification.
 Suppose $d$ is the difference between the estimated maximum number of states in $P$
 and the number of states in the machine $M$.
-We also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
+Also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
 making $\Sigma\left[ n \right]$ a random string with a maximal length of $n$.
 For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
 The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup (S
@@ -334,7 +334,7 @@ queries \cite{Shahbaz2009}.
       \node        (2) at (3,0) {};
 
       \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-            (1) edge [bend left] node[auto,draw=none] {$a/x$} (2) 
+            (1) edge [bend left] node[auto,draw=none] {$a/x$} (2)
             (2) edge [bend left] node[auto,draw=none] {$b/x$} (1)
             (1) edge [loop above] node[auto,draw=none] {$b/x$} (1)
             (2) edge [loop above] node[auto,draw=none] {$a/y$} (2);
@@ -348,7 +348,7 @@ queries \cite{Shahbaz2009}.
     \begin{tabular}{ | l || c | c | }
       \hline
                   & $a$   & $b$ \\ \hline \hline
-      $\epsilon$  & $x$   & $x$ \\ 
+      $\epsilon$  & $x$   & $x$ \\
       $a$         & $y$   & $x$ \\ \hline \hline
       $b$         & $x$   & $x$ \\
       $aa$        & $y$   & $x$ \\
@@ -386,7 +386,7 @@ the Teacher (if needed) with the answer of previously asked queries, which is
 sent back to the learning algorithm. The system then only needs to reset if the
 complete membership query has not already been asked before.
 Other systems lack any support for a reset function.
-As we'll see in \cref{sec:applications}, the system under learning
+As will be seen in \cref{sec:applications}, the system under learning
 could well be a system over which the algorithm has no control.
 
 %Section 3.5?
