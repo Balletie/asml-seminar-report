@@ -21,7 +21,7 @@ automata in order to apply active automata learning on them.
 \label{sssec:libalf}
 Libalf\footnote{No support available, but can be downloaded from 
 \url{http://libalf.informatik.rwth-aachen.de}} is a library for learning and 
-manipulating formal languages. It has both active and passive learning 
+manipulating formal languages. It has both active and passive automata learning 
 algorithms. The name is short for Automata Learning Framework. In this article, 
 only the active part is covered.
 
@@ -29,11 +29,11 @@ The library consists of a core library and two additional libraries,
 liblangen (random regular language generator) and AMoRE++ (automata library).
 
 The core consists of the learning algorithms and the knowledgebase. The 
-Knowledgebase stores language information and collects the different queries 
+knowledgebase stores language information and collects the different queries 
 that are used for that language. This storage makes it possible to switch 
 learning algorithms or to use multiple learning algorithms during the learning 
 process. Therefore, Libalf is suitable for experimenting with different kinds 
-of learning algorithms to see how they affect the learn process. 
+of learning algorithms to see how they affect the learning process. 
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{Tool_images/libalf_demo_interface.png}
@@ -50,8 +50,8 @@ teacher is filled in by the user.
 
 When a scenario is started, there is an option to let the algorithm run 
 step by step. This means that the user can go through the learning algorithms 
-step by step and see how it handles the membership queries and the 
-counterexample. 
+in a step-wise manner, to see how it handles the membership queries and the 
+counterexamples. 
 
 The active learning algorithms that Libalf offers are listed below:
 
