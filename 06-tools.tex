@@ -173,7 +173,7 @@ Tomte\footnote{Named after a character from the book: The Wonderful Adventures
 of Nile}\footnote{In active development and available from
 \url{http://tomte.cs.ru.nl/Tomte-0-4}} is a command-line tool that 
 automatically makes abstractions for automata learning.  It is essentially a 
-translator between the SUL and the learner. This makes 
+translator between the SUL and the Learner. This makes 
 tools such as Learnlib easier to use, since the user does not have to make the 
 mapping manually.
 
@@ -185,7 +185,7 @@ mapping manually.
 
 The Abstractor, Lookahead Oracle and Determinizer together form Tomte. The
 other two parts are not part of Tomte, but it comes with Learnlib for making
-the learner. The makers also have a tool\footnote{SUL tool available from
+the Learner. The makers also have a tool\footnote{SUL tool available from
 \url{http://tomte.cs.ru.nl/Sut-0-4/Description}} available for creating the SUL
 since they must be modeled after a register automaton\cite{Aarts2015}
 (which is an extension of a Mealy machine).
@@ -202,7 +202,7 @@ implementation of this oracle is found in \cite[p. 170]{Aarts2014} and
 \cite[p. 105]{Tomte2014}.
 
 \paragraph{Abstractor} The Abstractor is the component that creates the mapping
-between the SUL and the learner. The idea behind the Abstractor is to make the
+between the SUL and the Learner. The idea behind the Abstractor is to make the
 model that needs to be learned by the Learner smaller than the SUL. This is
 needed, because a SUL typically has parameter values that make the alphabet
 large.
