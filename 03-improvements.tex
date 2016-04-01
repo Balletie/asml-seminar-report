@@ -112,15 +112,14 @@ algorithm finds a \textit{single} extension $e$ from $\gamma$ that distinguishes
 two states in the new hypothesis and adds it to the set $E$ of distinguishing
 extensions. This is in contrast to the original $L^*$ algorithm, which adds all
 prefixes of the counterexample to the set $S$ of access strings. Their algorithm
-maintains that each row in the observation table is
+ensures that each row in the observation table remains
 distinct~\cite{Rivest1993}. Thus, each access string $s \in S$ uniquely
 identifies a state\footnote{From this is it also follows that the consistence
   property of the observation table is trivially satisfied~\cite{Rivest1993},
-  thereby eliminating the need for consistency checking~\cite{Howar2014}.}, like
-what is the case with the classification tree.  However, there is no notion of a
-$\sift$ operation in this context, therefore the notation $\access{\hat M}{w}$
-is used to denote the unique access string corresponding to a string
-$w \in \Sigma^*$.
+  thereby eliminating the need for consistency checking~\cite{Howar2014}.}, as
+is the case for classification trees. Since there is no notion of a $\sift$
+operation in this context, the notation $\access{\hat M}{w}$ is used to denote
+the unique access string corresponding to a string $w \in \Sigma^*$.
 
 According to Rivest and Schapire\cite{Rivest1993} and further clarified by
 Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, the counterexample
