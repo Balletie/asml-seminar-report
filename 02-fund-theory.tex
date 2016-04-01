@@ -149,6 +149,7 @@ hypothesis. After that, the algorithm is described. To get a more intuitive
 sense of how the algorithm works, an example run of the algorithm is given. The
 section then concludes with a complexity analysis.
 
+\newpage
 \subsubsection{The data structure}
 \label{sec:data-structure}
 \begin{table}[t]
@@ -228,6 +229,7 @@ and of consistence, defined in \cref{def:closure,def:consistence} respectively.
   holds that $\row(s_1\concat\sigma) = \row(s_2\concat\sigma)$.
 \end{definition}
 
+\newpage
 \subsubsection{The algorithm}
 \label{sec:algorithm}
 As said in the previous section, the \cref{alg:lstar} begins by initializing
@@ -294,6 +296,7 @@ hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
 be made. To address this problem, $t$ is added to $S$ and again the table is
 filled by executing the required membership queries.
 
+\newpage
 \paragraph{The second phase} By now the observation table is both closed and
 consistent. The algorithm uses the observation table to construct a hypothesis
 in the manner defined in \cref{sec:nerode-equiv-equiv}. Once the hypothesis is
@@ -310,7 +313,7 @@ The input alphabet for this DFA is $\Sigma = \{a, b\}$. $L^*$ initializes $S$
 and $E$ to $\{\epsilon\}$ and performs three membership queries to build the
 initial observation table of table~\ref{tbl:observation_1}.
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
 \begin{subfigure}[b]{.4\textwidth}
 \centering
@@ -356,7 +359,7 @@ initial observation table of table~\ref{tbl:observation_1}.
 \end{figure}
 
 
-\begin{table}
+\begin{table}[b]
 \centering
 
 \begin{subtable}[h]{.23\textwidth}

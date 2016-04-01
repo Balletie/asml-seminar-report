@@ -77,32 +77,6 @@ the implementation and protocol.
 The W-method generates tests that guarantee correctness of an
 implementation with a number of states below a certain upper bound.
 
-The W-method generates input sequences that reach every state in the
-diagram, checks all the transitions in the diagram and identifies all the
-destination states and verifies them against their counterparts in
-the implementation~\cite{Ipate2007}.
-To achieve this, the W-method constructs two sets of input sequences:
-\begin{itemize}
-  \item A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the
-    final state machine, including the empty sequence to reach the initial state.
-  \item A characterization set $W \subseteq \Sigma^{*}$ that has different
-    outputs for at least one sequence in $W$ for every pair of different states.
-\end{itemize}
-
-Given a specification $P$ that can be modeled by an unknown finite state machine $M$,
-the only information the algorithm needs is an estimate of the maximum number of
-states of an unknown model for the specification.
-Suppose $d$ is the difference between the estimated maximum number of states in $P$
-and the number of states in the machine $M$.
-Also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
-making $\Sigma\left[ n \right]$ a random string with a maximal length of $n$.
-For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
-The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup (S
-\concat \Sigma)$, which is also called the transition cover of $M$, ensures that all the
-states and transition in $P$ are also present in $M$, while
-$\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
-performing all the transitions. For pseudocode see algorithm~\ref{alg:w-method}.
-
 \begin{algorithm}[h]
 \caption{The W-method algorithm}
 \label{alg:w-method}
@@ -140,6 +114,32 @@ maximum length}
 \EndFunction{}
 \end{algorithmic}
 \end{algorithm}
+
+The W-method generates input sequences that reach every state in the
+diagram, checks all the transitions in the diagram and identifies all the
+destination states and verifies them against their counterparts in
+the implementation~\cite{Ipate2007}.
+To achieve this, the W-method constructs two sets of input sequences:
+\begin{itemize}
+  \item A state cover $S \subseteq \Sigma^{*}$ that reaches every state in the
+    final state machine, including the empty sequence to reach the initial state.
+  \item A characterization set $W \subseteq \Sigma^{*}$ that has different
+    outputs for at least one sequence in $W$ for every pair of different states.
+\end{itemize}
+
+Given a specification $P$ that can be modeled by an unknown finite state machine $M$,
+the only information the algorithm needs is an estimate of the maximum number of
+states of an unknown model for the specification.
+Suppose $d$ is the difference between the estimated maximum number of states in $P$
+and the number of states in the machine $M$.
+Also take $\Sigma \left[ n \right] = \Sigma^{n} \cup \dots \cup \lbrace \epsilon \rbrace$,
+making $\Sigma\left[ n \right]$ a random string with a maximal length of $n$.
+For the W-method the testing suite $T = S \concat \Sigma\left[ d + 1 \right]  \concat W$.
+The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup (S
+\concat \Sigma)$, which is also called the transition cover of $M$, ensures that all the
+states and transition in $P$ are also present in $M$, while
+$\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
+performing all the transitions. For pseudocode see algorithm~\ref{alg:w-method}.
 
 \subsection{Limiting the Amount of Membership Queries}
 Membership queries are the most straightforward to translate to real world
@@ -187,6 +187,7 @@ equivalence querying process.
 Using this approach, Howar~et~al. found the most complete
 model of the SUL using a limited amount of membership queries.
 
+\newpage
 \subsection{Learning Mealy Machines}
 \label{sec:learn-mealy-mach}
 
@@ -266,7 +267,7 @@ learned by $L^*$ by defining $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$~\cite{Sh
 \end{algorithmic}
 \end{algorithm}
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
 \begin{subfigure}[b]{.4\textwidth}
 \centering
@@ -343,25 +344,6 @@ this value in the observation table is that it corresponds to the sequence of
 output symbols that is produced when the input $e$ is applied from the state
 corresponding to $s$.
 
-An example Mealy machine $\mathcal{M}$ is shown in figure~\ref{fig:mealy_example}. A possible observation table built by $L^*_M$ when it
-learns $\mathcal{M}$ is shown in table~\ref{tbl:mealy_observation_table} (source
-of the example: Shahbaz~et~al.~\cite{Shahbaz2009}). In this table it can be seen
-that the value in $\row(aa)$ under the column labeled by $a$ is $y$, even though
-the output query would have returned the string $xyy$ for the input string
-$aaa$.
-
-With the new meaning of the values in the table, a value of $\epsilon$ in $E$
-becomes nonsensical. This is because $\epsilon$ would denote no change in
-state, so there would be no output symbol. Therefore, at the start of the
-algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$.
-
-The concepts of closedness and consistency remain identical. The procedure to
-build the hypothesis remains largely the same, but now the generated hypothesis
-no longer defines accepting states. Instead, it defines output strings on the
-transitions. Following similar reasoning as in Angluin's paper~\cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
-model describing the target using at most $\mathcal{O}(k^2nm + kmn^2)$ output
-queries~\cite{Shahbaz2009}.
-
 \begin{figure}[h]
   \begin{minipage}{.45\textwidth}
     \centering
@@ -400,6 +382,24 @@ queries~\cite{Shahbaz2009}.
   \end{minipage}
 \end{figure}
 
+An example Mealy machine $\mathcal{M}$ is shown in figure~\ref{fig:mealy_example}. A possible observation table built by $L^*_M$ when it
+learns $\mathcal{M}$ is shown in table~\ref{tbl:mealy_observation_table} (source
+of the example: Shahbaz~et~al.~\cite{Shahbaz2009}). In this table it can be seen
+that the value in $\row(aa)$ under the column labeled by $a$ is $y$, even though
+the output query would have returned the string $xyy$ for the input string
+$aaa$.
+
+With the new meaning of the values in the table, a value of $\epsilon$ in $E$
+becomes nonsensical. This is because $\epsilon$ would denote no change in
+state, so there would be no output symbol. Therefore, at the start of the
+algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$.
+
+The concepts of closedness and consistency remain identical. The procedure to
+build the hypothesis remains largely the same, but now the generated hypothesis
+no longer defines accepting states. Instead, it defines output strings on the
+transitions. Following similar reasoning as in Angluin's paper~\cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
+model describing the target using at most $\mathcal{O}(k^2nm + kmn^2)$ output
+queries~\cite{Shahbaz2009}.
 
 \subsection{Systems Without a \textit{Reset} Function}
 \label{sec:noreset}
