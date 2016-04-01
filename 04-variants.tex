@@ -118,22 +118,27 @@ performing all the transitions. For pseudocode see algorithm \ref{alg:w-method}.
 \caption{The W-method algorithm}
 \label{alg:w-method}
 \begin{algorithmic}[1]
-\Function{W}{$P, M, \Sigma, Reset$}
+\Function{W-method}{$P, M, \Sigma, Reset$}
 \State $S \gets \{ \epsilon \}$ \Comment{Initialize state cover set}
-\State $E \gets \{ \epsilon \}$ \Comment{Initialize characterization set}
+\State $W \gets \{ \epsilon \}$ \Comment{Initialize characterization set}
+\State $X \gets \emptyset$ \Comment{Initialize an emtyset for words of a maximum length}
 
-\For{State $q \in M$}
-\State $S$.add(q.accessString) \Comment{Build state cover S}
+%\For{State $q \in M$}
+%\State $S$.add(q.accessString) \Comment{Build state cover S}
+%\EndFor
+\State Build $S$ \Comment{Build state cover}
+\State Build $W$ \Comment{Build the characterization set}
+\ForAll{$0 \leq i \leq (estimatedstates(P) - numstates(M) + 1)$} \Comment{Build the set of words with the given
+maximum length}
+\State $X \gets X \cup \Sigma^{i}$ \Comment{Add word of length $i$}
 \EndFor
 
-\State Build E \Comment{Build Distinguishing extentions}
-
-\For($s \in S$)
-\For($e \in E$)
-\For($a \in \Sigma^{0 to (P.estematedstates - M.states + 1)}$)
-\If{$P.accept(s \concat a \concat e) \neq M.accept(s \concat a \concat e)$}
-\Comment{Check equality for $s \concat a \concat e$}
-\State \Return $s \concat a \concat e$ \Comment{Return counterexample}
+\For{$s \in S$}
+\For{$w \in W$}
+\For{$a \in X$}
+\If{$P.accept(s \concat a \concat w) \neq M.accept(s \concat a \concat w)$}
+\Comment{Check equality for $s \concat a \concat w$}
+\State \Return "not equal"
 \EndIf
 \State \Call{Reset}{$P, M$} \Comment{Reset $P$ and $M$}
 \EndFor
