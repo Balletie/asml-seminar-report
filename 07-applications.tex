@@ -16,7 +16,7 @@ One commonly used application of active state machine learning is
 protocol verification. This checks whether a protocol implementation follows
 its formal description. The description is used to identify states and
 allowed transitions. These states and transitions are then used to construct a
-state machine that is according to the protocol definition. It is this machine
+state machine that conforms to the protocol definition. It is this machine
 against which equivalence queries are performed, to find out whether the
 implementation logic is according to the specification. The input alphabet
 is defined as an abstract set of messages that relate to the messages the
@@ -46,8 +46,8 @@ a very costly one.
 An aspect that has proven to be difficult in practice, namely
 that of resetting the state of the machine after each iteration, is for this
 specific application fairly easy. De Ruiter et al. defined an additional
-message, a ``reset''-message. This, when output, sets up a new client-server
-connection, after which a new iteration can start.
+message, a ``reset''-message. When this message is used, a new client-server 
+connection is set up, after which a new iteration can start.
 
 \subsection{Learning Botnets}
 Related to the application of protocol verification is applying active state
@@ -64,7 +64,7 @@ For this, several improvements have been made to the $L^*$ algorithm.
 They wrote a script that communicates with the botnet. It concretizes input
 sequences to valid protocol messages and converts the response of the botnet
 back to contain only elements defined in the output alphabet. Eventually, this
-response is returned to $L^*$.
+response is returned to the learning algorithm.
 
 Since a botnet CnC protocol inherently operates over the internet, queries have
 a high latency. Caching queries combined with parallel execution increased the execution speed
