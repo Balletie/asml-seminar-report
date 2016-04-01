@@ -38,7 +38,7 @@ applying active state machine learning to real world scenarios, such as:
 For each of these challenges a variant of the $L^*$ algorithm will be discussed
 that addresses the specific issues encountered.
 
-\subsection{Approximating $\eq(M)$ queries with $\mq(w)$ queries}
+\subsection{Approximating equivalence queries with membership queries}
 In theoretical simulations, equivalence testing is often easy because the target
 system (in some cases even the model!) is known. In practice, however, the SUL
 is generally a black box, since the main motive for using a learning algorithm
@@ -116,16 +116,16 @@ $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same stat
 performing all the transitions.
 
 \subsection{Limiting the amount of membership queries}
-Membership queries are the most straightforward
-to translate to real world applications: they can be realized via testing.
-An important thing to note, however, is the amount of membership queries required.
-In a theoretical framework the learning algorithm does not have to account
-for execution times of individual $\mq(w)$ queries.
-In practice, such queries might take considerable time or be expensive to execute.
+Membership queries are the most straightforward to translate to real world
+applications: they can be realized via testing.  An important thing to note,
+however, is the amount of membership queries required.  In a theoretical
+framework the learning algorithm does not have to account for execution times of
+individual membership queries. In practice, such queries might take
+considerable time or be expensive to execute.
 
 Learning a real world application can easily require several thousand membership
 queries~\cite[p. 100]{Tomte2014}. Furthermore, when using for example
-\textit{Chow's method} for $\eq(M)$ queries, the amount of membership queries
+\textit{Chow's method} for equivalence queries, the amount of membership queries
 needed grows exponentially in the number of states~\cite{Chow1978}.  This means
 that the time required to learn a model can be greatly reduced either by
 speeding up membership queries (executing them in parallel~\cite{Howar2012}), or
@@ -379,15 +379,16 @@ queries \cite{Shahbaz2009}.
 
 \subsection{Systems without a \textit{reset} function}
 \label{sec:noreset}
-In the $L^*$ learning algorithm, every $\mq(w)$ query is implicitly independent
-of other queries. However, when learning a system in practice, it might happen
-that $\mq(w)$ queries are not independent at all. Suppose for example that the
-SUL requires authentication while also imposing a restriction on the maximum
-amount of failed requests. In such a system queries are no longer independent of
-each other, since after a certain amount of authentication requests the behavior
-of the system suddenly changes for the same membership queries. In order to solve
-this issue, the $L^*$ algorithm implicitly requires a means of resetting the
-SUL~\cite[p. 301]{Rivest1993} in between successive membership queries.
+In the $L^*$ learning algorithm, every membership query is implicitly
+independent of other queries. However, when learning a system in practice, it
+might happen that membership queries are not independent at all. Suppose for
+example that the SUL requires authentication while also imposing a restriction
+on the maximum amount of failed requests. In such a system queries are no longer
+independent of each other, since after a certain amount of authentication
+requests the behavior of the system suddenly changes for the same membership
+queries. In order to solve this issue, the $L^*$ algorithm implicitly requires a
+means of resetting the SUL~\cite[p. 301]{Rivest1993} in between successive
+membership queries.
 
 However, not in all situations a reset function is desirable. An example is a
 system where the reset takes a lot of time compared to the learning process. For
@@ -449,12 +450,12 @@ reached eventually by executing $h$, giving it the ability to simulate a reset.
 
 With every string there is the possibility that $M$ gets trapped in a loop.
 Therefore it is generally quite hard if not impossible to find such a state.
-Rivest \& Schapire solve this by simulating independent copies of $M$
-for each possible output $s$ on executing $h$~\cite[p. 313]{Rivest1993}.
-Since the set of possible outputs on $h$ is limited by the number of states $n$,
-the amount of independent copies is bounded by $\mathcal{O}(n)$.
-Therefore this algorithm is bounded by $\mathcal{O}(n \cdot (m + e))$,
-with $m$ the amount of $\mq(w)$ queries and $e$ the amount of $\eq(M)$ queries.
+Rivest \& Schapire solve this by simulating independent copies of $M$ for each
+possible output $s$ on executing $h$~\cite[p. 313]{Rivest1993}.  Since the set
+of possible outputs on $h$ is limited by the number of states $n$, the amount of
+independent copies is bounded by $\mathcal{O}(n)$.  Therefore this algorithm is
+bounded by $\mathcal{O}(n \cdot (m + e))$, with $m$ the amount of membership
+queries and $e$ the amount of equivalence queries.
 \\
 \\
 All the above problems might give the impression that active state machine
