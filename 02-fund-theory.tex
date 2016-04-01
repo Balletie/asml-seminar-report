@@ -198,15 +198,15 @@ and of consistence, defined in \cref{def:closure,def:consistence} respectively.
 
 \subsubsection{The Algorithm}
 \label{sec:algorithm}
-As said in the previous section, the \cref{alg:lstar} begins by
-initializing $S$ and $E$ to $\{\epsilon\}$.
-The initial cells of the table are filled by performing membership queries.
-After the initialization is done, the algorithm enters the main
-loop~(line~\ref{line:loop}), which is split up into two phases.
-The first phase~(line~\ref{line:first}) ensures the properties of closure
-and consistence. This phase is repeated until these properties are satisfied.
-In the second phase~(line~\ref{line:second}) the algorithm constructs a
-hypothesis automaton and uses it to perform an equivalence query.
+As said in the previous section, the \cref{alg:lstar} begins by initializing
+$S$ and $E$ to $\{\epsilon\}$. The initial cells of the table are filled by
+performing membership queries. After the initialization is done, the algorithm
+enters the main loop~(line~\ref{line:loop}), which is split up into two
+phases. The first phase~(lines~\ref{line:ph1_begin}~-~\ref{line:ph1_end})
+ensures the properties of closure and consistence. This phase is repeated
+until these properties are satisfied. In the second
+phase~(lines~\ref{line:ph2_start}~-~\ref{line:ph2_end}) the algorithm
+constructs a hypothesis automaton and uses it to perform an equivalence query.
 
 \begin{algorithm}[h]
 \caption{Angluin's $L^*$ algorithm}
@@ -216,10 +216,8 @@ hypothesis automaton and uses it to perform an equivalence query.
   \State $S \gets E \gets \{ \epsilon \}$
   \State Construct the observation table $(S,E,T)$ by executing
          $\mq(w)$ for $\epsilon$ and $\forall\sigma \in \Sigma$
-  \label[line]{line:loop}
-  \Loop
-    \label[line]{line:first}
-    \While{$(S,E,T)$ is not closed or not consistent}
+  \Loop \label[line]{line:loop}
+    \While{$(S,E,T)$ is not closed or not consistent} \label[line]{line:ph1_begin}
       \If{$(S,E,T)$ is not consistent}
         \State Find some $s_1, s_2 \in S, e \in E$ and $\sigma \in \Sigma$ such that
         \State $\row(s_1) = row(s_2)$ and $T(s_1, \sigma \concat e) \neq T(s_2, \sigma \concat e)$
@@ -233,9 +231,8 @@ hypothesis automaton and uses it to perform an equivalence query.
         \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
                $w \in (S \cup S \concat \Sigma)\concat E$
       \EndIf
-    \EndWhile
-    \label[line]{line:second}
-    \State $M \gets M(S,E,T)$
+    \EndWhile \label[line]{line:ph1_end}
+    \State $M \gets M(S,E,T)$ \label[line]{line:ph2_start}
     \State Execute $\eq(M)$
     \If{a counterexample $t$ is given}
       \ForAll{prefixes $t'$ of $t$}
@@ -245,7 +242,7 @@ hypothesis automaton and uses it to perform an equivalence query.
       \EndFor
     \Else
       \State \Return $M$
-    \EndIf
+    \EndIf \label[line]{line:ph2_end}
   \EndLoop
 \EndFunction{}
 \end{algorithmic}
