@@ -39,14 +39,12 @@ For each of these challenges a variant of the $L^*$ algorithm will be discussed
 that addresses the specific issues encountered.
 
 \subsection{Approximating $\eq(M)$ queries with $\mq(w)$ queries}
-In theoretical simulations, equivalence testing is often easy because
-the target system (in some cases even the model!) is known.
-In practice, however, the system under learning is generally
-a black box, since the main motive for using a learning algorithm is to
-infer knowledge about some unknown system.
-Therefore equivalence queries can generally only be answered by exhaustively
-testing the inputs and outputs of a system.
-However, exhaustively testing a black box is undecidably hard.
+In theoretical simulations, equivalence testing is often easy because the target
+system (in some cases even the model!) is known. In practice, however, the SUL
+is generally a black box, since the main motive for using a learning algorithm
+is to infer knowledge about some unknown system. Therefore equivalence queries
+can generally only be answered by exhaustively testing the inputs and outputs of
+a system. However, exhaustively testing a black box is undecidably hard.
 
 This means that equivalence queries will have to be approximated, typically by
 using membership queries. Together with the introduction of the $L^*$ algorithm,
@@ -73,11 +71,11 @@ to guarantee the correct result of equivalence queries, given an upper bound of
 the number of states in the target \cite{Ipate2007}.
 
 According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
-to converge to a correct approximation of the system under learning
-is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method.
-The maximum length of these sequences is $n^{2} \times m \times k^{m-n+1}$,
-where $n$ is the number of states in the provided automaton, $m$ is the number
-of states in the correct automaton and $k$ is the size of the input alphabet.
+to converge to a correct approximation of the SUL is bounded by $n^{2} \times
+k^{m-n+1}$ when using Chow's W-method. The maximum length of these sequences is
+$n^{2} \times m \times k^{m-n+1}$, where $n$ is the number of states in the
+provided automaton, $m$ is the number of states in the correct automaton and $k$
+is the size of the input alphabet.
 
 By refining the test suites and the specification at the same time
 and by using a divide and conquer approach, the size of the test is
@@ -363,31 +361,27 @@ queries \cite{Shahbaz2009}.
 
 \subsection{Systems without a \textit{reset} function}
 \label{sec:noreset}
-In the $L^*$ learning algorithm, every $\mq(w)$ query is implicitly
-independent of other queries.
-However, when learning a system in practice, it might happen that
-$\mq(w)$ queries are not independent at all.
-Suppose for example that the system under learning requires authentication
-while also imposing a restriction on the maximum amount of failed requests.
-In such a system queries are no longer independent of each other,
-since after a certain amount of authentication requests
-the systems behavior suddenly changes for the same membership queries.
-In order to solve this issue, the $L^*$ algorithm implicitly requires a means
-of resetting the system under learning~\cite[p. 301]{Rivest1993}
-in between successive membership queries.
+In the $L^*$ learning algorithm, every $\mq(w)$ query is implicitly independent
+of other queries. However, when learning a system in practice, it might happen
+that $\mq(w)$ queries are not independent at all. Suppose for example that the
+SUL requires authentication while also imposing a restriction on the maximum
+amount of failed requests. In such a system queries are no longer independent of
+each other, since after a certain amount of authentication requests the systems
+behavior suddenly changes for the same membership queries. In order to solve
+this issue, the $L^*$ algorithm implicitly requires a means of resetting the
+SUL~\cite[p. 301]{Rivest1993} in between successive membership queries.
 
 However, not in all situations a reset function is desirable. An example is a
-system where the reset takes a lot of time compared to the learning process.
-For such systems a reduction in the amount of resets is helpful. The method
-proposed by Bauer~et~al.~\cite{Bauer2012} can be used for this situation. This
-method reuses already (or partially) asked membership queries by only sending
-the remaining part of the query to the Teacher. It then combines the answer of
-the Teacher (if needed) with the answer of previously asked queries, which is
-sent back to the learning algorithm. The system then only needs to reset if the
-complete membership query has not already been asked before.
-Other systems lack any support for a reset function.
-As will be seen in \cref{sec:applications}, the system under learning
-could well be a system over which the algorithm has no control.
+system where the reset takes a lot of time compared to the learning process. For
+such systems a reduction in the amount of resets is helpful. The method proposed
+by Bauer~et~al.~\cite{Bauer2012} can be used for this situation. This method
+reuses already (or partially) asked membership queries by only sending the
+remaining part of the query to the Teacher. It then combines the answer of the
+Teacher (if needed) with the answer of previously asked queries, which is sent
+back to the learning algorithm. The system then only needs to reset if the
+complete membership query has not already been asked before. Other systems lack
+any support for a reset function. As will be seen in \cref{sec:applications},
+the SUL could well be a system over which the algorithm has no control.
 
 %Section 3.5?
 %Another obstacle to overcome is that of parameters used in real world
