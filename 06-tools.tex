@@ -6,12 +6,12 @@
 The previous sections have shown that active automata learning is a currently 
 studied computational learning process. However, as section 
 \cref{sec:variants} has shown, there are some challenges in using active 
-automata learning in a practical setting. To overcome these challenge as well 
+automata learning in a practical setting. To overcome these challenges as well 
 as to promote active automata learning in practice, tools and libraries have 
 been created. This section will give a brief overview of a couple of tools and 
 libraries. This selection is based on the importance, availability and the 
-amount of researches that have used those tools and libraries. First, the 
-libraries Libalf and Learnlib will be discussed. Those libraries provide 
+amount of researches that have used these tools and libraries. First, the 
+libraries Libalf and Learnlib will be discussed. These libraries provide 
 various active automata learning algorithms and optimizations. After that, the 
 tool Tomte is discussed, which automatically generates abstractions for 
 automata in order to apply active automata learning on them. 
@@ -19,21 +19,21 @@ automata in order to apply active automata learning on them.
 
 \subsubsection{Libalf}
 \label{sssec:libalf}
-Libalf\footnote{No support available,but can be downloaded from 
-	\url{http://libalf.informatik.rwth-aachen.de}} is a library for learning 
-	and manipulating formal languages. It has both active and passive learning 
-	algorithms. The name is short for: Library Automata Learning Framework. For 
-	this paper, only the active part is covered.
+Libalf\footnote{No support available, but can be downloaded from 
+\url{http://libalf.informatik.rwth-aachen.de}} is a library for learning and 
+manipulating formal languages. It has both active and passive learning 
+algorithms. The name is short for Automata Learning Framework. In this article, 
+only the active part is covered.
 
-The library consists of a core library as well as two additional libraries, 
-liblangen(random regular language generator) and AMoRE++(automata library).
+The library consists of a core library and two additional libraries, 
+liblangen (random regular language generator) and AMoRE++ (automata library).
 
-The core consists of the learning algorithms and the Knowledgebase. The 
+The core consists of the learning algorithms and the knowledgebase. The 
 Knowledgebase stores language information and collects the different queries 
 that are used for that language. This storage makes it possible to switch 
 learning algorithms or to use multiple learning algorithms during the learning 
-process. Therefore, Libalf is suitable for experimenting with different kind of 
-learning algorithms and see how they would affect the learn process. 
+process. Therefore, Libalf is suitable for experimenting with different kinds 
+of learning algorithms to see how they affect the learn process. 
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{Tool_images/libalf_demo_interface.png}
@@ -41,37 +41,36 @@ learning algorithms and see how they would affect the learn process.
 	\label{fig:libalf_interface}
 \end{figure}
 
-Besides using Libalf as a library, a demo application is also available, see 
-figure \ref{fig:libalf_interface}. In this application, each learning 
-configuration is stored in a scenario. This scenario contains the learning 
-algorithm, filters, connectivity(server or local), and the implementation of 
-the teacher. The teacher can be either be based on a supplied model(DFA or 
-regular expression) or the user is fills in the role of the teacher.
+Besides using Libalf as a library, a demo application is also available. In 
+this application, each learning configuration is stored in a scenario. Each 
+scenario contains the learning algorithm, filters, connectivity (server or 
+local) and the implementation of the teacher. The teacher can either be 
+based on a supplied model (DFA or regular expression) or the role of the 
+teacher is filled in by the user. 
 
 When a scenario is started, there is an option to let the algorithm run 
-step-by-step. This means that the user can go through the learning algorithms 
-step by step and see how it handles the membership queries and the reaction on 
-the counterexample. 
+step by step. This means that the user can go through the learning algorithms 
+step by step and see how it handles the membership queries and the 
+counterexample. 
 
-The active learning algorithms that it offers are listed below.
+The active learning algorithms that Libalf offers are listed below:
 
 \begin{itemize}
-	\item $L^*$ (see section \cref{sec:an-algor-learn})
-	\item Rivest \& Schapnire's (see section \cref{sec:rivest-schap-count})
+	\item $L^*$ (see \cref{sec:an-algor-learn})
+	\item Rivest \& Schapnire's (see \cref{sec:rivest-schap-count})
 	\item $NL^*$ \cite{Bollig2009}
-	\item Kearns \& Vazirani's (see section \cref{sec:classification-trees})
+	\item Kearns \& Vazirani's (see \cref{sec:classification-trees})
 \end{itemize}
 
-Besides the algorithms and the knowledgebase, it has filters for reducing the 
-amount of queries asked to the teacher. These filters use domain specific 
-knowledge. An example of is the validation of HTML. If a query can already be 
-answered by this validator, then this query is not passed to the teacher, thus 
-reducing the queries asked to the teacher.
-A filter can also be composed of multiple filters by using logical 
-connectors(and,or.not).
+Besides the algorithms and the knowledgebase, Libalf has filters for reducing 
+the amount of queries asked to the teacher. These filters use domain specific 
+knowledge. If a query can already be answered by this filter, it is not passed 
+to the teacher, thus reducing the queries asked to the teacher. A filter can 
+also be composed of multiple filters by using logical connectors ($\land$, 
+$\lor$, $\lnot$).
 
 Libalf also provides normalizers. A normalizer defines a domain specific 
-equivalence relations(relation between equivalence queries) over all strings 
+equivalence relation (relation between equivalence queries) over all strings 
 and only stores information of one representative of that relation. This 
 reduces the amount of memory needed and could also reduce the amount of 
 equivalence queries.
@@ -105,7 +104,7 @@ structures and algorithms depend on these representations. This makes it easy
 to add third party implementations of automata such as the BRICS library
 \cite{Alur2005}. Automatalib includes minimalization algorithms and equivalence
 testing algorithms based on Hopcroft and Karp's near-linear equivalence
-algorithm \cite{Hopcroft1971} or the W-Method (section \ref{sec:chow}) for
+algorithm \cite{Hopcroft1971} or the W-Method (\cref{sec:chow}) for
 black-box testing.
 
 \begin{figure}[!ht]
@@ -121,22 +120,22 @@ analysis with other methods. All the official supported base algorithms with
 their alternative counterexample analysis are listed below:
 
 \begin{itemize}
-	\item $L^*$ (base) (see \cref{sec:an-algor-learn})
+	\item $L^*$ (see \cref{sec:an-algor-learn})
 	\begin{itemize}
 		\item Maler \& Pnueli's \cite{Maler1995}
 		\item Rivest \& Schapnire's (see \cref{sec:rivest-schap-count})
 		\item Shahbaz's \cite{Shahbaz2009}
 		\item Suffix1by1 \cite{Irfan2010}
 	\end{itemize}
-	\item Obversation Pack (base) (see section \ref{sec:ttt})
-	\item Kearns \& Vazirani's (base) (see \cref{sec:classification-trees})
-	\item DHC (base) \cite{Merten2012}
-	\item TTT (base) (see section \cref{sec:ttt})
-	\item $NL^*$ (base) \cite{Bollig2009}
+	\item Obversation Pack (see \cref{sec:ttt})
+	\item Kearns \& Vazirani's (see \cref{sec:classification-trees})
+	\item DHC \cite{Merten2012}
+	\item TTT (see \cref{sec:ttt})
+	\item $NL^*$ \cite{Bollig2009}
 \end{itemize}
 
-All the algorithms work with both DFAs and Mealy machines (see section
-\ref{sec:learn-mealy-mach}), except for DHC\cite{Merten2012} and
+All the algorithms work with both DFAs and Mealy machines (see 
+\cref{sec:learn-mealy-mach}), except for DHC\cite{Merten2012} and
 $NL^*$\cite{Bollig2009}.
 
 For finding the counterexamples, Learnlib uses Automatalib as well as other
@@ -144,28 +143,27 @@ methods such as randomized tests. More methods can be found in
 \cite[p. 490]{Isberner2015b}.
 
 Learnlib also offers filters that pre-process the queries of the learning
-algorithm. An example is the reduction of the amount of queries (see section
-\ref{sec:noreset}). Other examples are a mechanism for reducing the amount of
+algorithm. An example is the reduction of the amount of queries (see 
+\cref{sec:noreset}). Other examples are a mechanism for reducing the amount of
 resets  and a parallelization component that uses multiple teachers and
 parallel execution of membership queries\cite{Henrix2015,Howar2012}.
 
 
-Besides the library, there also exists an application called Learnlib 
-Studio\footnote{Available from here 
-	\url{http://ls5-www.cs.tu-dortmund.de/projects/learnlib/download.php}}. 
-	This application is based on the older version, JLearn, but it offers a 
-	graphical interface, see figure \ref{fig:learnlib_studio}. 
-	
+Besides the library, there is also an application called Learnlib 
+Studio\footnote{Available from 
+\url{http://ls5-www.cs.tu-dortmund.de/projects/learnlib/download.php}}. 
+This application is based on the older version, JLearn, but it offers a 
+graphical interface. See figure \ref{fig:learnlib_studio}. 
+
 	\begin{figure}[H]
 		\includegraphics[width=\textwidth]{Tool_images/learnlib_studio_interface.png}
 		\caption{Graphical interface of Learnlib Studio}
 		\label{fig:learnlib_studio}
 	\end{figure}
-	
-	The interface makes it possible to use the different 
-	building blocks of JLearn(similar to Learnlib) in a graph structure. These 
-	building blocks consists of the different learning algorithms, oracles, 
-	statistics and more. 
+
+The interface makes it possible to use the different building blocks of 
+JLearn (similar to Learnlib) in a graph structure. These building blocks 
+consist of the different learning algorithms, oracles, statistics and more. 
 
 
 \subsection{Tomte}
@@ -175,9 +173,9 @@ Tomte\footnote{Named after a character from the book: The Wonderful Adventures
 of Nile}\footnote{In active development and available from
 \url{http://tomte.cs.ru.nl/Tomte-0-4}} is a command-line tool that 
 automatically makes abstractions for automata learning.  It is essentially a 
-translator between the system under learning (SUL) and the learner. This makes 
-tools such as Learnlib easier, since the user does not have to make the mapping 
-manually.
+translator between the SUL and the learner. This makes 
+tools such as Learnlib easier to use, since the user does not have to make the 
+mapping manually.
 
 \begin{figure}[!h]
 	\includegraphics[width=\textwidth]{Tool_images/tomte_network.png}
