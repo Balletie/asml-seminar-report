@@ -143,26 +143,26 @@ in the number of states \cref{sec:chow}.
 The $L^*$ algorithm of Angluin is only able to learn DFA's (and equivalent
 models). However, some applications are characterized by their I/O behaviour.
 Such behaviour is not easily modeled by a DFA. Instead, they are more naturally
-modeled by mealy machines\cite{Shahbaz2009} (see definition
+modeled by Mealy machines\cite{Shahbaz2009} (see definition
 \ref{def:mealy_machine}).
 
 \begin{definition}[Mealy machine]\label{def:mealy_machine}
-  A mealy machine $M$ is a 6-tuple $(Q, q_0, \Sigma, \Lambda, \delta, \lambda)$
+  A Mealy machine $M$ is a 6-tuple $(Q, q_0, \Sigma, \Lambda, \delta, \lambda)$
   where $Q$ is the set of states, $q_0$ is the initial state, $\Sigma$ is the
   input alphabet, $\Lambda$ is the output alphabet, $\delta$ is the transition
   function and $\lambda$ is the output function.
 \end{definition}
 
-A mealy machine is similar to a DFA, but instead of defining accepting states,
+A Mealy machine is similar to a DFA, but instead of defining accepting states,
 it defines a function $\lambda: Q \times \Sigma \to \Lambda$ that defines
-the output symbol returned on each state transition. To learn a mealy machine
-with $L^*$, some adaptions are required: either the mealy machine can be
+the output symbol returned on each state transition. To learn a Mealy machine
+with $L^*$, some adaptions are required: either the Mealy machine can be
 transformed into a DFA, or an adaptation of $L^*$ called $L^*_{M}$ can be used
-to learn the mealy machine directly.
+to learn the Mealy machine directly.
 
-\subsubsection {Transforming a mealy machines into a DFA}
+\subsubsection {Transforming a Mealy machine into a DFA}
 
-A mealy machine $\mathcal{M}$ can be transformed into a DFA $D$. By using the
+A Mealy machine $\mathcal{M}$ can be transformed into a DFA $D$. By using the
 alphabet of the transformed model, $D$ can be learned by the $L^*$ algorithm.
 The only required change to the algorithm is the implementation of the
 membership query, as will be explained below. There are two ways to transform
@@ -172,7 +172,7 @@ The main difference between the transformations is in the input alphabet they
 define. One uses $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$\cite{Hungar2003},
 while the other uses $\Sigma = \Sigma_\mathcal{M} \times O$ \cite{Makinen2001}.
 Note that in this section the $_{\mathcal{M}}$ subscript is used to disambiguate
-between items from the DFA and mealy tuples.
+between items from the DFA and Mealy tuples.
 
 
 When using $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$, each transition in
@@ -188,7 +188,7 @@ learned by $L^*$ by defining $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$
 \cite{Hungar2003,Niese2003}.
 
 \begin{algorithm}[h]
-\caption{Transformation of a mealy machine into a DFA}
+\caption{Transformation of a Mealy machine into a DFA}
 \label{alg:transform_hungar}
 \begin{algorithmic}[1]
 \Function{Transform}{$Q_\mathcal{M}, q_{0_\mathcal{M}}, \Sigma_\mathcal{M},
@@ -268,7 +268,7 @@ The second transformation uses $\Sigma = \Sigma_\mathcal{M} \times \Lambda$.
 M\"{a}kinen~et~al were the first to use (a slightly modified version of) $L^*$
 to learn a DFA with input/output pairs as input symbols. Several other papers
 mention that a DFA with such inputs can be created from a Mealy machine by
-taking $\Sigma = \Sigma_\mathcal{M} \times \Lambda$, and that there Mealy
+taking $\Sigma = \Sigma_\mathcal{M} \times \Lambda$, and that therefore Mealy
 machines can be learned by $L^*$ \cite{Shahbaz2009,Irfan2010,Groz2012}. This
 transformation removes the need for intermediate states, but it has significant
 impact on the size of the input alphabet \cite{Hungar2003}. Since none of the
@@ -276,7 +276,7 @@ mentioned papers explicitly define the transformation in detail, no pseudocode
 is given here.
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
-Angluin's $L^*$ algorithm has been adjusted for use with mealy machines. The new
+Angluin's $L^*$ algorithm has been adjusted for use with Mealy machines. The new
 procedure was first informally described in \cite{Margaria2004}, and later more
 rigorously in \cite{Shahbaz2009}. In $L^*$ the membership queries return a
 boolean value; either it's a member, or it's not. For $L^*_{M}$, the membership
