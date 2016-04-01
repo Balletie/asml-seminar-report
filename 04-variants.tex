@@ -205,7 +205,7 @@ learned by $L^*$ by defining $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$
     \Comment Add a transition from $q_t$
   \EndFor
 
-  \For{$q \in Q \times \Sigma$}
+  \For{$(q, \sigma) \in Q \times \Sigma$}
     \If{$\delta(q, \sigma)$ is not yet defined}
       \State $\delta(q, \sigma) \gets q_{err}$
     \EndIf
