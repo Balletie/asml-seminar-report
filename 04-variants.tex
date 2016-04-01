@@ -273,16 +273,16 @@ The second transformation uses $\Sigma = \Sigma_\mathcal{M} \times \Lambda$.
 M\"{a}kinen~et~al were the first to use (a slightly modified version of) $L^*$
 to learn a DFA with input/output pairs as input symbols. Several other papers
 mention that a DFA with such inputs can be created from a Mealy machine by
-taking $\Sigma = \Sigma_\mathcal{M} \times \Lambda$, and that therefore Mealy
+taking $\Sigma = \Sigma_\mathcal{M} \times \Lambda$ and that therefore Mealy
 machines can be learned by $L^*$ \cite{Shahbaz2009,Irfan2010,Groz2012}. This
-transformation removes the need for intermediate states, but it has significant
-impact on the size of the input alphabet \cite{Hungar2003}. Since none of the
-mentioned papers explicitly define the transformation in detail, no pseudocode
-is given here.
+transformation removes the need for intermediate states, but it has
+significant impact on the size of the input alphabet \cite{Hungar2003}. Since
+no papers could be found that explicitly define the transformation in detail,
+no pseudocode is given here.
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
 Angluin's $L^*$ algorithm has been adjusted for use with Mealy machines. The new
-procedure was first informally described in \cite{Margaria2004}, and later more
+procedure was first informally described in \cite{Margaria2004} and later more
 rigorously in \cite{Shahbaz2009}. In $L^*$ the membership queries return a
 boolean value; either it's a member, or it's not. For $L^*_{M}$, the membership
 query is replaced by an output query, which returns an output string. The
@@ -294,7 +294,7 @@ $r$ with $|r| = |s| + |e|$, where $|x|$ denotes the length of the string $x$.
 Instead of storing $r$ directly in the observation table, only the last $|e|$
 symbols of $r$ are stored (since the observation is prefix closed, the output
 corresponding to $s$ is already stored in the table). The intuitive meaning of
-this value in the observation table is that it correspond to the sequence of
+this value in the observation table is that it corresponds to the sequence of
 output symbols that is produced when the input $e$ is applied from the state
 corresponding to $s$.
 
@@ -313,7 +313,7 @@ algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$.
 
 The concepts of closedness and consistency remain identical. The procedure to
 build the hypothesis remains largely the same, but now the generated hypothesis
-no longer defines accepting states, but instead defines output strings on the
+no longer defines accepting states. Instead, it defines output strings on the
 transitions. Following similar reasoning as in Angluin's paper
 \cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
 model describing the target using at most $\mathcal{O}(k^2nm + kmn^2)$ output
