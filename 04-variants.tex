@@ -335,9 +335,12 @@ state, so there would be no output symbol. Therefore, at the start of the
 algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$.
 
 The concepts of closedness and consistency remain identical. The procedure to
-build the hypothesis remains largely the same, but now the generated
-hypothesis no longer defines accepting states, but instead defines output
-strings on the transitions.
+build the hypothesis remains largely the same, but now the generated hypothesis
+no longer defines accepting states, but instead defines outpusst strings on the
+transitions. Following similar reasoning as in Angluin's paper
+\cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
+model describing the target using at most $\mathcal{O}(k^2nm + kmn^2)$ output
+queries \cite{Shahbaz2009}.
 
 \subsection{Systems without a \textit{reset} function}
 \label{sec:noreset}
