@@ -38,11 +38,12 @@ $w$ is called the \textit{access string} of the state $\exec{M}{w}$. Lastly, let
 $\lang_M$ denote the regular language accepted by $M$; that is
 $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
 
-Note that the uses of \textit{access string} varies in the literature: in some
-places they are used as \textit{unique} identifiers of states in some set
-(e.g.~\cite{Isberner2015a,Isberner2014a}), elsewhere they need not be unique
-(e.g.~\cite{Howar2014}). In this article the latter meaning is used, and
-otherwise it is explicitly mentioned that it also serves as a unique identifier.
+Note that the use of \textit{access string} varies in the literature: in some
+places it is used as a \textit{unique} identifier of a state
+(e.g.~\cite{Isberner2015a,Isberner2014a}), whereas elsewhere an access string
+need not be a unique identifier (e.g.~\cite{Howar2014}). In this article the
+latter meaning is used. When it serves as a unique identifier, then this is
+explicitly mentioned.
 
 \subsection{Nerode-Equivalence and Equivalence Classes}
 \label{sec:nerode-equiv-equiv}
@@ -57,9 +58,9 @@ From this point of view, the states $p$ and $q$ can be considered equivalent, in
 that they pose no difference for any string processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
 are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
-and originally published by Nerode\cite{Nerode1958}. A group of strings form an
-\textit{equivalence class} if they are mutually Nerode-equivalent. Thus any set
-of strings can be partitioned into equivalence classes.
+and originally published by Nerode\cite{Nerode1958}. A group of strings forms an
+\textit{equivalence class} if the strings are mutually Nerode-equivalent. Thus
+any set of strings can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$ and let $v$, $w$ and
@@ -162,10 +163,10 @@ section then concludes with a complexity analysis.
 While learning, the algorithm maintains a set of access strings $S$ and a set of
 distinguishing extensions $E$ (see \cref{def:dist-ext}) in a two-dimensional
 table called the \textit{observation table}. The columns of this table are
-labeled by the items of $E$. The rows are split into an upper part and a lower
-part, which are labeled by items from $S$ and $S \concat \Sigma$
-respectively. Lastly, the cells corresponding with a row $s$ and a column $e$,
-denoted as $T(s,e)$, are labeled with $1$ or $0$ depending on whether
+labeled by the elements of $E$. The rows are split into an upper part and a
+lower part. The former is labeled by elements from $S$, the latter by those of
+$S \concat \Sigma$. Lastly, the cells corresponding with a row $s$ and a column
+$e$, denoted as $T(s,e)$, are labeled with $1$ or $0$ depending on whether
 $\mq(s \concat e)$ equals ``yes'' or ``no'' respectively. The observation table
 is initialized with $S = E = \{\epsilon\}$, as can be seen in
 \cref{tbl:observation_1}.
