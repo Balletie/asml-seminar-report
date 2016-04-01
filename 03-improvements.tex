@@ -32,12 +32,12 @@ distinguished by their lowest common ancestor in the tree. It follows that,
 since any pair is distinguished by a distinguishing extension, any pair of
 access strings in the classification tree are Nerode-inequivalent (see
 \cref{def:nerode-eq}). Therefore each access string $s \in S$ uniquely
-identifies an equivalence class $\eqclass{s}{\lang_M}$ of the target automaton
-$M$.
+identifies an equivalence class $\eqclass{s}{\lang_{\hat M}}$ of the hypothesis
+automaton $\hat M$.
 
 An essential concept is the \textit{sifting} operation (see \cref{alg:sift}),
 which for any string $w$ finds the identifying access string of
-$\eqclass{w}{\lang_M}$. The operation is denoted as $\sift(w)$ and works as
+$\eqclass{w}{\lang_{\hat M}}$. The operation is denoted as $\sift(w)$ and works as
 follows: starting at the root node, for each internal node labeled with $e$, go
 left or right in the tree depending on $\mq(s \concat e)$. This is done until a
 leaf node has been reached, which is labeled with the correct access string.
@@ -58,7 +58,8 @@ accepting states of $\hat M$.
       node labeled $\epsilon$.}
       \If{$n$ is a leaf node}
         \State\Return $n.\text{label}$
-        \Comment{$n.\text{label}$ is the access string that identifies   $\eqclass{w}{\lang_M}$.}
+        \Comment{$n.\text{label}$ is the access string that identifies
+          $\eqclass{w}{\lang_{\hat M}}$.}
       \EndIf
       \If{$\mq(w \concat n.\text{label})$}
         \Comment{$n.\text{label}$ is a distinguishing extension.}
@@ -176,11 +177,11 @@ classification tree is as follows: when the decomposition
 $\gamma = a \concat \sigma \concat e$ has been found from the counterexample
 $\gamma$ as per \cref{sec:rivest-schap-count}, the string $e$ forms a
 distinguishing extension for the states in $\hat M$ represented by
-$\access{M}{a\concat\sigma}$ and $\access{M}{a}\concat\sigma$. Thus, the leaf
-node corresponding to $\access{M}{a\concat\sigma}$ needs to be split into an
-inner node labeled with $e$, where its leaves are labeled by
-$\access{M}{a\concat\sigma}$ and
-$\access{M}{a}\concat\sigma$~\cite{Isberner2015a}.
+$\access{\hat M}{a\concat\sigma}$ and $\access{\hat M}{a}\concat\sigma$. Thus,
+the leaf node corresponding to $\access{\hat M}{a\concat\sigma}$ needs to be
+split into an inner node labeled with $e$, where its leaves are labeled by
+$\access{\hat M}{a\concat\sigma}$ and
+$\access{\hat M}{a}\concat\sigma$~\cite{Isberner2015a}.
 
 The TTT algorithm due to Isberner~\cite{Isberner2014b} builds further upon the
 Observation Pack algorithm by adding \textit{discriminator
