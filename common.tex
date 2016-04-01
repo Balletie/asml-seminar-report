@@ -13,6 +13,14 @@
 \newtheorem{definition}{Definition}[section]
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,arrows}
+
+%\DeclareCaptionType{algorithm}
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
 
 % Math macros
 \newcommand{\concat}{\cdot}
