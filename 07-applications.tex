@@ -8,7 +8,7 @@
 This chapter serves to highlight some interesting and important practical
 applications of active state machine learning. The goal is not to discuss
 individual applications, rather several ``domains'' of application have been
-identified: protocol verification, software testing and  botnet identification.
+identified: protocol verification and  botnet identification.
 Each domain will be introduced shortly and illustrated with a short example.
 
 \subsection{Protocol Verification}
@@ -47,6 +47,45 @@ that of resetting the state of the machine after each iteration, is for this
 specific application fairly easy. De Ruiter et al. defined an additional
 message, a ``reset''-message. This, when output, sets up a new client-server
 connection, after which a new iteration can start.
+
+\subsection{Botnet Detection}
+Related to the application of protocol verification is using active state
+machine learning to defend against botnets~\cite{Cho2010}. The implementation of
+the botnet is very well comparable to that of a protocol implementation. Thus,
+the way in which botnet detection is performed complies to the way that is
+explained in the previous section. Vulnerabilities that are exposed by analyzing
+the resulting state machine can be used to protect against or even bring down a
+botnet.
+
+\subsubsection{MegaD Analysis}
+Cho~et~al. analyzed the MegaD botnet, which uses a Command and Control protocol.
+For this, several improvements have been made to the $L^*$ algorithm.
+They wrote a script that communicates with the botnet. It concretizes input
+sequences to valid protocol messages and converts the response of the botnet
+back to contain only elements defined in the output alphabet. Eventually, this
+response is returned to $L^*$.
+
+Furthermore, the query caching combined with parallel execution increased the
+execution speed of the inference by approximately 4.85 times compared to
+inference using purely $L^*$ according to Cho~et~al. The main speed gain came
+from the ability to send a unique sequence of input messages only once, leading
+to a great reduction in the total latency suffered from sending messages over
+the network.
+
+Finally, they used a recursive approach to be able to use predictions of
+membership query results and to roll back to a previous state if a prediction
+were to be found erroneous (identified by random sampling). These predictions
+were mainly feasible because the inference process initially had to handle the
+many self-loops of states. An example of such self-loop is when the SUL is
+expecting a specific message, but receives another. An error is generated, and
+the client may try again. Since many different kinds of unexpected messages may
+exist, the number of self-loops can also be numerous. The common issue of
+resettability was solved by Cho~et~al. by initializing a new session before
+sending a new (sequence of) message(s). A source of non-determinism they
+encountered was the master server responding with a continuous stream of
+INFO-messages, which theoretically would not have to end. This was solved by
+setting a maximum threshold on the latency allowed before an answer had to be
+arrived. If this threshold was reached, they simply reset the session.
 
 \end{document}
 
