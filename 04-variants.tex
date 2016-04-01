@@ -13,11 +13,11 @@
 \label{sec:variants}
 In the first few years following the introduction of the $L^*$ algorithm by
 Angluin~\cite{Angluin1987}, $L^*$ learning was only a theoretical exploration.
-The various improvements described in the previous chapter,
+The various improvements described in the previous section,
 such as \textit{Classification Trees} \cref{sec:classification-trees} and
 the \textit{TTT} algorithm \cref{sec:ttt} made practical applications more feasible.
 
-The learning algorithms discussed in the previous chapters all required an
+The learning algorithms discussed in the previous sections all required an
 (abstract, formal) input alphabet, an (abstract, formal) output alphabet,
 membership queries and equivalence queries.
 In practice, it is in many cases quite difficult to realize these requirements
@@ -125,21 +125,20 @@ In practice, such queries might take considerable time or be expensive to execut
 
 Learning a real world application can easily require several thousand membership
 queries~\cite[p. 100]{Tomte2014}. Furthermore, when using for example
-\textit{Chow's method} for $\eq(M)$ queries, the amount of membership
-queries needed grows exponentially in the number of states~\cite{Chow1978}.
-This means that the time required to learn a model can be greatly reduced
-either by speeding up membership queries
-(executing them in parallel~\cite{Howar2012}),
-or simply by reducing the number of membership queries required~\cref{sec:tools}.
+\textit{Chow's method} for $\eq(M)$ queries, the amount of membership queries
+needed grows exponentially in the number of states~\cite{Chow1978}.  This means
+that the time required to learn a model can be greatly reduced either by
+speeding up membership queries (executing them in parallel~\cite{Howar2012}), or
+simply by reducing the number of membership queries required (\cref{sec:tools}).
 
-Chapter~\ref{sec:improvements} has discussed several improvements to achieve
-exactly that. Additionally, domain-specific optimizations can be used to
-further reduce the number of membership queries required significantly.
-When dealing with a network protocol such as TLS~\cite{deRuiter2015}
-\todo{reference TLS section} for example, after a network connection is closed,
-there are usually no further possible transitions for the protocol state.
-Accounting for this behavior in the implementation of the W-method
-resulted in a decrease from 68578 to 4126 equivalence queries.
+\Cref{sec:improvements} has discussed several improvements to achieve exactly
+that. Additionally, domain-specific optimizations can be used to further reduce
+the number of membership queries required significantly.  When dealing with a
+network protocol such as TLS~\cite{deRuiter2015} \todo{reference TLS section}
+for example, after a network connection is closed, there are usually no further
+possible transitions for the protocol state.  Accounting for this behavior in
+the implementation of the W-method resulted in a decrease from 68578 to 4126
+equivalence queries.
 
 Another initiative to decrease the number of membership queries required
 to efficiently learn a system was the ZULU Challenge~\cite{Howar2010b}
@@ -461,7 +460,7 @@ with $m$ the amount of $\mq(w)$ queries and $e$ the amount of $\eq(M)$ queries.
 All the above problems might give the impression that active state machine
 learning is not yet applicable to real world applications. While it is true that
 practical application is not yet complete, great progress has been made and
-great things have already been achieved. The last chapter serves to highlight
+great things have already been achieved. The last section serves to highlight
 some real world applications that illustrates these facts.
 
 \end{document}

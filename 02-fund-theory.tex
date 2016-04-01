@@ -6,7 +6,7 @@
 \begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
-This chapter introduces the theory fundamental to active state machine learning:
+This section introduces the theory fundamental to active state machine learning:
 the notion of Nerode-equivalence and the original learning algorithm due to
 Angluin called $L^*$\cite{Angluin1987}. Before this, the necessary notation used
 throughout this article is introduced.
@@ -196,15 +196,15 @@ section then concludes with a complexity analysis.
   \caption{Examples of observation tables}
 \end{table}
 
-While learning, the algorithm maintains a set of access strings $S$ (see
-\cref{def:acc-str}) and a set of distinguishing extensions $E$ (see
-\cref{def:dist-ext}) in a two-dimensional table called the \textit{observation
-  table}. The columns of this table are labeled by the items of $E$. The rows
-are split into an upper part and a lower part. The former is labeled by elements
-from $S$, the latter by those of $S \concat \Sigma$. Lastly, the cells
-corresponding with a row $s$ and a column $e$, denoted as $T(s,e)$, are labeled
-with $1$ or $0$ depending on the output of $\mq(s \concat e)$. The observation
-table is initialized with $S = E = \{\epsilon\}$, as can be seen in
+While learning, the algorithm maintains a set of access strings $S$ and a set of
+distinguishing extensions $E$ (see \cref{def:dist-ext}) in a two-dimensional
+table called the \textit{observation table}. The columns of this table are
+labeled by the items of $E$. The rows are split into an upper part and a lower
+part. The former is labeled by elements from $S$, the latter by those of
+$S \concat \Sigma$. Lastly, the cells corresponding with a row $s$ and a column
+$e$, denoted as $T(s,e)$, are labeled with $1$ or $0$ depending on the output of
+$\mq(s \concat e)$. The observation table is initialized with
+$S = E = \{\epsilon\}$, as can be seen in
 \cref{tbl:example_observation_initial}. An example of a filled observation table
 is shown in \cref{tbl:example_observation}.
 
