@@ -8,8 +8,8 @@
 \label{sec:fundamental-theory}
 This chapter introduces the theory fundamental to active state machine learning:
 the notion of Nerode-equivalence and the original learning algorithm due to
-Angluin called $L^*$\cite{Angluin1987}. Before this, an explanation of the
-notation used throughout this article is in order.
+Angluin called $L^*$\cite{Angluin1987}. Before this, the necessary notation used
+throughout this article is introduced.
 
 \subsection{Basic Notation}
 \label{sec:basic-notation}
@@ -49,7 +49,7 @@ explicitly mentioned.
 \label{sec:nerode-equiv-equiv}
 It is possible for a DFA $M$ to contain states which are redundant. That is, for
 some states, any string processed from all of those states leads to an accepting
-state or a rejecting state. More formally, for two states $p,q \in Q$ and a
+state or a rejecting state. More formally, for two states $p,q \in Q$ and any
 string $w \in \Sigma^*$, both $\dstar{p}{w}$ and $\dstar{q}{w}$ are either an
 accepting state or a rejecting state. There is no $w$ which
 \textit{distinguishes} the two states.
@@ -59,8 +59,8 @@ that they pose no difference for any string processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
 are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
 and originally published by Nerode\cite{Nerode1958}. A group of strings forms an
-\textit{equivalence class} if the strings are mutually Nerode-equivalent. Thus
-any set of strings can be partitioned into equivalence classes.
+\textit{equivalence class} if the strings are mutually Nerode-equivalent. Thus,
+for a given DFA, any set of strings can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$ and let $v$, $w$ and
@@ -106,11 +106,10 @@ accepting state if and only if $\eqclass{w}{\lang_M} \subseteq \lang_M$.
 In active state machine learning, the goal is to learn an unknown finite state
 automaton $M$ (the \textit{target}). The key principle of all active state
 machine learning algorithms is to progressively refine a hypothesis automaton
-$\hat M$ until it equals $M$.
-
-Put in terms of equivalence classes, a learning algorithm progressively refines
-a set of equivalence classes $\nero_{\hat M}$, until it eventually converges to
-the set of equivalence classes $\nero_M$ of the target.
+$\hat M$ until it equals $M$. Put in terms of equivalence classes, a learning
+algorithm progressively refines a set of equivalence classes $\nero_{\hat M}$,
+until it eventually converges to the set of equivalence classes $\nero_M$ of the
+target.
 
 To ensure progress at each step, any active learning algorithm has access to a
 so-called \textit{Teacher} which can answer queries concerning the target. This
@@ -124,9 +123,6 @@ according to the Myhill-Nerode theorem, thus the amount of progress that can be
 made must also be finite. The same can be said for other types of automata for
 which the Myhill-Nerode theorem is applicable. An example is the Mealy machine,
 which will be the scope of discussion of \cref{sec:learn-mealy-mach}.
-
-Before that, however, the original algorithm due to Angluin for learning DFAs
-will be discussed.
 
 \subsection{An Algorithm for Learning DFAs}
 \label{sec:an-algor-learn}
@@ -145,10 +141,11 @@ two types of queries:
   denoted as $\mq(w)$.
 \item[Equivalence Query] Given a hypothesis DFA $\hat M$, answers ``yes'' if
   $\hat M$ equals $M$, in which case the algorithm is finished. If the
-  hypothesis is not equal to $M$, it provides a counterexample $\gamma$. The
-  counterexample can be used to further refine $\nero_{\hat M}$, since $\gamma$
-  is an example of an incorrect equivalence class. It is denoted as
-  $\eq(\hat M)$.
+  hypothesis is not equal to $M$, it provides a counterexample $\gamma$ such
+  that $\gamma \in \lang_M$ but $\gamma \not\in \lang_{\hat M}$, or vice
+  versa. The counterexample can be used to further refine $\nero_{\hat M}$,
+  since $\gamma$ is an example of an incorrect equivalence class. It is denoted
+  as $\eq(\hat M)$.
 \end{description}
 
 Now that the framework in which the algorithm operates is known, the workings of
@@ -480,7 +477,8 @@ queries made. Specifically, the number of membership queries, as these normally
 far outnumber the equivalence queries. The asymptotic number of membership
 queries is called the \textit{query complexity}.
 
-Angluin states that the number of items in the observation table is at most
+Angluin states that the number of items in the observation table is bounded by
+the following~\cite{Angluin1987}:
 \begin{equation} \label{eq:obs_table_items}
 (k+1)(n+m(n-1))n = \mathcal{O}(mn^2)
 \end{equation}
