@@ -49,23 +49,25 @@ specific application fairly easy. De Ruiter et al. defined an additional
 message, a ``reset''-message. This, when output, sets up a new client-server
 connection, after which a new iteration can start.
 
-\subsection{Botnet Detection}
-Related to the application of protocol verification is using active state
-machine learning to defend against botnets~\cite{Cho2010}. The implementation of
-the botnet is very well comparable to that of a protocol implementation. The way
-in which botnet detection is performed is the same as explained in the previous
-section. Vulnerabilities that are exposed by analyzing the resulting state
+\subsection{Learning Botnets}
+Related to the application of protocol verification is applying active state
+machine learning to botnet Command and Control (CnC) protocols~\cite{Cho2010}.
+An implementation of a botnet is very well comparable to that of a protocol
+implementation. By learning the protocol of a botnet, knowledge about it
+can be inferred, which might ultimately lead to the ability to take them down.
+Vulnerabilities that are exposed by analyzing the resulting state
 machine can be used to protect against or even bring down a botnet.
 
 \subsubsection{MegaD analysis}
-Cho~et~al. analyzed the MegaD botnet, which uses a Command and Control protocol.
+Cho~et~al. analyzed the CnC protocol of the MegaD botnet.
 For this, several improvements have been made to the $L^*$ algorithm.
 They wrote a script that communicates with the botnet. It concretizes input
 sequences to valid protocol messages and converts the response of the botnet
 back to contain only elements defined in the output alphabet. Eventually, this
 response is returned to $L^*$.
 
-The query caching combined with parallel execution increased the execution speed
+Since a botnet CnC protocol inherently operates over the internet, queries have
+a high latency. Caching queries combined with parallel execution increased the execution speed
 of the inference by approximately 4.85 times compared to inference using purely
 $L^*$~\cite{Cho2010}. The main speed gain came from the ability to send
 a unique sequence of input messages only once, leading to a great reduction in
