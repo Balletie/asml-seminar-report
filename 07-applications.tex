@@ -52,11 +52,10 @@ connection, after which a new iteration can start.
 \subsection{Botnet Detection}
 Related to the application of protocol verification is using active state
 machine learning to defend against botnets~\cite{Cho2010}. The implementation of
-the botnet is very well comparable to that of a protocol implementation. Thus,
-the way in which botnet detection is performed complies to the way that is
-explained in the previous section. Vulnerabilities that are exposed by analyzing
-the resulting state machine can be used to protect against or even bring down a
-botnet.
+the botnet is very well comparable to that of a protocol implementation. The way
+in which botnet detection is performed is the same as explained in the previous
+section. Vulnerabilities that are exposed by analyzing the resulting state
+machine can be used to protect against or even bring down a botnet.
 
 \subsubsection{MegaD analysis}
 Cho~et~al. analyzed the MegaD botnet, which uses a Command and Control protocol.
@@ -66,12 +65,11 @@ sequences to valid protocol messages and converts the response of the botnet
 back to contain only elements defined in the output alphabet. Eventually, this
 response is returned to $L^*$.
 
-Furthermore, the query caching combined with parallel execution increased the
-execution speed of the inference by approximately 4.85 times compared to
-inference using purely $L^*$ according to Cho~et~al. The main speed gain came
-from the ability to send a unique sequence of input messages only once, leading
-to a great reduction in the total latency suffered from sending messages over
-the network.
+The query caching combined with parallel execution increased the execution speed
+of the inference by approximately 4.85 times compared to inference using purely
+$L^*$~\cite{Cho2010}. The main speed gain came from the ability to send
+a unique sequence of input messages only once, leading to a great reduction in
+the total latency suffered from sending messages over the network.
 
 Finally, they used a recursive approach to be able to use predictions of
 membership query results and to roll back to a previous state if a prediction
