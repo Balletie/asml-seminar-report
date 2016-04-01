@@ -1,7 +1,81 @@
 \section*{Conclusion}
 \label{sec:conclusion}
+In this article, the history and development of active state machine learning
+have been discussed. \Cref{sec:fundamental-theory} explained the fundamental theory behind the
+topic, providing a formal basis for the rest of the article. The notions of
+Nerode-equivalence and equivalence classes were introduced. Furthermore, it was
+explained what purpose active state machine learning serves. The main algorithm,
+the one described by Angluin~\cite{Angluin1987}, was explained in detail. These
+key concepts are fundamental to all further research and development performed
+on the topic.
+
+In \cref{sec:improvements}, various improvements on the original research were discussed,
+such as the classification tree as introduced by Kearns and Vazirani~\cite{Kearns1994}.
+This different type of datastructure is, as opposed to the discrimination table
+defined by Angluin, proven to be redundancy-free, resulting in more efficient
+query and space complexities. Rivest and Schapire~\cite{Rivest1993} introduced
+another significant improvement, namely counterexample analysis. Instead of
+adding all prefixes from a counterexample to the set of distinguishing
+extensions, only the one leading to an incorrect transition is added. When it
+comes to query complexity, Rivest and Schapire achieve even more of an improvement
+than Kearns and Vazirani. However, their demand for space is larger, albeit
+still improving on $L^*$. A combination of these two improvements was introduced
+by Howar~\cite{Howar2012a,Isberner2015a}: the Observation Pack algorithm.
+Building even further on these improvements, Isberner~\cite{Isberner2014b} came
+up with the TTT algorithm, focusing on keeping counterexamples and thus the
+classification tree as concise as possible by removing the redundancy from
+counterexamples given by the Teacher.
+
+In \cref{sec:variants}, numerous variants arising from problems in applying
+the theory in practice were discussed. It was explained that the W-method,
+as defined by Chow~\cite{deRuiter2015,Chow1978}, can be used to approximate equivalence
+queries with membership queries. Chow also showed that this is a decidable problem
+when given an estimate of the maximum number of states of the SUL.
+Since the number of membership queries required grows even more when also using
+them for approximation of equivalence queries, algorithms benefit greatly from
+knowledge of application-specific context.
+Shahbaz and Groz~\cite{Shahbaz2009}
+introduced the notion of Mealy machines combined with active state machine
+learning, adding the support for I/O-dependent machines that $L^*$ lacks. For
+this, the $L^*$ algorithm was modified to output and store strings instead of
+either true or false. To eliminate the problem of being unable to reset the
+machine between individual membership queries, Rivest and Schapire~\cite{Rivest1993}
+proposed the use of homing sequences. When executed, these sequences lead to the
+final state of the machine, simulating a full reset.
+
+In \cref{sec:tools}, Learnlib, libalf and Tomte~\cite{Raffelt2009,Bollig2010,Tomte2014}
+were discussed to illustrate how active state machine learning can be modeled in
+practice. Learnlib provides the user with numerous learning algorithms to choose
+from, including $L^*$ and many of its improved variants and supports both DFAs
+and Mealy machines, depending on the chosen algorithm. Tomte is a tool that maps
+the SUL to the Learner. It first solves nondeterminism by conversion and then
+preprocesses the SUL behavior, before actually mapping the SUL to the Learner.
+Libalf provides multiple algorithms and comes with the option to add
+context-specific information, to optimize the amount of membership queries
+required. It also comes with normalizers, optimizing the number of and memory
+required for equivalence queries.
+
+The final chapter, \cref{sec:applications}, highlighted practical applications of state
+machine learning. Protocol validation~\cite{deRuiter2015} was found to be
+applicable in reality by adding protocol-specific improvements to the
+learning algorithms. Related to this application, the protocol as implemented
+by a botnet can be inferred using a similar approach to protocol
+validation~\cite{Cho2010}. By analyzing the resulting machine, vulnerabilities
+can be derived to protect against or even tear down a botnet.
+To be able to perform these applications in practice, modifications to known
+algorithms have to be done. In particular, knowledge about the SUL can help to
+predict outcomes or even enables the learning algorithm to be interrupted after
+a certain state had been reached.
+
+It has been interesting to see how a theoretical piece of work can suddenly
+emerge to a practical tool for many previously unanswered questions, such as the
+undecidability of black box testing. These answers have enabled the
+application of theoretical research that seemed impossible to apply to real-world
+problems. Especially the application to botnets and security protocols are
+interesting real world problems that active state machine learning has shed its
+light on.
 
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
-%%% End:
+%%% End
