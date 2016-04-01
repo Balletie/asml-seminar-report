@@ -134,32 +134,35 @@ either by speeding up membership queries
 (executing them in parallel~\cite{Howar2012}),
 or simply by reducing the number of membership queries required~\cref{sec:tools}.
 
-Chapter \cref{sec:improvements} has discussed several improvements to achieve
+Chapter~\ref{sec:improvements} has discussed several improvements to achieve
 exactly that. Additionally, domain-specific optimizations can be used to
 further reduce the number of membership queries required significantly.
 When dealing with a network protocol such as TLS~\cite{deRuiter2015}
-\cref{sec:tls} for example, after a network connection is closed,
+\todo{reference TLS section} for example, after a network connection is closed,
 there are usually no further possible transitions for the protocol state.
 Accounting for this behaviour in the implementation of the W-method used
-resulted in a decrease from 68578 to 4126 $\eq(M)$ queries.
+resulted in a decrease from 68578 to 4126 equivalence queries.
 
-Another initiative to decrease the number of $\mq(M)$ queries needed
+Another initiative to decrease the number of membership queries required
 to efficiently learn a system was the ZULU Challenge~\cite{Howar2010b}
 The ZULU challenge aimed to represent a realistic learning scenario,
-which meant the learning algorithm could ask only a limited amount of $\mq(w)$
-queries and no $\eq(M)$ queries at all.
+which meant the learning algorithm could ask only a limited amount of
+membership queries and no equivalence queries at all.
 This effectively rules out any use of the W-method.
 According to Howar~et~al. this meant a shift in objective from
 "Trying to prove equivalence" to "Finding counterexamples fast".
 
-Their winning algorithm used observation pack\cref{sec:ttt} and modified
-the learning algorithm to take advantage of previous hypotheses posed.
-The $L^*$ algorithm produces a new hypothesis based on the observation table
-on every iteration. Howar~et~al used how the original hypothesis can be
-procedurally evolved, eventually converging to a correct model.
-Using counterexample analysis\cref{sec:rivest-schap-count} and
-a hearistic search for counter examples, their algorithm succeeded in finding
-most states of the SUL in the ZULU challenge using limited member queries.
+They won using a slightly modified Observation Pack algorithm (\cref{sec:ttt}):
+instead of building a new hypothesis automaton each iteration as done
+in the $L^*$ algorithm, their modified algorithm progressively refined
+the hypothesis to avoid rebuilding from scratch,
+eventually converging to a correct model.
+Their algorithm combined various heuristics for finding
+counterexamples~\cite{Howar2010b} and Rivest \& Schapire-style counterexample
+analysis~(\cref{sec:rivest-schap-count}) to implement a global continuous
+equivalence querying process.
+Using this approach, Howar~et~al found the most complete
+model of the SUL using a limited amount of membership queries.
 
 \subsection{Learning Mealy machines}
 \label{sec:learn-mealy-mach}
