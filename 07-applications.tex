@@ -8,8 +8,86 @@
 This section serves to highlight some interesting and important practical
 applications of active state machine learning. The goal is not to discuss
 individual applications, rather several ``domains'' of application have been
-identified. Before doing so, however, the bridge between theory and application
-must be crossed.
+identified: protocol verification and  botnet identification.
+Each domain will be introduced shortly and illustrated with a short example.
+
+\subsection{Protocol Verification}
+One commonly used application of active state machine learning is
+protocol verification. This checks whether a protocol implementation follows
+its formal description. The description is used to identify states and
+allowed transitions. These states and transitions are then used to construct a
+state machine that conforms to the protocol definition. It is this machine
+against which equivalence queries are performed, to find out whether the
+implementation logic is according to the specification. The input alphabet
+is defined as an abstract set of messages that relate to the messages the
+protocol specification defines. Furthermore, an output alphabet is defined,
+containing a set of abstractions of the possible messages the protocol
+implementation can output. Often, the output alphabet is concatenated with
+some special strings that trigger a certain command, such as a reset command.
+Later on in this section, an example of such an extension is given.
+
+Sequences of input messages are constructed and passed to the SUL. If the
+machine's output matches the expected output, the implementation is correct.
+However, if the expected output does not match the actual output, there is
+some bug in the SUL. The tests are performed as black box testing, resulting
+in the need for approximation as explained in \cref{sec:variants}. One specific
+example of protocol verification is given below. More examples of applications
+can be found in~\cite{Aarts2013,Cho2010,Aarts2010}.
+
+\subsubsection{TLS-protocol verification} For this specific protocol verification
+application~\cite{deRuiter2015}, an improved version of the W-method as explained
+in \cref{sec:chow} is used. The improvement comes forth from the fact that the
+TLS-protocol requires the output to be ``Connection closed'' at all times once a
+connection is closed. By making use of this and thus limiting the W-method to
+halt whenever the connection is closed, a great reduction in the time needed to
+perform the implementation analysis is achieved, especially since the W-method is
+a very costly one.
+
+An aspect that has proven to be difficult in practice, namely
+that of resetting the state of the machine after each iteration, is for this
+specific application fairly easy. De Ruiter et al. defined an additional
+message, a ``reset''-message. When this message is used, a new client-server 
+connection is set up after which a new iteration can start.
+
+\subsection{Learning Botnets}
+Related to the application of protocol verification is applying active state
+machine learning to botnet Command and Control (CnC) protocols~\cite{Cho2010}.
+An implementation of a botnet is very well comparable to that of a protocol
+implementation. By learning the protocol of a botnet, knowledge about it
+can be inferred that might ultimately lead to exposing vulnerabilities
+that can be used to protect against it or even bring it down.
+
+\subsubsection{MegaD analysis}
+Cho~et~al. analyzed the CnC protocol of the MegaD botnet.
+For this, several improvements have been made to the $L^*$ algorithm.
+They wrote a script that communicates with the botnet. It concretizes input
+sequences to valid protocol messages and converts the response of the botnet
+back to contain only elements defined in the output alphabet. Eventually, this
+response is returned to the learning algorithm.
+
+Since a botnet CnC protocol inherently operates over the internet, queries have
+a high latency. Caching queries combined with parallel execution increased the execution speed
+of the inference by approximately 4.85 times compared to inference using purely
+$L^*$~\cite{Cho2010}. The main speed gain came from the ability to send
+a unique sequence of input messages only once, leading to a great reduction in
+the total latency suffered from sending messages over the network.
+
+Finally, they used a recursive approach to be able to use predictions of
+membership query results and to roll back to a previous state if a prediction
+were to be found erroneous (identified by random sampling). These predictions
+were mainly feasible because the inference process initially had to handle the
+many self-loops of states. An example of such self-loop is when the SUL is
+expecting a specific message, but receives another. An error is generated and
+the client may try again. Since many different kinds of unexpected messages may
+exist, the number of self-loops can also be numerous.
+
+The common issue of resettability was solved by Cho~et~al. by initializing a
+new session before sending a new (sequence of) message(s). A source of
+non-determinism they encountered was the master server responding with a
+continuous stream of INFO-messages, which theoretically would not have to end.
+This was solved by setting a maximum threshold on the latency allowed before an
+answer had to be arrived. If this threshold was reached, they simply reset the
+session.
 
 \end{document}
 
