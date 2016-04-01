@@ -2,7 +2,7 @@
 \label{sec:fundamental-theory}
 This section introduces the theory fundamental to active state machine learning:
 the notion of Nerode-equivalence and the original learning algorithm due to
-Angluin called $L^*$\cite{Angluin1987}. Before this, the necessary notation used
+Angluin called $L^*$~\cite{Angluin1987}. Before this, the necessary notation used
 throughout this article is introduced.
 
 \subsection{Basic Notation}
@@ -27,7 +27,7 @@ used in the article.
 For some string $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
 processing $w$ from state $q$. Furthermore, denote
 $\exec{M}{w} = \dstar{q_0}{w}$ to be the state reached by processing $w$ from
-the initial state $q_0$, as used by Kearns and Vazirani\cite{Kearns1994}. Then
+the initial state $q_0$, as used by Kearns and Vazirani~\cite{Kearns1994}. Then
 $w$ is called the \textit{access string} of the state $\exec{M}{w}$. Lastly, let
 $\lang_M$ denote the regular language accepted by $M$; that is
 $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
@@ -52,7 +52,7 @@ From this point of view, the states $p$ and $q$ can be considered equivalent, in
 that they pose no difference for any string processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
 are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
-and originally published by Nerode\cite{Nerode1958}. A group of strings forms an
+and originally published by Nerode~\cite{Nerode1958}. A group of strings forms an
 \textit{equivalence class} if the strings are mutually Nerode-equivalent. Thus,
 for a given DFA, any set of strings can be partitioned into equivalence classes.
 
@@ -83,7 +83,7 @@ pumping lemma for regular languages, which can only prove that a language is
 
 According to Hopcroft and Ullman, it follows from the Myhill-Nerode theorem that
 each regular language $\lang$ has a minimal DFA $M$ which accepts
-$\lang$\cite{Hopcroft2001}. In fact, the amount of states of $M$ is precisely
+$\lang$~\cite{Hopcroft2001}. In fact, the amount of states of $M$ is precisely
 equal to the amount of equivalence classes in $\nero_\lang$, thus there is a
 one-to-one correspondence between $\nero_\lang$ and the states of $M$.
 
@@ -121,7 +121,7 @@ which will be the scope of discussion of \cref{sec:learn-mealy-mach}.
 \subsection{An Algorithm for Learning DFAs}
 \label{sec:an-algor-learn}
 In 1987, Angluin published the $L^*$ algorithm for learning
-DFAs\cite{Angluin1987}. Since all of the work on active state machine learning is
+DFAs~\cite{Angluin1987}. Since all of the work on active state machine learning is
 based on the work due to Angluin, a section is devoted to describe the algorithm
 in detail.
 
@@ -305,10 +305,10 @@ one.
 
 \subsubsection{Example run}
 \label{sec:example-run}
-Suppose $L^*$ is used to learn the target DFA $M$ of figure \ref{fig:target}.
+Suppose $L^*$ is used to learn the target DFA $M$ of figure~\ref{fig:target}.
 The input alphabet for this DFA is $\Sigma = \{a, b\}$. $L^*$ initializes $S$
 and $E$ to $\{\epsilon\}$ and performs three membership queries to build the
-initial observation table of table \ref{tbl:observation_1}.
+initial observation table of table~\ref{tbl:observation_1}.
 
 \begin{figure}[t]
 \centering
@@ -438,12 +438,12 @@ $bbbb$     & $0$        & $0$   & $0$  \\
 \end{table}
 
 Since the table is both closed and consistent, the algorithm moves on to phase two
-and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
+and constructs the hypothesis of figure~\ref{fig:hypoth_1}. It executes an
 equivalence query with the hypothesis as parameter. Since it does not match $M$,
 the oracle will provide a counterexample. Assume the counterexample provided is
 $bbb$ (it could also have provided other counterexamples such as $bbbbbbb$).
 Now, the counterexample and all prefixes are added to $S$. After performing the
-new membership queries, the table \ref{tbl:observation_2} is built and the
+new membership queries, the table~\ref{tbl:observation_2} is built and the
 algorithm returns to phase one.
 
 The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
@@ -452,9 +452,9 @@ Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table
 \ref{tbl:observation_3}. This table is still inconsistent, since $\row(\epsilon)
 = \row(b)$, but $\row(\epsilon \concat b)$ differs from $\row(b \concat b)$ under
 the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new
-membership queries now results in table \ref{tbl:observation_4}. The table is
+membership queries now results in table~\ref{tbl:observation_4}. The table is
 now both consistent and closed, so $L^*$ moves on to phase two and constructs the
-hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
+hypothesis of figure~\ref{fig:target}. Since this is equal to the target, the
 equivalence query returns ``yes'' and the algorithm terminates.
 
 \subsubsection{Complexity analysis}
@@ -478,7 +478,7 @@ the following~\cite{Angluin1987}:
 \end{equation}
 In this equation $k = |\Sigma|$, $n$ is the number of states in the minimum
 acceptor of the target and $m$ is equal to length of the longest
-counterexample\cite{Angluin1987}. Since each item has a length of at most
+counterexample~\cite{Angluin1987}. Since each item has a length of at most
 $\mathcal{O}(m+n)$, she concludes that the total space required for storing the
 observation table is $\mathcal{O}(m^2n^2 + mn^3)$.
 

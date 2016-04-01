@@ -55,7 +55,7 @@ The active learning algorithms that libalf offers are listed below:
 \begin{itemize}
 	\item $L^*$ (see \cref{sec:an-algor-learn})
 	\item Rivest \& Schapnire's (see \cref{sec:rivest-schap-count})
-	\item $NL^*$ \cite{Bollig2009}
+	\item $NL^*$~\cite{Bollig2009}
 	\item Kearns \& Vazirani's (see \cref{sec:classification-trees})
 \end{itemize}
 
@@ -72,7 +72,7 @@ and only stores information of one representative of that relation. This
 reduces the amount of memory needed and could also reduce the amount of 
 equivalence queries.
 
-More information on libalf is published in \cite{Bollig2010}.
+More information on libalf is published in~\cite{Bollig2010}.
 
 \subsection{Learnlib}
 \label{ssec:learnlib}
@@ -80,8 +80,8 @@ More information on libalf is published in \cite{Bollig2010}.
 Learnlib\footnote{Supported through bug fixes and available from
 \url{https://github.com/LearnLib/learnlib}} is a library that implements various
 active learning algorithms as well as different configurations for learning
-automata. It has been in development since 2009 \cite{Raffelt2009} and as of
-2015, there has been a total overhaul of the library \cite{Isberner2015b}. To
+automata. It has been in development since 2009~\cite{Raffelt2009} and as of
+2015, there has been a total overhaul of the library~\cite{Isberner2015b}. To
 avoid confusion, the old version was renamed to JLearn.
 
 The current version of this library consists out of two parts: Automatalib and
@@ -89,19 +89,18 @@ Learnlib.
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{Tool_images/automatalib_architecture.png}
-	\caption{Architecture of Automatalib, source is from \cite{Isberner2015b}}
+	\caption{Architecture of Automatalib, source is from~\cite{Isberner2015b}}
 	\label{fig:automatalib_arch}
 \end{figure}
 
 \paragraph{Automatalib} Automatalib is an independent library that contains
 abstract automata representations, automata data structures and algorithms (see
-figure \ref{fig:automatalib_arch}). The
+figure~\ref{fig:automatalib_arch}). The
 abstract automata representations make the library flexible because all data
 structures and algorithms depend on these representations. This makes it easy
-to add third party implementations of automata such as the BRICS library
-\cite{Alur2005}. Automatalib includes minimalization algorithms and equivalence
+to add third party implementations of automata such as the BRICS library~\cite{Alur2005}. Automatalib includes minimalization algorithms and equivalence
 testing algorithms based on Hopcroft and Karp's near-linear equivalence
-algorithm \cite{Hopcroft1971} or the W-Method (\cref{sec:chow}) for
+algorithm~\cite{Hopcroft1971} or the W-Method (\cref{sec:chow}) for
 black-box testing.
 
 \begin{figure}[!ht]
@@ -119,38 +118,37 @@ their alternative counterexample analysis are listed below:
 \begin{itemize}
 	\item $L^*$ (see \cref{sec:an-algor-learn})
 	\begin{itemize}
-		\item Maler \& Pnueli's \cite{Maler1995}
+		\item Maler \& Pnueli's~\cite{Maler1995}
 		\item Rivest \& Schapnire's (see \cref{sec:rivest-schap-count})
-		\item Shahbaz's \cite{Shahbaz2009}
-		\item Suffix1by1 \cite{Irfan2010}
+		\item Shahbaz's~\cite{Shahbaz2009}
+		\item Suffix1by1~\cite{Irfan2010}
 	\end{itemize}
 	\item Obversation Pack (see \cref{sec:ttt})
 	\item Kearns \& Vazirani's (see \cref{sec:classification-trees})
-	\item DHC \cite{Merten2012}
+	\item DHC~\cite{Merten2012}
 	\item TTT (see \cref{sec:ttt})
-	\item $NL^*$ \cite{Bollig2009}
+	\item $NL^*$~\cite{Bollig2009}
 \end{itemize}
 
 All the algorithms work with both DFAs and Mealy machines (see 
-\cref{sec:learn-mealy-mach}), except for DHC\cite{Merten2012} and
-$NL^*$\cite{Bollig2009}.
+\cref{sec:learn-mealy-mach}), except for DHC~\cite{Merten2012} and
+$NL^*$~\cite{Bollig2009}.
 
 For finding the counterexamples, Learnlib uses Automatalib as well as other
-methods such as randomized tests. More methods can be found in
-\cite[p. 490]{Isberner2015b}.
+methods such as randomized tests. More methods can be found in~\cite[p. 490]{Isberner2015b}.
 
 Learnlib also offers filters that pre-process the queries of the learning
 algorithm. An example is the reduction of the amount of queries (see 
 \cref{sec:noreset}). Other examples are a mechanism for reducing the amount of
 resets  and a parallelization component that uses multiple Teachers and
-parallel execution of membership queries\cite{Henrix2015,Howar2012}.
+parallel execution of membership queries~\cite{Henrix2015,Howar2012}.
 
 
 Besides the library, there is also an application called Learnlib 
 Studio\footnote{Available from 
 \url{http://ls5-www.cs.tu-dortmund.de/projects/learnlib/download.php}}. 
 This application is based on the older version, JLearn, but it offers a 
-graphical interface. See figure \ref{fig:learnlib_studio}. 
+graphical interface. See figure~\ref{fig:learnlib_studio}. 
 
 	\begin{figure}[H]
 		\includegraphics[width=\textwidth]{Tool_images/learnlib_studio_interface.png}
@@ -184,19 +182,18 @@ The Abstractor, Lookahead Oracle and Determinizer together form Tomte. The
 other two parts are not part of Tomte, but it comes with Learnlib for making
 the Learner. The makers also have a tool\footnote{SUL tool available from
 \url{http://tomte.cs.ru.nl/Sut-0-4/Description}} available for creating the SUL
-since they must be modeled after a register automaton\cite{Aarts2015}
+since they must be modeled after a register automaton~\cite{Aarts2015}
 (which is an extension of a Mealy machine).
 
 \paragraph{Determinizer} The Determinizer elimates the nondeterministic
 behavior caused by the SUL. Since tools like Learnlib can only analyze
 deterministic behavior, it needs to converted. The theory behind it is
-explained in \cite[p. 172]{Aarts2015}.
+explained in~\cite[p. 172]{Aarts2015}.
 
 \paragraph{Lookahead Oracle} This oracle is used to annotate events of the SUL
 with information about the impact on the future behavior of the SUL. This way,
 the Lookahead Oracle acts as a cache for the Abstractor. The theory and
-implementation of this oracle is found in \cite[p. 170]{Aarts2014} and
-\cite[p. 105]{Tomte2014}.
+implementation of this oracle is found in~\cite[p. 170]{Aarts2014} and~\cite[p. 105]{Tomte2014}.
 
 \paragraph{Abstractor} The Abstractor is the component that creates the mapping
 between the SUL and the Learner. The idea behind the Abstractor is to make the
@@ -206,17 +203,15 @@ large.
 
 The Abstractor uses a concrete input set $\Sigma$ and a concrete
 output set $\Lambda$ used by the SUL. Then, with the help of
-counterexample-guided abstraction refinement\cite[p. 104]{Tomte2014} an
+counterexample-guided abstraction refinement~\cite[p. 104]{Tomte2014} an
 abstracted input set $X$ and output set $Y$ is created. Those abstracted sets
 then represent a smaller model of the SUL. In order to make it scalable, this
 component also tries to reduce the length of the counterexample by removing
-loops and single transitions \cite{Koopman2014}. The complete theory is found
-in \cite{Tomte2014}.
+loops and single transitions~\cite{Koopman2014}. The complete theory is found
+in~\cite{Tomte2014}.
 
 \paragraph{Interaction between the modules} The exchange of messages between
-all the modules is as follows (see numbering in figure
-\ref{fig:tomte_arch_interaction}. For more information about this process see
-\cite{Aarts2015,Tomte2014}.
+all the modules is as follows (see numbering in figure~\ref{fig:tomte_arch_interaction}. For more information about this process see~\cite{Aarts2015,Tomte2014}.
 
 \begin{enumerate}
 	\item The Learner sends an abstract query $x \in X$ to the Abstractor.
