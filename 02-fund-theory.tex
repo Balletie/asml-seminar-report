@@ -1,9 +1,3 @@
-\documentclass[multi,tikz,crop=false,class=article]{standalone}
-\onlyifstandalone{\input{common}}
-\usepackage{amsmath}
-\usetikzlibrary{automata,arrows}
-
-\begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
 This section introduces the theory fundamental to active state machine learning:
@@ -502,8 +496,6 @@ outnumber the equivalence queries.} The total space required for the observation
 table becomes $\mathcal{O}(kmn^2) \cdot \mathcal{O}(m+n) = O(km^2n^2 + kmn^3)$.
 This is equal to the total space complexity, since adding the space required for
 the hypothesis (which is $\mathcal{O}(kn)$) does not change the complexity.
-
-\end{document}
 
 %%% Local Variables:
 %%% mode: latex
