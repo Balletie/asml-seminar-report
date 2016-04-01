@@ -113,7 +113,45 @@ The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup
 \concat \Sigma)$, which is also called the transition cover of $M$, ensures that all the
 states and transition in $P$ are also present in $M$, while
 $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
-performing all the transitions.
+performing all the transitions. For pseudocode see algorithm \ref{alg:w-method}.
+
+\begin{algorithm}[h]
+\caption{The W-method algorithm}
+\label{alg:w-method}
+\begin{algorithmic}[1]
+\Function{W-method}{$P, M, \Sigma, Reset$} \Comment{$P$ is the protocol (or Teacher) to test against, $M$ is the machine to test,
+$\Sigma$ is the input alphabet of $M$ and $Reset$ is the reset function}
+\State $S \gets \{ \epsilon \}$ \Comment{Initialize state cover set}
+\State $W \gets \{ \epsilon \}$ \Comment{Initialize characterization set}
+\State $X \gets \emptyset$ \Comment{Initialize an emty set for words of a maximum length}
+
+%\For{State $q \in M$}
+%\State $S$.add(q.accessString) \Comment{Build state cover S}
+%\EndFor
+\State Build $S$ \Comment{Build state cover}
+\State Build $W$ \Comment{Build the characterization set}
+\ForAll{$0 \leq i \leq (estimatedstates(P) - numstates(M) + 1)$} \Comment{Build the set of words with the given
+maximum length}
+\State $X \gets X \cup \Sigma^{i}$ \Comment{Add word of length $i$}
+\EndFor
+
+\For{$s \in S$}
+\For{$w \in W$}
+\For{$a \in X$}
+\If{$P$ accepts $(s \concat a \concat w) \neq $ $M$ accepts $(s \concat a \concat w)$}
+\Comment{Check equality for $s \concat a \concat w$}
+\State \Return "not equal"
+\EndIf
+\State \Call{Reset}{$P, M$} \Comment{Reset $P$ and $M$}
+\EndFor
+\EndFor
+\EndFor
+
+\State \Return "equal"
+
+\EndFunction{}
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Limiting the Amount of Membership Queries}
 Membership queries are the most straightforward to translate to real world
