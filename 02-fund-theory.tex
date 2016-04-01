@@ -155,7 +155,7 @@ hypothesis. After that, the algorithm is described. To get a more intuitive
 sense of how the algorithm works, an example run of the algorithm is given. The
 section then concludes with a complexity analysis.
 
-\subsubsection{The Data Structure}
+\subsubsection{The data structure}
 \label{sec:data-structure}
 \begin{table}[t]
   \centering
@@ -234,7 +234,7 @@ and of consistence, defined in \cref{def:closure,def:consistence} respectively.
   holds that $\row(s_1\concat\sigma) = \row(s_2\concat\sigma)$.
 \end{definition}
 
-\subsubsection{The Algorithm}
+\subsubsection{The algorithm}
 \label{sec:algorithm}
 As said in the previous section, the \cref{alg:lstar} begins by initializing
 $S$ and $E$ to $\{\epsilon\}$. The initial cells of the table are filled by
@@ -463,7 +463,7 @@ now both consistent and closed, so $L^*$ moves on to phase two and constructs th
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns ``yes'' and the algorithm terminates.
 
-\subsubsection{Complexity Analysis}
+\subsubsection{Complexity analysis}
 \label{sec:complexity-analysis-lstar}
 % Note: Angluin considers k to be constant and therefore drops the term in the
 % asymptotic upperbounds of both the query complexity and space complexity. She

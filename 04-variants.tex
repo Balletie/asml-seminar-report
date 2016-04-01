@@ -38,7 +38,7 @@ applying active state machine learning to real world scenarios, such as:
 For each of these challenges a variant of the $L^*$ algorithm will be discussed
 that addresses the specific issues encountered.
 
-\subsection{Approximating equivalence queries with membership queries}
+\subsection{Approximating Equivalence Queries with Membership Queries}
 In theoretical simulations, equivalence testing is often easy because the target
 system (in some cases even the model!) is known. In practice, however, the SUL
 is generally a black box, since the main motive for using a learning algorithm
@@ -115,7 +115,7 @@ states and transition in $P$ are also present in $M$, while
 $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
 performing all the transitions.
 
-\subsection{Limiting the amount of membership queries}
+\subsection{Limiting the Amount of Membership Queries}
 Membership queries are the most straightforward to translate to real world
 applications: they can be realized via testing.  An important thing to note,
 however, is the amount of membership queries required.  In a theoretical
@@ -161,7 +161,7 @@ equivalence querying process.
 Using this approach, Howar~et~al. found the most complete
 model of the SUL using a limited amount of membership queries.
 
-\subsection{Learning Mealy machines}
+\subsection{Learning Mealy Machines}
 \label{sec:learn-mealy-mach}
 
 The $L^*$ algorithm of Angluin is only able to learn DFAs (and equivalent
@@ -377,7 +377,7 @@ queries \cite{Shahbaz2009}.
 \end{figure}
 
 
-\subsection{Systems without a \textit{reset} function}
+\subsection{Systems Without a \textit{Reset} Function}
 \label{sec:noreset}
 In the $L^*$ learning algorithm, every membership query is implicitly
 independent of other queries. However, when learning a system in practice, it
