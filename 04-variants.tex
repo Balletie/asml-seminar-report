@@ -276,35 +276,6 @@ mentioned papers explicitly define the transformation in detail, no pseudocode
 is given here.
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
-
-\begin{tabular}{ | l || c | c | }
-\hline
-            & $a$   & $b$ \\ \hline \hline
-$\epsilon$  & $x$   & $x$ \\ 
-$a$         & $y$   & $x$ \\ \hline \hline
-$b$         & $x$   & $x$ \\
-$aa$        & $y$   & $x$ \\
-$ab$        & $x$   & $x$ \\
-\hline
-% \caption{Observation table}
-\end{tabular}
-
-\begin{tikzpicture}
-  [bend angle=40,every node/.style={draw,circle}]
-
-  \tikzstyle{initial} = [dashed]
-
-  \node[initial]   (1) at (1,0) {};
-  \node        (2) at (3,0) {};
-
-  \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge [bend left] node[auto,draw=none] {$a/x$} (2) 
-        (2) edge [bend left] node[auto,draw=none] {$b/x$} (1)
-        (1) edge [loop above] node[auto,draw=none] {$b/x$} (1)
-        (2) edge [loop above] node[auto,draw=none] {$a/y$} (2);
-% \caption{Example mealy machine}        
-\end{tikzpicture}
-
 Angluin's $L^*$ algorithm has been adjusted for use with mealy machines. The new
 procedure was first informally described in \cite{Margaria2004}, and later more
 rigorously in \cite{Shahbaz2009}. In $L^*$ the membership queries return a
@@ -322,12 +293,13 @@ this value in the observation table is that it correspond to the sequence of
 output symbols that is produced when the input $e$ is applied from the state
 corresponding to $s$.
 
-An example Mealy machine $\mathcal{M}$ is shown in figure REF. A possible
-observation table built by $L^*_M$ when it learns $\mathcal{M}$ is shown in
-table REF (source of the example: Shahbaz~et~al \cite{Shahbaz2009}). In this
-table it can be seen that the value in $\row(aa)$ under the column labeled by
-$a$ is $y$, even though the output query would have returned the string $xyy$
-for the input string $aaa$.
+An example Mealy machine $\mathcal{M}$ is shown in figure
+\ref{fig:mealy_example}. A possible observation table built by $L^*_M$ when it
+learns $\mathcal{M}$ is shown in table \ref{tbl:mealy_observation_table} (source
+of the example: Shahbaz~et~al \cite{Shahbaz2009}). In this table it can be seen
+that the value in $\row(aa)$ under the column labeled by $a$ is $y$, even though
+the output query would have returned the string $xyy$ for the input string
+$aaa$.
 
 With the new meaning of the values in the table, a value of $\epsilon$ in $E$
 becomes nonsensical. This is because $\epsilon$ would denote no change in
@@ -341,6 +313,45 @@ transitions. Following similar reasoning as in Angluin's paper
 \cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
 model describing the target using at most $\mathcal{O}(k^2nm + kmn^2)$ output
 queries \cite{Shahbaz2009}.
+
+\begin{figure}[h]
+  \begin{minipage}{.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+      [bend angle=40,every node/.style={draw,circle}]
+
+      \tikzstyle{initial} = [dashed]
+
+      \node[initial]   (1) at (1,0) {};
+      \node        (2) at (3,0) {};
+
+      \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
+            (1) edge [bend left] node[auto,draw=none] {$a/x$} (2) 
+            (2) edge [bend left] node[auto,draw=none] {$b/x$} (1)
+            (1) edge [loop above] node[auto,draw=none] {$b/x$} (1)
+            (2) edge [loop above] node[auto,draw=none] {$a/y$} (2);
+    \end{tikzpicture}
+    \captionof{figure}[t]{Example Mealy machine}
+    \label{fig:mealy_example}
+  \end{minipage}
+%
+  \begin{minipage}{.45\textwidth}
+    \centering
+    \begin{tabular}{ | l || c | c | }
+      \hline
+                  & $a$   & $b$ \\ \hline \hline
+      $\epsilon$  & $x$   & $x$ \\ 
+      $a$         & $y$   & $x$ \\ \hline \hline
+      $b$         & $x$   & $x$ \\
+      $aa$        & $y$   & $x$ \\
+      $ab$        & $x$   & $x$ \\
+      \hline
+    \end{tabular}
+    \captionof{table}[t]{Example observation table}
+    \label{tbl:mealy_observation_table}
+  \end{minipage}
+\end{figure}
+
 
 \subsection{Systems without a \textit{reset} function}
 \label{sec:noreset}
