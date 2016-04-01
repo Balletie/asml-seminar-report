@@ -111,7 +111,15 @@ When a counterexample $\gamma$ is obtained, Rivest and Schapire's improved
 algorithm finds a \textit{single} extension $e$ from $\gamma$ that distinguishes
 two states in the new hypothesis and adds it to the set $E$ of distinguishing
 extensions. This is in contrast to the original $L^*$ algorithm, which adds all
-prefixes of the counterexample to the set $S$ of access strings.
+prefixes of the counterexample to the set $S$ of access strings. Their algorithm
+ensures that each row in the observation table remains
+distinct~\cite{Rivest1993}. Thus, each access string $s \in S$ uniquely
+identifies a state\footnote{From this is it also follows that the consistence
+  property of the observation table is trivially satisfied~\cite{Rivest1993},
+  thereby eliminating the need for consistency checking~\cite{Howar2014}.}, as
+is the case for classification trees. Since there is no notion of a $\sift$
+operation in this context, the notation $\access{\hat M}{w}$ is used to denote
+the unique access string corresponding to a string $w \in \Sigma^*$.
 
 According to Rivest and Schapire\cite{Rivest1993} and further clarified by
 Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, the counterexample
@@ -131,9 +139,9 @@ The correct decomposition of $\gamma$ can be found using a search strategy. The
 search strategy originally used by Rivest and Schapire is a binary search: first
 a membership query is performed with the decomposition in the middle. If it is
 accepted, then this means that the next search should be done in the first half
-of $\gamma$ (assuming that $\mq(\gamma)$ returned ``yes'', but $\gamma
-\not\in \lang_{\hat M}$). Otherwise, the search should be continued in the
-second half.
+of $\gamma$ (assuming that $\gamma \in \lang_M$, but
+$\gamma \not\in \lang_{\hat M}$). Otherwise, the search should be continued in
+the second half.
 
 \paragraph{Query complexity} As expected from a binary search, this results in
 $\mathcal{O}(\log(m))$ membership queries per counterexample of length $m$. The

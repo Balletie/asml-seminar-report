@@ -34,15 +34,16 @@ For some string $w \in \Sigma^*$, let $\dstar{q}{w}$ denote the state reached by
 processing $w$ from state $q$. Furthermore, denote
 $\exec{M}{w} = \dstar{q_0}{w}$ to be the state reached by processing $w$ from
 the initial state $q_0$, as used by Kearns and Vazirani\cite{Kearns1994}. Then
-$w$ is called the \textit{access string} of the state $\exec{M}{w}$ (see
-\cref{def:acc-str}). Lastly, let $\lang_M$ denote the regular language accepted
-by $M$; that is $\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
+$w$ is called the \textit{access string} of the state $\exec{M}{w}$. Lastly, let
+$\lang_M$ denote the regular language accepted by $M$; that is
+$\lang_M = \{ w \mid \exec{M}{w} \in F \}$.
 
-\begin{definition}[Access String]\label{def:acc-str}
-  For some alphabet $\Sigma$ and a state $q \in Q$ of some DFA $M$, a string
-  $w \in \Sigma^*$ is called an \textit{access string} of $q$ if
-  $\exec{M}{w} = q$
-\end{definition}
+Note that the use of \textit{access string} varies in the literature: in some
+places it is used as a \textit{unique} identifier of a state
+(e.g.~\cite{Isberner2015a,Isberner2014a}), whereas elsewhere an access string
+need not be a unique identifier (e.g.~\cite{Howar2014}). In this article the
+latter meaning is used. When it serves as a unique identifier, then this is
+explicitly mentioned.
 
 \subsection{Nerode-Equivalence and Equivalence Classes}
 \label{sec:nerode-equiv-equiv}
@@ -57,9 +58,9 @@ From this point of view, the states $p$ and $q$ can be considered equivalent, in
 that they pose no difference for any string processed from those states to be
 accepted or not. The access strings $v$ and $w$ of $p$ and $q$, respectively,
 are said to be \textit{Nerode-equivalent}, as described in \cref{def:nerode-eq}
-and originally published by Nerode\cite{Nerode1958}. A group of access strings
-form an \textit{equivalence class} if they are mutually Nerode-equivalent. Thus
-any set of access strings can be partitioned into equivalence classes.
+and originally published by Nerode\cite{Nerode1958}. A group of strings forms an
+\textit{equivalence class} if the strings are mutually Nerode-equivalent. Thus
+any set of strings can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
   Let $\lang$ be a language over some alphabet $\Sigma$ and let $v$, $w$ and
@@ -73,8 +74,8 @@ any set of access strings can be partitioned into equivalence classes.
   and only if there is no distinguishing extension $z$ for $v$ and $w$. We write
   $v \nero_\lang w$ if $v$ and $w$ are Nerode-equivalent.
 
-  Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of an access
-  string $w$, such that for any string $v$ in $\eqclass{w}{\lang}$ it holds that
+  Let $\eqclass{w}{\lang}$ denote the \textit{equivalence class} of a string
+  $w$, such that for any string $v$ in $\eqclass{w}{\lang}$ it holds that
   $v \nero_\lang w$. Lastly, let $\nero_\lang$ be the set of all equivalence
   classes of $\lang$. For convenience, denote $\nero_M$ to be the same set for
   some DFA $M$.
@@ -159,16 +160,16 @@ section then concludes with a complexity analysis.
 
 \subsubsection{The Data Structure}
 \label{sec:data-structure}
-While learning, the algorithm maintains a set of access strings $S$ (see
-\cref{def:acc-str}) and a set of distinguishing extensions $E$ (see
-\cref{def:dist-ext}) in a two-dimensional table called the \textit{observation
-  table}. The columns of this table are labeled by the items of $E$. The rows
-are split into an upper part and a lower part, which are labeled by items from
-$S$ and $S \concat \Sigma$ respectively. Lastly, the cells corresponding with a
-row $s$ and a column $e$, denoted as $T(s,e)$, are labeled with $1$ or $0$
-depending on whether $\mq(s \concat e)$ equals ``yes'' or ``no''
-respectively. The observation table is initialized with $S = E = \{\epsilon\}$,
-as can be seen in \cref{tbl:observation_1}.
+While learning, the algorithm maintains a set of access strings $S$ and a set of
+distinguishing extensions $E$ (see \cref{def:dist-ext}) in a two-dimensional
+table called the \textit{observation table}. The columns of this table are
+labeled by the elements of $E$. The rows are split into an upper part and a
+lower part. The former is labeled by elements from $S$, the latter by those of
+$S \concat \Sigma$. Lastly, the cells corresponding with a row $s$ and a column
+$e$, denoted as $T(s,e)$, are labeled with $1$ or $0$ depending on whether
+$\mq(s \concat e)$ equals ``yes'' or ``no'' respectively. The observation table
+is initialized with $S = E = \{\epsilon\}$, as can be seen in
+\cref{tbl:observation_1}.
 
 An observation table provides sufficient information for constructing a
 hypothesis, as will be explained now. Let $\row(s)$ represent the finite
