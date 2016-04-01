@@ -118,10 +118,11 @@ performing all the transitions. For pseudocode see algorithm \ref{alg:w-method}.
 \caption{The W-method algorithm}
 \label{alg:w-method}
 \begin{algorithmic}[1]
-\Function{W-method}{$P, M, \Sigma, Reset$}
+\Function{W-method}{$P, M, \Sigma, Reset$} \Comment{$P$ is the protocol (or Teacher) to test against, $M$ is the machine to test,
+$\Sigma$ is the input alphabet of $M$ and Reset is the reset function}
 \State $S \gets \{ \epsilon \}$ \Comment{Initialize state cover set}
 \State $W \gets \{ \epsilon \}$ \Comment{Initialize characterization set}
-\State $X \gets \emptyset$ \Comment{Initialize an emtyset for words of a maximum length}
+\State $X \gets \emptyset$ \Comment{Initialize an emty set for words of a maximum length}
 
 %\For{State $q \in M$}
 %\State $S$.add(q.accessString) \Comment{Build state cover S}
