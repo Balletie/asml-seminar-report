@@ -62,7 +62,7 @@ form an \textit{equivalence class} if they are mutually Nerode-equivalent. Thus
 any set of access strings can be partitioned into equivalence classes.
 
 \begin{definition}[Distinguishing Extension]\label{def:dist-ext}
-  Let $\lang$ be a language over some alphabet $\Sigma$, and let $v$, $w$ and
+  Let $\lang$ be a language over some alphabet $\Sigma$ and let $v$, $w$ and
   $z$ be strings in $\Sigma^*$. Then $z$ is a \textit{distinguishing extension}
   for $v$ and $w$ if and only if \textit{exactly one} of $v \concat z$ and
   $w \concat z$ is in $\lang$.
@@ -162,13 +162,13 @@ section then concludes with a complexity analysis.
 While learning, the algorithm maintains a set of access strings $S$ (see
 \cref{def:acc-str}) and a set of distinguishing extensions $E$ (see
 \cref{def:dist-ext}) in a two-dimensional table called the \textit{observation
-  table}. The columns of this table are labelled by the items of $E$. The rows
-are split into an upper part and a lower part, which are labelled by items from
+  table}. The columns of this table are labeled by the items of $E$. The rows
+are split into an upper part and a lower part, which are labeled by items from
 $S$ and $S \concat \Sigma$ respectively. Lastly, the cells corresponding with a
-row $s$ and a column $e$, are labelled with $1$ or $0$ depending on whether
-$s \concat e \in \lang_M$, which is denoted as $T(s,e)$. The observation table
-is initialized with $S = E = \{\epsilon\}$, as can be seen in
-\cref{tbl:observation_1}.
+row $s$ and a column $e$, denoted as $T(s,e)$, are labeled with $1$ or $0$
+depending on whether $\mq(s \concat e)$ equals ``yes'' or ``no''
+respectively. The observation table is initialized with $S = E = \{\epsilon\}$,
+as can be seen in \cref{tbl:observation_1}.
 
 An observation table provides sufficient information for constructing a
 hypothesis, as will be explained now. Let $\row(s)$ represent the finite
@@ -198,27 +198,69 @@ and of consistence, defined in \cref{def:closure,def:consistence} respectively.
 
 \subsubsection{The Algorithm}
 \label{sec:algorithm}
-As said in the previous section, the algorithm begins by initializing $S$ and
-$E$ to $\{\epsilon\}$. The initial cells of the table are filled by performing
-membership queries. After the initialization is done, the algorithm enters the
-main loop, which is split up into two phases. The first phase ensures the
-properties of closure and consistence, and is repeated until these properties
-are satisfied. In the second phase the algorithm constructs a hypothesis
-automaton, and uses it to perform an equivalence query.
+As said in the previous section, the \cref{alg:lstar} begins by initializing
+$S$ and $E$ to $\{\epsilon\}$. The initial cells of the table are filled by
+performing membership queries. After the initialization is done, the algorithm
+enters the main loop~(line~\ref{line:loop}), which is split up into two
+phases. The first phase~(lines~\ref{line:ph1_begin}~-~\ref{line:ph1_end})
+ensures the properties of closure and consistence. This phase is repeated
+until these properties are satisfied. In the second
+phase~(lines~\ref{line:ph2_start}~-~\ref{line:ph2_end}) the algorithm
+constructs a hypothesis automaton and uses it to perform an equivalence query.
 
-\paragraph{The first phase} If the property of closure (\cref{def:closure}) is
-not satisfied, then there exists some $t \in S \concat \Sigma$ such that
-$\row(t) \neq \row(s)$ for all $s \in S$. This means that when constructing a
-hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
-be made. To address this problem, $t$ is added to $S$ and the table is filled by
-executing the required membership queries.
+\begin{algorithm}[h]
+\caption{Angluin's $L^*$ algorithm}
+\label{alg:lstar}
+\begin{algorithmic}[1]
+\Function{Learner}{}
+  \State $S \gets E \gets \{ \epsilon \}$
+  \State Construct the observation table $(S,E,T)$ by executing
+         $\mq(w)$ for $\epsilon$ and $\forall\sigma \in \Sigma$
+  \Loop \label[line]{line:loop}
+    \While{$(S,E,T)$ is not closed or not consistent} \label[line]{line:ph1_begin}
+      \If{$(S,E,T)$ is not consistent}
+        \State Find some $s_1, s_2 \in S, e \in E$ and $\sigma \in \Sigma$ such that
+        \State $\row(s_1) = row(s_2)$ and $T(s_1, \sigma \concat e) \neq T(s_2, \sigma \concat e)$
+        \State $E \gets E \cup \{ \sigma \concat e \}$
+        \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
+               $w \in (S \cup S \concat \Sigma)\concat E$
+      \EndIf
+      \If{$(S,E,T)$ is not closed}
+        \State Find some $t \in S \concat \Sigma$ such that $\forall s \in S(\row(s) \neq \row(t))$
+        \State $S \gets S \cup \{ t \}$
+        \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
+               $w \in (S \cup S \concat \Sigma)\concat E$
+      \EndIf
+    \EndWhile \label[line]{line:ph1_end}
+    \State $M \gets M(S,E,T)$ \label[line]{line:ph2_start}
+    \State Execute $\eq(M)$
+    \If{a counterexample $t$ is given}
+      \ForAll{prefixes $t'$ of $t$}
+        \State $S \gets S \cup \{ t' \}$
+        \State Fill $(S,E,T)$ by executing $\mq(w)$ for each
+               $w \in (S \cup S \concat \Sigma)\concat E$
+      \EndFor
+    \Else
+      \State \Return $M$
+    \EndIf \label[line]{line:ph2_end}
+  \EndLoop
+\EndFunction{}
+\end{algorithmic}
+\end{algorithm}
 
-Furthermore, if the property of consistence (\cref{def:consistence}) is not
+\paragraph{The first phase} If the property of consistence (\cref{def:consistence}) is not
 satisfied, then there exists some $s_1,s_2 \in S$, $e \in E$ and
 $\sigma \in \Sigma$ such that $\row(s_1) = \row(s_2)$, but
 $T(s_1,\sigma\concat e) \neq T(s_2,\sigma\concat e)$. Thus, $\sigma\concat e$
-defines a new distinguishing extension, and should be added to $E$. Again, the
-table is filled by executing membership queries where needed.
+defines a new distinguishing extension and should be added to $E$.
+Afterwards, the table is filled by executing membership queries where needed.
+
+Furthermore, if the property of closure (\cref{def:closure}) is
+not satisfied, then there exists some $t \in S \concat \Sigma$ such that
+$\row(t) \neq \row(s)$ for all $s \in S$. This means that when constructing a
+hypothesis $\hat M$, there exists no state $\row(t)$ to which a transition can
+be made. To address this problem, $t$ is added to $S$ and again the table is
+filled by executing the required membership queries.
 
 \paragraph{The second phase} By now the observation table is both closed and
 consistent. The algorithm uses the observation table to construct a hypothesis
@@ -227,13 +269,13 @@ constructed, the equivalence query is executed upon it. If the response is
 ``yes'', the algorithm is done and halts. If instead the response is a
 counterexample, the counterexample and all of its prefixes are added to $S$,
 after which $S \concat \Sigma$ is updated and the algorithm moves back to phase
-1.
+one.
 
 \subsubsection{Example run}
 \label{sec:example-run}
 Suppose $L^*$ is used to learn the target DFA $M$ of figure \ref{fig:target}.
-The input alphabet for this DFA is $\Sigma = \{a, b\}. $ $L^*$ initializes $S$
-and $E$ to $\{\epsilon\}$, and performs three membership queries to build the
+The input alphabet for this DFA is $\Sigma = \{a, b\}$. $L^*$ initializes $S$
+and $E$ to $\{\epsilon\}$ and performs three membership queries to build the
 initial observation table of table \ref{tbl:observation_1}.
 
 \begin{figure}[t]
@@ -251,7 +293,7 @@ initial observation table of table \ref{tbl:observation_1}.
   \node[accepting] (4) at (4,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge              node[auto,draw=none] {$b$} (2) 
+        (1) edge              node[auto,draw=none] {$b$} (2)
         (2) edge              node[auto,draw=none] {$b$} (3)
         (3) edge              node[auto,draw=none] {$b$} (4)
         (1) edge [loop above] node[auto,draw=none] {$a$} (1)
@@ -273,7 +315,7 @@ initial observation table of table \ref{tbl:observation_1}.
   \node[initial]   (1) at (1,0) {};
 
   \path[->, >=stealth, shorten > = 1pt, shorten < = 1pt]
-        (1) edge [loop right] node[auto,draw=none] {$a$} (2) 
+        (1) edge [loop right] node[auto,draw=none] {$a$} (2)
         (1) edge [loop left]  node[auto,draw=none] {$b$} (2);
 \end{tikzpicture}
 \caption{First hypothesis} \label{fig:hypoth_1}
@@ -305,9 +347,9 @@ $b$        & $0$        \\
 \begin{tabular}{ | l || c | }
 \hline
            & $\epsilon$ \\ \hline \hline
-$\epsilon$ & $0$        \\ 
-$b$        & $0$        \\ 
-$bb$       & $0$        \\ 
+$\epsilon$ & $0$        \\
+$b$        & $0$        \\
+$bb$       & $0$        \\
 $bbb$      & $1$        \\ \hline \hline
 $a$        & $0$        \\
 $ba$       & $0$        \\
@@ -326,9 +368,9 @@ $bbbb$     & $0$        \\
 \begin{tabular}{ | l || c | c | }
 \hline
            & $\epsilon$ & $b$ \\ \hline \hline
-$\epsilon$ & $0$        & $0$ \\ 
-$b$        & $0$        & $0$ \\ 
-$bb$       & $0$        & $1$ \\ 
+$\epsilon$ & $0$        & $0$ \\
+$b$        & $0$        & $0$ \\
+$bb$       & $0$        & $1$ \\
 $bbb$      & $1$        & $0$ \\ \hline \hline
 $a$        & $0$        & $0$ \\
 $ba$       & $0$        & $0$ \\
@@ -347,9 +389,9 @@ $bbbb$     & $0$        & $0$ \\
 \begin{tabular}{ | l || c | c | c | }
 \hline
            & $\epsilon$ & $b$   & $bb$ \\ \hline \hline
-$\epsilon$ & $0$        & $0$   & $0$  \\ 
-$b$        & $0$        & $0$   & $1$  \\ 
-$bb$       & $0$        & $1$   & $0$  \\ 
+$\epsilon$ & $0$        & $0$   & $0$  \\
+$b$        & $0$        & $0$   & $1$  \\
+$bb$       & $0$        & $1$   & $0$  \\
 $bbb$      & $1$        & $0$   & $0$  \\ \hline \hline
 $a$        & $0$        & $0$   & $0$  \\
 $ba$       & $0$        & $0$   & $1$  \\
@@ -363,31 +405,31 @@ $bbbb$     & $0$        & $0$   & $0$  \\
 \caption{Observation tables}
 \end{table}
 
-Since the table is both closed and consistent, the algorithm moves on to phase 2
+Since the table is both closed and consistent, the algorithm moves on to phase two
 and constructs the hypothesis of figure \ref{fig:hypoth_1}. It executes an
 equivalence query with the hypothesis as parameter. Since it does not match $M$,
 the oracle will provide a counterexample. Assume the counterexample provided is
 $bbb$ (it could also have provided other counterexamples such as $bbbbbbb$).
 Now, the counterexample and all prefixes are added to $S$. After performing the
 new membership queries, the table \ref{tbl:observation_2} is built and the
-algorithm returns to phase 1.
+algorithm returns to phase one.
 
 The new table is closed, but not consistent, since $\row(b) = \row(bb)$, but
 $\row(b \concat b)$ and $\row(bb \concat b)$ differ under the column $\epsilon$.
 Therefore, $L^*$ adds $b \concat \epsilon = b$ to $E$, resulting in table
-\ref{tbl:observation_3}. This table is still inconsistent, since row($\epsilon$)
-= row($b$), but row($\epsilon \concat b$) differs from row($b \concat b$) under
+\ref{tbl:observation_3}. This table is still inconsistent, since $\row(\epsilon)
+= \row(b)$, but $\row(\epsilon \concat b)$ differs from $\row(b \concat b)$ under
 the column $b$. Therefore, $L^*$ adds $b \concat b$ to $E$. Performing the new
 membership queries now results in table \ref{tbl:observation_4}. The table is
-now both consistent and closed, so $L^*$ moves on to phase 2 and constructs the
+now both consistent and closed, so $L^*$ moves on to phase two and constructs the
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns `yes' and the algorithm terminates.
 
 \subsubsection{Complexity Analysis}
 \label{sec:complexity-analysis-lstar}
-% Note: Angluin considers k to be constant, and therefore drops the term in the
+% Note: Angluin considers k to be constant and therefore drops the term in the
 % asymptotic upperbounds of both the query complexity and space complexity. She
-% also doesn't explicitly state the required number of membership queries, but
+% also does not explicitly state the required number of membership queries, but
 % it is easy to see that this will be equal to the number of cells in the
 % observation table.
 
