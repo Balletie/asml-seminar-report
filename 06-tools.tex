@@ -10,7 +10,7 @@ practical setting. To overcome these challenges as well as to promote active
 automata learning in practice, tools and libraries have been created. This
 section will give a brief overview of a couple of tools and libraries. This
 selection is based on the importance, availability and the amount of researches
-that have used these tools and libraries. First, the libraries Libalf and
+that have used these tools and libraries. First, the libraries libalf and
 Learnlib will be discussed. These libraries provide various active automata
 learning algorithms and optimizations. After that, the tool Tomte is discussed,
 which automatically generates abstractions for automata in order to apply active
@@ -32,16 +32,16 @@ The core consists of the learning algorithms and the knowledgebase. The
 knowledgebase stores language information and collects the different queries 
 that are used for that language. This storage makes it possible to switch 
 learning algorithms or to use multiple learning algorithms during the learning 
-process. Therefore, Libalf is suitable for experimenting with different kinds 
+process. Therefore, libalf is suitable for experimenting with different kinds 
 of learning algorithms to see how they affect the learning process. 
 
 \begin{figure}[!ht]
 	\includegraphics[width=\textwidth]{Tool_images/libalf_demo_interface.png}
-	\caption{Application interface of Libalf}
+	\caption{Application interface of libalf}
 	\label{fig:libalf_interface}
 \end{figure}
 
-Besides using Libalf as a library, a demo application is also available. In 
+Besides using libalf as a library, a demo application is also available. In 
 this application, each learning configuration is stored in a scenario. Each 
 scenario contains the learning algorithm, filters, connectivity (server or 
 local) and the implementation of the Teacher. The Teacher can either be 
@@ -53,7 +53,7 @@ step by step. This means that the user can go through the learning algorithms
 in a step-wise manner, to see how it handles the membership queries and the 
 counterexamples. 
 
-The active learning algorithms that Libalf offers are listed below:
+The active learning algorithms that libalf offers are listed below:
 
 \begin{itemize}
 	\item $L^*$ (see \cref{sec:an-algor-learn})
@@ -62,7 +62,7 @@ The active learning algorithms that Libalf offers are listed below:
 	\item Kearns \& Vazirani's (see \cref{sec:classification-trees})
 \end{itemize}
 
-Besides the algorithms and the knowledgebase, Libalf has filters for reducing 
+Besides the algorithms and the knowledgebase, libalf has filters for reducing 
 the amount of queries asked to the Teacher. These filters use domain specific 
 knowledge. If a query can already be answered by this filter, it is not passed 
 to the Teacher, thus reducing the queries asked to the Teacher. A filter can 
@@ -75,7 +75,7 @@ and only stores information of one representative of that relation. This
 reduces the amount of memory needed and could also reduce the amount of 
 equivalence queries.
 
-More information on Libalf is published in \cite{Bollig2010}.
+More information on libalf is published in \cite{Bollig2010}.
 
 \subsection{Learnlib}
 \label{ssec:learnlib}
