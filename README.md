@@ -1,5 +1,19 @@
 # asml-seminar-report
-ASML Bachelor Seminar report
+ASML Bachelor Seminar report on active state machine learning.
+
+The final version can be downloaded [here](https://github.com/Balletie/asml-seminar-report/releases/download/final/main.pdf)
+
+## Collaborators
+
+In alphabetical order:
+
+- Piet van Agtmaal
+- Stefan Boodt
+- Sander Bosma
+- Gerlof Fokkema
+- Jente Hidskes
+- Arjan Langerak
+- Skip Lentz
 
 ## Compiling
 
