@@ -38,26 +38,25 @@ a system. However, exhaustively testing a black box is undecidably hard.
 This means that equivalence queries will have to be approximated, typically by
 using membership queries. Together with the introduction of the $L^*$ algorithm,
 Angluin introduced a way to approximate the equivalence queries by executing a
-series of membership queries \cite{Angluin1987}. For each of these membership
+series of membership queries~\cite{Angluin1987}. For each of these membership
 queries, a random sequence from $\Sigma^*$ is generated and is then checked
 against both the hypothesis and the target. This process is repeated until
 either a counterexample has been found or the desired confidence that the
 hypothesis is correct is reached. This confidence is a configurable parameter.
 Its value depends on the desired probability that a correct model of the target
 is learned. This approach does not guarantee a correct result of the equivalence
-query. Despite this, it is still used in practice either exclusively (e.g.
-\cite{Cho2010}) or in combination with more robust alternatives such as Chow's
-W-method (e.g. \cite{Bauer2014}).
+query. Despite this, it is still used in practice either exclusively (e.g.~\cite{Cho2010}) or in combination with more robust alternatives such as Chow's
+W-method (e.g.~\cite{Bauer2014}).
 \todo{cite reason why random sampling is still used}
 
 \subsubsection{Chow's W-method}
 \label{sec:chow}
 
-Chow's W-method is a form of model-based testing \cite{deRuiter2015, Chow1978}.
+Chow's W-method is a form of model-based testing~\cite{deRuiter2015, Chow1978}.
 Like Angluin's random sampling technique, it uses membership queries to
 approximate equivalence queries. The advantage of this method is that it is able
 to guarantee the correct result of equivalence queries, given an upper bound of
-the number of states in the target \cite{Ipate2007}.
+the number of states in the target~\cite{Ipate2007}.
 
 According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the SUL is bounded by $n^{2} \times
@@ -102,7 +101,7 @@ The idea behind the W-method is that $S \concat \Sigma\left[ 1 \right]  = S \cup
 \concat \Sigma)$, which is also called the transition cover of $M$, ensures that all the
 states and transition in $P$ are also present in $M$, while
 $\Sigma\left[ n \right] \concat W$ ensures that $M$ and $P$ are in the same state after
-performing all the transitions. For pseudocode see algorithm \ref{alg:w-method}.
+performing all the transitions. For pseudocode see algorithm~\ref{alg:w-method}.
 
 \begin{algorithm}[h]
 \caption{The W-method algorithm}
@@ -192,16 +191,13 @@ model of the SUL using a limited amount of membership queries.
 \label{sec:learn-mealy-mach}
 
 By modifying the $L^*$ algorithm and using model transformation techniques, many
-different automaton types can be learned, including Mealy machines
-\cite{Shahbaz2009}, I/O automata \cite{Aarts2010a}, register automata
-\cite{Howar2012} and event-recording automata \cite{Grinchtein05}. In this
+different automaton types can be learned, including Mealy machines~\cite{Shahbaz2009}, I/O automata~\cite{Aarts2010a}, register automata~\cite{Howar2012} and event-recording automata~\cite{Grinchtein05}. In this
 article only the Mealy variant is discussed in detail.
 
 The basic $L^*$ algorithm is only able to learn DFAs (and equivalent
 models). However, some applications are characterized by their input/output behavior.
 Such behavior is not easily modeled by a DFA. Instead, they are more naturally
-modeled by Mealy machines\cite{Shahbaz2009} (see definition
-\ref{def:mealy_machine}).
+modeled by Mealy machines~\cite{Shahbaz2009} (see definition~\ref{def:mealy_machine}).
 
 \begin{definition}[Mealy machine]\label{def:mealy_machine}
   A Mealy machine $M$ is a 6-tuple $(Q, q_0, \Sigma, \Lambda, \delta, \lambda)$
@@ -226,8 +222,8 @@ membership query, as will be explained below. There are two ways to transform
 $\mathcal{M}$ into $D$. Both transformations have in common that they introduce
 a single error state $q_{err}$, which is the only non-accepting state in $D$.
 The main difference between the transformations is in the input alphabet they
-define. One uses $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$\cite{Hungar2003},
-while the other uses $\Sigma = \Sigma_\mathcal{M} \times O$ \cite{Makinen2001}.
+define. One uses $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$~\cite{Hungar2003},
+while the other uses $\Sigma = \Sigma_\mathcal{M} \times O$~\cite{Makinen2001}.
 Note that in this section the $_{\mathcal{M}}$ subscript is used to disambiguate
 between items from the DFA and Mealy tuples.
 
@@ -237,12 +233,9 @@ $\mathcal{M}$ with input symbol $\sigma$ and output symbol $o$ is split into two
 transitions. The first is constrained by $\sigma$ and transitions to a new
 intermediate state $q_t$. The second transitions from $q_t$ and is constrained
 by $o$. All inputs that are not defined after this step transition into
-$q_{err}$. An example can be seen in figure \ref{fig:transformation_hungar} and
-the pseudocode of this transformation is shown in algorithm
-\ref{alg:transform_hungar}. The transformed model of $\mathcal{M}$ can be
-learned by $L^*$ by defining $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$
-\cite{Shahbaz2009} and using the appropriate $\mq$ and $\eq$ implementations
-\cite{Hungar2003,Niese2003}.
+$q_{err}$. An example can be seen in figure~\ref{fig:transformation_hungar} and
+the pseudocode of this transformation is shown in algorithm~\ref{alg:transform_hungar}. The transformed model of $\mathcal{M}$ can be
+learned by $L^*$ by defining $\Sigma = \Sigma_\mathcal{M} \cup \Lambda$~\cite{Shahbaz2009} and using the appropriate $\mq$ and $\eq$ implementations~\cite{Hungar2003,Niese2003}.
 
 \begin{algorithm}[h]
 \caption{Transformation of a Mealy machine into a DFA}
@@ -326,16 +319,16 @@ M\"{a}kinen~et~al. were the first to use (a slightly modified version of) $L^*$
 to learn a DFA with input/output pairs as input symbols. Several other papers
 mention that a DFA with such inputs can be created from a Mealy machine by
 taking $\Sigma = \Sigma_\mathcal{M} \times \Lambda$ and that therefore Mealy
-machines can be learned by $L^*$ \cite{Shahbaz2009,Irfan2010,Groz2012}. This
+machines can be learned by $L^*$~\cite{Shahbaz2009,Irfan2010,Groz2012}. This
 transformation removes the need for intermediate states, but it has
-significant impact on the size of the input alphabet \cite{Hungar2003}. Since
+significant impact on the size of the input alphabet~\cite{Hungar2003}. Since
 no papers could be found that explicitly define the transformation in detail,
 no pseudocode is given here.
 
 \subsubsection {Adapting $L^*$ into $L^*_{M}$}
 Angluin's $L^*$ algorithm has been adjusted for use with Mealy machines. The new
-procedure was first informally described in \cite{Margaria2004} and later more
-rigorously in \cite{Shahbaz2009}. In $L^*$ the membership queries return a
+procedure was first informally described in~\cite{Margaria2004} and later more
+rigorously in~\cite{Shahbaz2009}. In $L^*$ the membership queries return a
 boolean value; either it is a member, or it is not. For $L^*_{M}$, the membership
 query is replaced by an output query, which returns an output string. The
 observation table is modified to store these output strings instead of boolean
@@ -350,10 +343,9 @@ this value in the observation table is that it corresponds to the sequence of
 output symbols that is produced when the input $e$ is applied from the state
 corresponding to $s$.
 
-An example Mealy machine $\mathcal{M}$ is shown in figure
-\ref{fig:mealy_example}. A possible observation table built by $L^*_M$ when it
-learns $\mathcal{M}$ is shown in table \ref{tbl:mealy_observation_table} (source
-of the example: Shahbaz~et~al. \cite{Shahbaz2009}). In this table it can be seen
+An example Mealy machine $\mathcal{M}$ is shown in figure~\ref{fig:mealy_example}. A possible observation table built by $L^*_M$ when it
+learns $\mathcal{M}$ is shown in table~\ref{tbl:mealy_observation_table} (source
+of the example: Shahbaz~et~al.~\cite{Shahbaz2009}). In this table it can be seen
 that the value in $\row(aa)$ under the column labeled by $a$ is $y$, even though
 the output query would have returned the string $xyy$ for the input string
 $aaa$.
@@ -366,10 +358,9 @@ algorithm, $E$ is not intialized to $\{\epsilon\}$ but to $\Sigma$.
 The concepts of closedness and consistency remain identical. The procedure to
 build the hypothesis remains largely the same, but now the generated hypothesis
 no longer defines accepting states. Instead, it defines output strings on the
-transitions. Following similar reasoning as in Angluin's paper
-\cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
+transitions. Following similar reasoning as in Angluin's paper~\cite{Angluin1987}, it can be concluded that $L^*_M$ is guaranteed to find a
 model describing the target using at most $\mathcal{O}(k^2nm + kmn^2)$ output
-queries \cite{Shahbaz2009}.
+queries~\cite{Shahbaz2009}.
 
 \begin{figure}[h]
   \begin{minipage}{.45\textwidth}

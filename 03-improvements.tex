@@ -10,7 +10,7 @@ query complexity, the second is in terms of the space complexity.
 
 \subsection{Classification Trees}
 \label{sec:classification-trees}
-Introduced by Kearns and Vazirani\cite{Kearns1994}, classification trees (or
+Introduced by Kearns and Vazirani~\cite{Kearns1994}, classification trees (or
 \textit{discrimination trees}) are meant as a replacement for the observation
 table (see \cref{sec:data-structure}). In other words, it is a different data
 structure for maintaining the necessary information to form a hypothesis
@@ -70,22 +70,22 @@ accepting states of $\hat M$.
 Howar~et~al. state that a classification tree is redundancy-free because each
 state in $\hat M$ is distinguished by one distinguishing extension, as opposed
 to observation tables where states are distinguished by a fixed amount of
-distinguishing extensions\cite{Howar2014}.
+distinguishing extensions~\cite{Howar2014}.
 
 \subsubsection{Complexity analysis}
 \label{sec:complexity-analysis}
 With their introduction of the classification tree, Kearns and Vazirani also
 adapted the original $L^*$ learning algorithm to use the tree
-structure\cite{Kearns1994}. The precise operation of the adapted algorithm will
+structure~\cite{Kearns1994}. The precise operation of the adapted algorithm will
 not be explained. Nevertheless an overview of the impact on the query- and space
 complexity is given below.
 
 \paragraph{Query Complexity} The amount of membership queries for hypothesis
 construction is bounded by $\mathcal{O}(kn^2)$ membership queries in the worst
-case (i.e. a degenerated tree)\cite{Howar2014,Kearns1994,Isberner2014b}. For the
+case (i.e. a degenerated tree)~\cite{Howar2014,Kearns1994,Isberner2014b}. For the
 counterexample analysis the amount of queries is bounded by $\mathcal{O}(nm)$,
 which is done $\mathcal{O}(n)$ amount of times over all main loop
-executions\cite{Kearns1994}. Thus in total the query complexity is bounded by
+executions~\cite{Kearns1994}. Thus in total the query complexity is bounded by
 $\mathcal{O}(kn^2 + n^2m)$~\cite{Isberner2015a}, an improvement over that of
 $L^*$.
 
@@ -93,14 +93,14 @@ $L^*$.
 analyzed the space complexity of classification tree based learners as follows:
 a degenerated tree has $\mathcal{O}(n)$ amount of nodes, of which each inner
 node is labeled by a distinguishing extension of length
-$\mathcal{O}(m)$\cite{Isberner2015a}. The space required for the hypothesis
-automaton is $\mathcal{O}(kn)$\cite{Isberner2015a}. Thus the algorithm requires
-space in $\mathcal{O}(kn + mn)$\cite{Isberner2014b,Isberner2015a}, which is an
+$\mathcal{O}(m)$~\cite{Isberner2015a}. The space required for the hypothesis
+automaton is $\mathcal{O}(kn)$~\cite{Isberner2015a}. Thus the algorithm requires
+space in $\mathcal{O}(kn + mn)$~\cite{Isberner2014b,Isberner2015a}, which is an
 improvement on the space complexity of the observation table of $L^*$.
 
 \subsection{Rivest and Schapire's Counterexample Analysis}
 \label{sec:rivest-schap-count}
-Rivest and Schapire made a significant improvement\cite{Rivest1993} to the
+Rivest and Schapire made a significant improvement~\cite{Rivest1993} to the
 \textit{counterexample analysis} stage, which is the part that handles
 counterexamples returned by an equivalence query.
 
@@ -118,8 +118,8 @@ is the case for classification trees. Since there is no notion of a $\sift$
 operation in this context, the notation $\access{\hat M}{w}$ is used to denote
 the unique access string corresponding to a string $w \in \Sigma^*$.
 
-According to Rivest and Schapire\cite{Rivest1993} and further clarified by
-Steffen\cite{Steffen2011} and Isberner\cite{Isberner2014a}, the counterexample
+According to Rivest and Schapire~\cite{Rivest1993} and further clarified by
+Steffen~\cite{Steffen2011} and Isberner~\cite{Isberner2014a}, the counterexample
 $\gamma$ can be decomposed to find the distinguishing extension: let
 $a, e \in \Sigma^*$, $\sigma \in \Sigma$ such that
 $\gamma = a \concat \sigma \concat e$ and
@@ -150,11 +150,11 @@ Vazarani's (see \cref{sec:complexity-analysis}).
 
 It is worthwhile to note that Isberner~et~al. analyzed and compared other search
 strategies by means of an abstract framework for counterexample
-analysis\cite{Isberner2014a}. Their results show that the query complexities of
+analysis~\cite{Isberner2014a}. Their results show that the query complexities of
 the other search strategies remain the same as the original binary search
 strategy due to Rivest and Schapire, yet perform better when put into practice.
 
-\paragraph{Space Complexity} From Isberner's analysis\cite{Isberner2014b}, the
+\paragraph{Space Complexity} From Isberner's analysis~\cite{Isberner2014b}, the
 space complexity due to the new counterexample analysis is better than that of
 $L^*$, however it is worse than that of Kearns and Vazirani's:
 $\mathcal{O}(kn^2 + nm)$.
