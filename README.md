@@ -1,7 +1,8 @@
 # asml-seminar-report
-ASML Bachelor Seminar report on active state machine learning.
 
-The final version can be downloaded [here](https://github.com/Balletie/asml-seminar-report/releases/download/final/main.pdf)
+Bachelor Seminar report on active state machine learning.
+
+The final version can be downloaded [here](https://github.com/Balletie/asml-seminar-report/releases/download/final/main.pdf).
 
 ## Collaborators
 
