@@ -48,27 +48,28 @@ Therefore equivalence queries can generally only be answered by exhaustively
 testing the inputs and outputs of a system.
 However, exhaustively testing a black box is undecidably hard.
 
-This means that equivalence queries will have to be approximated,
-typically using membership queries. These approximated equivalence queries are in
-general also not decidable without assuming any extra knowledge~\cite{Steffen2011a},
-such as the number of states of the system under learning: it is impossible to
-be certain that the system has been tested extensively enough.
+This means that equivalence queries will have to be approximated, typically by
+using membership queries. Together with the introduction of the $L^*$ algorithm,
+Angluin introduced a way to approximate the equivalence queries by executing a
+series of membership queries \cite{Angluin1987}. For each of these membership
+queries, a random sequence from $\Sigma^*$ is generated and is then checked
+against both the hypothesis and the target. This process is repeated until
+either a counterexample has been found or the desired confidence that the
+hypothesis is correct is reached. Although this approach does not guarantee a
+correct result of the equivalence query, it is still used in practice
+\cite{Cho2010,Bauer2014}; often in combination with more robust alternatives
+such as Chow's W-method.
 
-An alternative to using equivalence queries, is to use model-based testing
-methods~\cite{Broy2005, Tretmans2011}. An example of
-model-based testing is Chow's W-method~\cite{deRuiter2015, Chow1978},
-which relies on approximating $\eq(M)$ queries by using $\mq(w)$ queries.
-
-%To further research in this area,
-%the \textit{ZULU} challenge~\cite{Combe2010} was introduced.
-%The \textit{ZULU} challenge asked participants to find a DFA corresponding
-%to a certain system as accurately as possible, while imposing a restriction
-%on the number of \textit{MEMBER (w)} queries and disallowing \textit{EQUIV (M)}
-%queries completely.
-%\todo{add some more text and a fluid intro to Chow's method}
 
 \subsubsection{Chow's W-method}
 \label{sec:chow}
+
+Chow's W-method is a form a model-based testing \cite{deRuiter2015, Chow1978}.
+Like Angluin's random sampling technique, it uses membership queries to
+approximate equivalence queries. The advantage of this method is that it is able
+to guarantee the correct result of equivalence queries, given an upper bound of
+the number of states in the target \cite{Ipate2007}.
+
 According to~\cite{Vasilevskii1973}, the maximum number of test sequences needed
 to converge to a correct approximation of the system under learning
 is bounded by $n^{2} \times k^{m-n+1}$ when using Chow's W-method.
