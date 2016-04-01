@@ -44,9 +44,9 @@ of learning algorithms to see how they affect the learning process.
 Besides using Libalf as a library, a demo application is also available. In 
 this application, each learning configuration is stored in a scenario. Each 
 scenario contains the learning algorithm, filters, connectivity (server or 
-local) and the implementation of the teacher. The teacher can either be 
+local) and the implementation of the Teacher. The Teacher can either be 
 based on a supplied model (DFA or regular expression) or the role of the 
-teacher is filled in by the user. 
+Teacher is filled in by the user. 
 
 When a scenario is started, there is an option to let the algorithm run 
 step by step. This means that the user can go through the learning algorithms 
@@ -63,9 +63,9 @@ The active learning algorithms that Libalf offers are listed below:
 \end{itemize}
 
 Besides the algorithms and the knowledgebase, Libalf has filters for reducing 
-the amount of queries asked to the teacher. These filters use domain specific 
+the amount of queries asked to the Teacher. These filters use domain specific 
 knowledge. If a query can already be answered by this filter, it is not passed 
-to the teacher, thus reducing the queries asked to the teacher. A filter can 
+to the Teacher, thus reducing the queries asked to the Teacher. A filter can 
 also be composed of multiple filters by using logical connectors ($\land$, 
 $\lor$ and $\lnot$).
 
@@ -145,7 +145,7 @@ methods such as randomized tests. More methods can be found in
 Learnlib also offers filters that pre-process the queries of the learning
 algorithm. An example is the reduction of the amount of queries (see 
 \cref{sec:noreset}). Other examples are a mechanism for reducing the amount of
-resets  and a parallelization component that uses multiple teachers and
+resets  and a parallelization component that uses multiple Teachers and
 parallel execution of membership queries\cite{Henrix2015,Howar2012}.
 
 
@@ -173,7 +173,7 @@ Tomte\footnote{Named after a character from the book: The Wonderful Adventures
 of Nile}\footnote{In active development and available from
 \url{http://tomte.cs.ru.nl/Tomte-0-4}} is a command-line tool that 
 automatically makes abstractions for automata learning.  It is essentially a 
-translator between the SUL and the learner. This makes 
+translator between the SUL and the Learner. This makes 
 tools such as Learnlib easier to use, since the user does not have to make the 
 mapping manually.
 
@@ -185,7 +185,7 @@ mapping manually.
 
 The Abstractor, Lookahead Oracle and Determinizer together form Tomte. The
 other two parts are not part of Tomte, but it comes with Learnlib for making
-the learner. The makers also have a tool\footnote{SUL tool available from
+the Learner. The makers also have a tool\footnote{SUL tool available from
 \url{http://tomte.cs.ru.nl/Sut-0-4/Description}} available for creating the SUL
 since they must be modeled after a register automaton\cite{Aarts2015}
 (which is an extension of a Mealy machine).
@@ -202,7 +202,7 @@ implementation of this oracle is found in \cite[p. 170]{Aarts2014} and
 \cite[p. 105]{Tomte2014}.
 
 \paragraph{Abstractor} The Abstractor is the component that creates the mapping
-between the SUL and the learner. The idea behind the Abstractor is to make the
+between the SUL and the Learner. The idea behind the Abstractor is to make the
 model that needs to be learned by the Learner smaller than the SUL. This is
 needed, because a SUL typically has parameter values that make the alphabet
 large.
