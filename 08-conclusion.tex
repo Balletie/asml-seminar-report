@@ -4,7 +4,7 @@
 \section*{Conclusion}
 \label{sec:conclusion}
 In this article, the history and development of active state machine learning
-have been discussed. Chapter one explained the fundamental theory  behind the
+have been discussed. Chapter one explained the fundamental theory behind the
 topic, providing a formal basis for the rest of the article. The notions of
 Nerode-equivalence and equivalence classes were introduced. Furthermore, it was
 explained what purpose active state machine learning serves. The main algorithm,
@@ -26,41 +26,41 @@ than Kearns and Vazirani. However, their demand for space is larger, albeit
 still improving on $L^*$. A combination of these two improvements was introduced
 by Howar~\cite{Howar2012a,Isberner2015a}: the Observation Pack algorithm.
 Building even further on these improvements, Isberner~\cite{Isberner2014b} came
-up with the TTT algorithm, focusing on keeping counterexamples, and thus the
+up with the TTT algorithm, focusing on keeping counterexamples and thus the
 classification tree, as concise as possible by removing the redundancy from
 counterexamples given by the Teacher.
 
 
 In chapter three, numerous problems when
 trying to apply the theory were addressed. The W-method as defined by
-Chow~\cite{Chow1978} aims to approximate the \eq{M} queries with \mq{w} queries,
-using model-based testing, thereby eliminating the problem of undecidability
-that arises with \eq{M} queries. To deal with the problem of the enormous amount
-of \mq{w} queries, which can be time consuming, one can use the available
-knowledge of some specific application context to interrupt checking for new
-transitions after some point. Shahbaz and Groz~\cite{Shahbaz2009}
+Chow~\cite{Chow1978} aims to approximate the equivalence queries with membership
+queries using model-based testing, thereby eliminating the problem of
+undecidability that arises with equivalence queries when the SUL is a black box
+system. To deal with the problem of the possibly enormous amount
+of membership queries, which can be time consuming, one can use the available
+knowledge of some application-specific context. Shahbaz and Groz~\cite{Shahbaz2009}
 introduced the notion of Mealy machines combined with active state machine
 learning, adding the support for I/O-dependent machines that $L^*$ lacks. For
 this, the $L^*$ algorithm was modified to output and store strings instead of
 either true or false. To eliminate the problem of being unable to reset the
-machine between individual \mq{w} queries, Rivest and Schapire~\cite{Rivest1993}
+machine between individual membership queries, Rivest and Schapire~\cite{Rivest1993}
 proposed the use of homing sequences. When executed, these sequences lead to the
 final state of the machine, simulating a full reset.
 
 
-In chapter four, Learnlib
-and Tomte~\cite{Raffelt2009,Tomte2014} were discussed to illustrate how practical
-challenges can be overcome. Learnlib provides the user with numerous learning
-algorithms to choose from, including $L^*$ and many of it's improving algorithms
-and supports both DFAs and Mealy machines if the specific algorithm supports both.
-Tomte is a tool that maps the SUL to the Learner, by first solving nondeterminism
-by conversion and preprocessing the SUL behavior.
+In chapter four, Learnlib and Tomte\todo{add libalf}~\cite{Raffelt2009,Tomte2014}
+were discussed to illustrate how active state machine learning can be modeled in
+practice. Learnlib provides the user with numerous learning algorithms to choose
+from, including $L^*$ and many of its improved variants and supports both DFAs
+and Mealy machines, depending on the chosen algorithm. Tomte is a tool that maps
+the SUL to the Learner. It first solves nondeterminism by conversion and then
+preprocesses the SUL behavior, before actually mapping the SUL to the Learner.
 
 
 The final chapter, chapter
 five, highlighted some practical applications.
 Protocol validation~\cite{deRuiter2015} was found to be applicable in reality by
-adding protocol-specific improvements to the learning algorithms, in particular
+adding protocol-specific improvements to the learning algorithms. In particular
 knowledge about the system that reduces the execution time or even enables the
 learning algorithm to be interrupted after a certain state had been reached.
 \end{document}
