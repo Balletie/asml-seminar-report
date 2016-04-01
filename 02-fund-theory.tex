@@ -6,7 +6,7 @@
 \begin{document}
 \section{Fundamental Theory}
 \label{sec:fundamental-theory}
-This chapter introduces the theory fundamental to active state machine learning:
+This section introduces the theory fundamental to active state machine learning:
 the notion of Nerode-equivalence and the original learning algorithm due to
 Angluin called $L^*$\cite{Angluin1987}. Before this, the necessary notation used
 throughout this article is introduced.
@@ -155,7 +155,7 @@ hypothesis. After that, the algorithm is described. To get a more intuitive
 sense of how the algorithm works, an example run of the algorithm is given. The
 section then concludes with a complexity analysis.
 
-\subsubsection{The Data Structure}
+\subsubsection{The data structure}
 \label{sec:data-structure}
 \begin{table}[t]
   \centering
@@ -196,22 +196,22 @@ section then concludes with a complexity analysis.
   \caption{Examples of observation tables}
 \end{table}
 
-While learning, the algorithm maintains a set of access strings $S$ (see
-\cref{def:acc-str}) and a set of distinguishing extensions $E$ (see
-\cref{def:dist-ext}) in a two-dimensional table called the \textit{observation
-  table}. The columns of this table are labeled by the items of $E$. The rows
-are split into an upper part and a lower part. The former is labeled by elements
-from $S$, the latter by those of $S \concat \Sigma$. Lastly, the cells
-corresponding with a row $s$ and a column $e$, denoted as $T(s,e)$, are labeled
-with $1$ or $0$ depending on the output of $\mq(s \concat e)$. The observation
-table is initialized with $S = E = \{\epsilon\}$, as can be seen in
+While learning, the algorithm maintains a set of access strings $S$ and a set of
+distinguishing extensions $E$ (see \cref{def:dist-ext}) in a two-dimensional
+table called the \textit{observation table}. The columns of this table are
+labeled by the items of $E$. The rows are split into an upper part and a lower
+part. The former is labeled by elements from $S$, the latter by those of
+$S \concat \Sigma$. Lastly, the cells corresponding with a row $s$ and a column
+$e$, denoted as $T(s,e)$, are labeled with $1$ or $0$ depending on the output of
+$\mq(s \concat e)$. The observation table is initialized with
+$S = E = \{\epsilon\}$, as can be seen in
 \cref{tbl:example_observation_initial}. An example of a filled observation table
 is shown in \cref{tbl:example_observation}.
 
 An observation table provides sufficient information for constructing a
 hypothesis, as will be explained now. Let $\row(s)$ represent the finite
 function $f : E \rightarrow \{0,1\}$ such that $f(e) = T(s,e)$. Then $\row(s)$
-has a direct correspondence to the equivalence class $\eqclass{s}{\lang_M}$,
+has a direct correspondence to the equivalence class $\eqclass{s}{\lang_{\hat M}}$,
 since if $\row(v) = \row(w)$ for some $v,w \in S$, then there is no suffix
 $e \in E$ such that $T(v,e) \neq T(w,e)$. Moreover, the rows in the lower part
 of the observation table represents the equivalence classes needed for
@@ -234,7 +234,7 @@ and of consistence, defined in \cref{def:closure,def:consistence} respectively.
   holds that $\row(s_1\concat\sigma) = \row(s_2\concat\sigma)$.
 \end{definition}
 
-\subsubsection{The Algorithm}
+\subsubsection{The algorithm}
 \label{sec:algorithm}
 As said in the previous section, the \cref{alg:lstar} begins by initializing
 $S$ and $E$ to $\{\epsilon\}$. The initial cells of the table are filled by
@@ -463,7 +463,7 @@ now both consistent and closed, so $L^*$ moves on to phase two and constructs th
 hypothesis of figure \ref{fig:target}. Since this is equal to the target, the
 equivalence query returns ``yes'' and the algorithm terminates.
 
-\subsubsection{Complexity Analysis}
+\subsubsection{Complexity analysis}
 \label{sec:complexity-analysis-lstar}
 % Note: Angluin considers k to be constant and therefore drops the term in the
 % asymptotic upperbounds of both the query complexity and space complexity. She
